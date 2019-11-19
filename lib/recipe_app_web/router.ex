@@ -9,8 +9,18 @@ defmodule RecipeAppWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
+  pipeline :ajax do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+  scope "/ajax", RecipeAppWeb do
+    pipe_through :ajax
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/sessions", SessionController, only: [:create], singleton: true
   end
 
   scope "/", RecipeAppWeb do
@@ -19,8 +29,4 @@ defmodule RecipeAppWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", RecipeAppWeb do
-  #   pipe_through :api
-  # end
 end
