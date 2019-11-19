@@ -15,3 +15,9 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+import init_page from './page';
+
+window.addEventListener("load", () => {
+    let root = document.getElementById('root');
+    init_page(root);
+});
