@@ -1,4 +1,8 @@
+import React from 'react';
 
+import { connect } from 'react-redux';
+
+import { Form, Button, Alert } from 'react-bootstrap';
 
 function SearchBar({ dispatch }) {
     function changed(data) {
@@ -16,7 +20,6 @@ function SearchBar({ dispatch }) {
         </Form.Group>
     </div>
 }
-
 
 
 export default connect(({ search }) => ({ search }))(SearchBar)
