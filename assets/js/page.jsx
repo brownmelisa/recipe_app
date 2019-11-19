@@ -8,6 +8,8 @@ import Home from './tabs/home'
 import Login from './login';
 import store from './store';
 
+import SearchRecipes from './recipes/search';
+
 export default function init_page(root) {
   let tree = (
     <Provider store={store}>
@@ -25,6 +27,11 @@ function Page(props) {
             <Nav.Item>
               <NavLink to="/" exact activeClassName="active" className="nav-link">
                 Home
+            </NavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <NavLink to="/recipes/search" exact activeClassName="active" className="nav-link">
+                Search Recipes
             </NavLink>
             </Nav.Item>
             <Nav.Item>
@@ -48,10 +55,17 @@ function Page(props) {
           <h1>Meal Plan</h1>
         </Route>
 
+        <Route exact path="/recipes/search">
+          <SearchRecipes />
+        </Route>
+
+        <Route exact path="/users">
+          <h1>Users</h1>
+        </Route>
+
         <Route exact path="/login">
           <Login />
         </Route>
-
       </Switch>
     </Router>
   );
