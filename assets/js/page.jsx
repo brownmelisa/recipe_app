@@ -5,10 +5,11 @@ import { Navbar, Nav, Col } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 
 import Home from './tabs/home'
-import Login from './login';
+import Login from './tabs/login';
 import store from './store';
 
 import SearchRecipes from './recipes/search';
+import RecipePage from './recipes/recipe_page'
 
 export default function init_page(root) {
   let tree = (
@@ -59,6 +60,11 @@ function Page(props) {
           <SearchRecipes />
         </Route>
 
+        <Route
+          exact path='/recipepage'
+          render={(props) => <RecipePage {...props} />}
+        />
+
         <Route exact path="/users">
           <h1>Users</h1>
         </Route>
@@ -67,7 +73,7 @@ function Page(props) {
           <Login />
         </Route>
       </Switch>
-    </Router>
+    </Router >
   );
 }
 

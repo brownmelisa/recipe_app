@@ -80,5 +80,9 @@ export function searchRecipes(form) {
   get(url)
     .then((resp) => {
       console.log("Search Resp", resp);
+      store.dispatch({
+        type: "SEARCH_RECIPES_RESP",
+        data: resp.data
+      })
     });
 }
