@@ -11,10 +11,21 @@ function login(st0 = {email: "", password: "", errors: null}, action) {
 }
 
 
+function signup(st0 = {name: "", email: "", password: "", errors: null}, action) {
+  switch(action.type) {
+    case 'CHANGE_SIGNUP':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
+
 
 function forms(st0, action) {
   let reducer = combineReducers({
     login,
+    signup
   });
   return reducer(st0, action);
 }

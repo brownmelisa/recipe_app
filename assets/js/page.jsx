@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-rou
 import { Navbar, Nav, Col } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 
+import Signup from './signup';
 import Login from './login';
 import store from './store';
 
@@ -50,7 +51,10 @@ function Page(props) {
 	<Route exact path="/login">
           <Login />
         </Route>
-
+        
+	<Route exact path="/signup">
+	  <Signup />
+	</Route>
       </Switch>
     </Router>
   );
@@ -85,6 +89,11 @@ let Session = connect(({session}) => ({session}))(({session, dispatch}) => {
             Login
           </NavLink>
         </Nav.Item>
+	<Nav.Item>
+	  <NavLink to="/signup" exact activeClassName="active" className="nav-link">
+	    Sign Up
+	  </NavLink>
+	</Nav.Item>
       </Nav>
     );
   }
