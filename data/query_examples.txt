@@ -1,0 +1,16 @@
+# Simple Search
+https://api.spoonacular.com/recipes/search?query=apple&muffin=2&apiKey=SOME_API_KEY
+
+# Complex Search (uses 3 requests)
+https://api.spoonacular.com/recipes/complexSearch?query=pasta&maxFat=25&number=10
+minProtein
+maxCalories
+maxFat
+
+prefix image URLs with: https://webknox.com/recipeImages/
+
+# Get Analyzed Recipe Instructions
+
+# Get Recipe Info/ Get Recipe Info Bulk
+
+# Get Recipe Price Breakdown by ID
