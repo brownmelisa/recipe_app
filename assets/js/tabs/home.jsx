@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 
-import RecipesList from '../recipe/index';
-import SearchBar from './searchbar'
+import RecipesList from '../recipes/cards';
+import SearchRecipes from '../recipes/search'
 import store from '../store';
 import { Row } from 'react-bootstrap';
 
@@ -12,7 +12,7 @@ function Content() {
     return (
         <div>
             <Row>
-                <SearchBar />
+                <SearchRecipes />
             </Row>
             <Row>
                 <RecipesList />
@@ -25,7 +25,6 @@ let Home = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
     if (session) {
         return (
             <div>
-                <p>Here is the Home page</p>
                 <Content />
             </div>
         );

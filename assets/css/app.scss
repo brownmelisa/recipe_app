@@ -3,3 +3,17 @@
 @import "~bootstrap/scss/bootstrap";
 
 $body-bg: #BBB;
+
+.rowC, .card_buttons{
+    display:flex; 
+    flex-direction:row; 
+}
+.rowC > div {
+    margin: 20px;
+}
+
+.card_buttons > button {
+    margin:10px;
+}
+
+

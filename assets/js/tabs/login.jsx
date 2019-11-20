@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 
-import { submit_login } from './ajax';
+import { submit_login } from '../ajax';
 
 class Login extends React.Component {
   constructor(props) {
@@ -34,25 +34,25 @@ class Login extends React.Component {
       return <Redirect to={this.state.redirect} />
     }
 
-    let {email, password, errors} = this.props;
+    let { email, password, errors } = this.props;
     let error_msg = null;
     if (errors) {
-      error_msg = <Alert variant="danger">{ errors }</Alert>;
+      error_msg = <Alert variant="danger">{errors}</Alert>;
     }
 
     return (
       <div>
         <h1>Log In</h1>
-        { error_msg }
+        {error_msg}
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control type="text" onChange={
-            (ev) => this.changed({email: ev.target.value})} />
+            (ev) => this.changed({ email: ev.target.value })} />
         </Form.Group>
         <Form.Group controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" onChange={
-            (ev) => this.changed({password: ev.target.value})} />
+            (ev) => this.changed({ password: ev.target.value })} />
         </Form.Group>
         <Form.Group controlId="submit">
           <Button variant="primary" onClick={() => submit_login(this)}>

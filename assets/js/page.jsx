@@ -5,9 +5,12 @@ import { Navbar, Nav, Col } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 
 import Home from './tabs/home'
-import Login from './login';
+import Login from './tabs/login';
 import store from './store';
 import MealPlan from './containers/MealPlan'
+
+import SearchRecipes from './recipes/search';
+import RecipePage from './recipes/recipe_page'
 
 export default function init_page(root) {
   let tree = (
@@ -26,6 +29,11 @@ function Page(props) {
             <Nav.Item>
               <NavLink to="/" exact activeClassName="active" className="nav-link">
                 Home
+            </NavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <NavLink to="/recipes/search" exact activeClassName="active" className="nav-link">
+                Search Recipes
             </NavLink>
             </Nav.Item>
             <Nav.Item>
@@ -49,12 +57,24 @@ function Page(props) {
           <MealPlan />
         </Route>
 
+        <Route exact path="/recipes/search">
+          <SearchRecipes />
+        </Route>
+
+        <Route
+          exact path='/recipepage'
+          render={(props) => <RecipePage {...props} />}
+        />
+
+        <Route exact path="/users">
+          <h1>Users</h1>
+        </Route>
+
         <Route exact path="/login">
           <Login />
         </Route>
-
       </Switch>
-    </Router>
+    </Router >
   );
 }
 
