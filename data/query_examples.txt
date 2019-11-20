@@ -14,3 +14,10 @@ prefix image URLs with: https://webknox.com/recipeImages/
 # Get Recipe Info/ Get Recipe Info Bulk
 
 # Get Recipe Price Breakdown by ID
+
+
+export default meal_plan;
+mix phx.gen.json GroceryLists GroceryList grocerylists email:string name:string
+
+mix phx.gen.json MealPlans MealPlan mealplans email:string name:string
+user_id:references:users
