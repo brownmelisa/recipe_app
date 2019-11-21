@@ -6,6 +6,7 @@ import { Provider, connect } from 'react-redux';
 import store from './store';
 
 import SearchRecipes from './recipes/search';
+import TestPage from './test1';
 
 export default function init_page(root) {
   let tree = (
@@ -31,6 +32,11 @@ function Page(props) {
               Users
             </NavLink>
           </Nav.Item>
+          <Nav.Item>
+            <NavLink to="/test" exact activeClassName="active" className="nav-link">
+              Test
+            </NavLink>
+          </Nav.Item>
         </Nav>
       </Navbar>
 
@@ -41,6 +47,10 @@ function Page(props) {
 
         <Route exact path="/users">
           <h1>Users</h1>
+        </Route>
+
+        <Route exact path="/test">
+          <TestPage/>
         </Route>
       </Switch>
     </Router>
