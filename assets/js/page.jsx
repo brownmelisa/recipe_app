@@ -7,7 +7,7 @@ import { Provider, connect } from 'react-redux';
 import Home from './tabs/home'
 import Login from './tabs/login';
 import store from './store';
-import MealPlan from './containers/MealPlan'
+import Mealplan_new from './mealplans/mealplan_new'
 
 import SearchRecipes from './recipes/search';
 import RecipePage from './recipes/recipe_page'
@@ -54,7 +54,7 @@ function Page(props) {
         </Route>
 
         <Route exact path="/mp">
-          <MealPlan />
+          <Mealplan_new />
         </Route>
 
         <Route exact path="/recipes/search">
