@@ -56,6 +56,19 @@ export function get(path) {
   }).then((resp) => resp.json());
 }
 
+export function getRecipe(form) {
+  console.log("Inside get recipe ajax");
+  let state = store.getState();
+  let recipeId = state.forms.test_get_recipe_details.recipeId;
+  console.log("Recipe id: ", recipeId);
+
+  let url = '/recipes/' + recipeId;
+  get(url)
+    .then((resp) => {
+      console.log("Get Recipe Resp", resp);
+    });
+}
+
 export function searchRecipes(form) {
   console.log("Inside search ajax");
   let state = store.getState();

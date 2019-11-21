@@ -53,9 +53,21 @@ function search_recipes(st0 = { searchTerm: "", type: "", cuisine: "" }, action)
 }
 
 
+
+// change later
+function test_get_recipe_details(st0 = { recipeId: "" }, action) {
+    switch (action.type) {
+        case 'CHANGE_GET_RECIPE_TEST':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function forms(st0, action) {
     let reducer = combineReducers({
         search_recipes,
+        test_get_recipe_details,
         login,
     });
     return reducer(st0, action);

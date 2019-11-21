@@ -10,6 +10,7 @@ import store from './store';
 
 import SearchRecipes from './recipes/search';
 import RecipePage from './recipes/recipe_page'
+import TestPage from './test1';
 
 export default function init_page(root) {
   let tree = (
@@ -40,12 +41,18 @@ function Page(props) {
                 Meal Plan
             </NavLink>
             </Nav.Item>
+            <Nav.Item>
+              <NavLink to="/test" exact activeClassName="active" className="nav-link">
+                Test
+            </NavLink>
+            </Nav.Item>
           </Nav>
         </Col>
         <Col md="4">
           <Session />
         </Col>
-      </Navbar>
+
+      </Navbar >
 
       <Switch>
         <Route exact path="/">
@@ -71,6 +78,9 @@ function Page(props) {
 
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/test">
+          <TestPage />
         </Route>
       </Switch>
     </Router >
