@@ -4,7 +4,7 @@
 
 $body-bg: #BBB;
 
-.rowC, .card_buttons{
+.rowC, .card_buttons, .ingr_and_instruction{
     display:flex; 
     flex-direction:row; 
 }
@@ -15,5 +15,14 @@ $body-bg: #BBB;
 .card_buttons > button {
     margin:10px;
 }
+
+.ingr_and_instruction img {
+    height: 2em;
+    width: auto;
+}
+.ingr_and_instruction > div {
+        margin:30px;
+}
+
 
 
