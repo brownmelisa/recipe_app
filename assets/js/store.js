@@ -6,15 +6,18 @@ import deepFreeze from 'deep-freeze-strict';
  * {
  *   forms: {
  *     search_recipes: {...},
+ *     test_get_recipe_details,
+ *     login,
  *   },
  *   users: Map.new(
  *     1 => {id: 1, name: "Alice", email: "alice@example.com"},
  *     ...
  *   ),
  *   recipes: Map.new(
- *     1 => {id: 1, title: "", image_url: "", calories:1, fats:"1gm", carbs:"",
- *           proteins: ""},
- *     ...
+ *     search_resp: {
+ *       1 => {id: 1, title: "", image_url: "", calories:1, fats:"1gm", carbs:"", proteins: ""},
+ *       ...},
+ *     detailed_resp: {...}
  *   ),
  * }
  */
@@ -43,6 +46,7 @@ function session(st0 = session0, action) {
     }
 }
 
+// submit the form for search for recipes by keyword
 function search_recipes(st0 = { searchTerm: "", type: "", cuisine: "" }, action) {
     switch (action.type) {
         case 'CHANGE_SEARCH_RECIPE':
@@ -52,25 +56,38 @@ function search_recipes(st0 = { searchTerm: "", type: "", cuisine: "" }, action)
     }
 }
 
+// change later
+function test_get_recipe_details(st0 = {recipeId: ""}, action){
+  switch (action.type) {
+    case 'CHANGE_GET_RECIPE_TEST':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
 
 function forms(st0, action) {
-    let reducer = combineReducers({
-        search_recipes,
-        login,
-    });
-    return reducer(st0, action);
+  let reducer = combineReducers({
+    search_recipes,
+    test_get_recipe_details,
+    login,
+  });
+  return reducer(st0, action);
 }
 
 function users(st0 = new Map(), action) {
     return st0;
 }
+
 function recipes(st0, action) {
-    let reducer = combineReducers({
-        search_resp,
-    })
+    let reducer = combineReducers(
+      { search_resp,
+        detailed_resp,
+    });
     return reducer(st0, action);
 }
 
+// get the response from search for recipes by keyword
 function search_resp(st0 = new Array(), action) {
     switch (action.type) {
         case 'SEARCH_RECIPES_RESP':
@@ -83,6 +100,16 @@ function search_resp(st0 = new Array(), action) {
         default:
             return st0;
     }
+}
+
+// gets response from querying a recipe id on the API
+function detailed_resp(st0 = new Map(), action) {
+  switch(action.type) {
+    case 'GET_RECIPE_DETAILED':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
 }
 
 function root_reducer(st0, action) {

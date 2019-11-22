@@ -1,5 +1,6 @@
 defmodule RecipeApp.Recipes do
   alias RecipeApp.SearchRecipesApi
+  alias RecipeApp.GetRecipeApi
   @moduledoc """
   The Recipes context.
   """
@@ -123,6 +124,10 @@ defmodule RecipeApp.Recipes do
         true -> acc
       end
     end)
+  end
+
+  def getRecipe(recipeId) do
+    GetRecipeApi.getRecipeDetails(recipeId)
   end
 
 end

@@ -1,4 +1,5 @@
 import store from './store';
+
 export function post_login(path, body) {
   let state = store.getState();
   //let token = state.session.token;
@@ -13,7 +14,6 @@ export function post_login(path, body) {
     body: JSON.stringify(body),
   }).then((resp) => resp.json());
 }
-
 
 export function submit_login(form) {
   let state = store.getState();
@@ -54,6 +54,31 @@ export function get(path) {
       //'x-auth': token || "",
     }),
   }).then((resp) => resp.json());
+}
+
+// export function getRecipe(form) {
+//   console.log("Inside get recipe ajax");
+//   let state = store.getState();
+//   let recipeId = state.forms.test_get_recipe_details.recipeId;
+//   console.log("Recipe id: ", recipeId);
+//
+//   let url = '/recipes/' + recipeId;
+//   get(url)
+//     .then((resp) => {
+//       console.log("Get Recipe Resp", resp);
+//   });
+// }
+
+// gets the recipe details by id and puts in redux store
+export function getRecipe(id) {
+  get('/recipes/' + id)
+    .then((resp) => {
+      console.log("Get Recipe Response", resp);
+      store.dispatch({
+          type: 'GET_RECIPE_DETAILED',
+          data: [resp.data]
+      })
+    });
 }
 
 export function searchRecipes(form) {

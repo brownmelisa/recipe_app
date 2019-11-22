@@ -11,6 +11,7 @@ import Mealplan_new from './mealplans/mealplan_new'
 
 import SearchRecipes from './recipes/search';
 import RecipePage from './recipes/recipe_page'
+import TestPage from './test1';
 
 export default function init_page(root) {
   let tree = (
@@ -29,23 +30,32 @@ function Page(props) {
             <Nav.Item>
               <NavLink to="/" exact activeClassName="active" className="nav-link">
                 Home
-            </NavLink>
+              </NavLink>
             </Nav.Item>
+
             <Nav.Item>
               <NavLink to="/recipes/search" exact activeClassName="active" className="nav-link">
                 Search Recipes
-            </NavLink>
+              </NavLink>
             </Nav.Item>
+
             <Nav.Item>
               <NavLink to="/mp" exact activeClassName="active" className="nav-link">
                 Meal Plan
-            </NavLink>
+              </NavLink>
+            </Nav.Item>
+
+            <Nav.Item>
+              <NavLink to="/test" exact activeClassName="active" className="nav-link">
+                Test
+              </NavLink>
             </Nav.Item>
           </Nav>
         </Col>
         <Col md="4">
           <Session />
         </Col>
+
       </Navbar>
 
       <Switch>
@@ -73,6 +83,11 @@ function Page(props) {
         <Route exact path="/login">
           <Login />
         </Route>
+
+        <Route exact path="/test">
+          <TestPage/>
+        </Route>
+
       </Switch>
     </Router >
   );

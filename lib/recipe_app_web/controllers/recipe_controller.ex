@@ -20,9 +20,15 @@ defmodule RecipeAppWeb.RecipeController do
     end
   end
 
+  # Overriding use of get /recipes/:id route to get recipe details via API
   def show(conn, %{"id" => id}) do
-    recipe = Recipes.get_recipe!(id)
-    render(conn, "show.json", recipe: recipe)
+    # recipe = Recipes.get_recipe!(id)
+    # render(conn, "show.json", recipe: recipe)
+
+    IO.puts("Inside show")
+    IO.inspect id
+    recipe = Recipes.getRecipe(id)
+    render(conn, "recipe_details.json", recipe: recipe)
   end
 
   def update(conn, %{"id" => id, "recipe" => recipe_params}) do
