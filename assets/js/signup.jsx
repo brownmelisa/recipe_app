@@ -59,6 +59,12 @@ class Signup extends React.Component {
           <Form.Control type="password" onChange={
             (ev) => this.changed({password: ev.target.value})} />
         </Form.Group>
+	<Form.Group controlId="password_confirmation">
+          <Form.Label>Re-input Password</Form.Label>
+          <Form.Control type="password" onChange={
+            (ev) => this.changed({password_confirmation: ev.target.value})} />
+        </Form.Group>
+
         <Form.Group controlId="submit">
           <Button variant="primary" onClick={() => submit_signup(this)}>
             Sign Up

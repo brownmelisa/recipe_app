@@ -11,7 +11,7 @@ function login(st0 = {email: "", password: "", errors: null}, action) {
 }
 
 
-function signup(st0 = {name: "", email: "", password: "", errors: null}, action) {
+function signup(st0 = {name: "", email: "", password: "", password_confirmation: "", errors: null}, action) {
   switch(action.type) {
     case 'CHANGE_SIGNUP':
       return Object.assign({}, st0, action.data);

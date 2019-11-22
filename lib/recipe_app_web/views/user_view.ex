@@ -12,8 +12,9 @@ defmodule RecipeAppWeb.UserView do
 
   def render("user.json", %{user: user}) do
     %{id: user.id,
+      name: user.name,
       email: user.email,
       password_hash: user.password_hash,
-      name: user.name}
+      password_confirmation: user.password_confirmation}
   end
 end
