@@ -7,11 +7,11 @@ import { Provider, connect } from 'react-redux';
 import Home from './tabs/home'
 import Login from './tabs/login';
 import store from './store';
-import Mealplan_new from './mealplans/mealplan_new'
 
 import SearchRecipes from './recipes/search';
 import RecipePage from './recipes/recipe_page'
 import TestPage from './test1';
+import MealplanNew from './mealplans/mealplan_new'
 
 export default function init_page(root) {
   let tree = (
@@ -64,7 +64,7 @@ function Page(props) {
         </Route>
 
         <Route exact path="/mp">
-          <Mealplan_new />
+          <MealplanNew />
         </Route>
 
         <Route exact path="/recipes/search">

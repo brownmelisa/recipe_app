@@ -56,6 +56,37 @@ export function get(path) {
   }).then((resp) => resp.json());
 }
 
+export function getRecipe(recipeId) {
+  console.log("Inside get recipe ajax");
+  let state = store.getState();
+  console.log("state in get recipe", state);
+  // let recipeId = state.forms.test_get_recipe_details.recipeId;
+  console.log("Recipe id: ", recipeId);
+
+  let url = '/recipes/' + recipeId;
+  get(url)
+    .then((resp) => {
+      console.log("Get Recipe Resp", resp);
+      store.dispatch({
+                       type: "GET_RECIPES_BY_ID_RESP",
+                       data: resp
+                     })
+    });
+}
+
+// // gets the recipe details by id and puts in redux store
+// export function getRecipe(id) {
+//   console.log("inside getRecipe ajax")
+//   get('/recipes/' + id)
+//     .then((resp) => {
+//       console.log("Get Recipe Response", resp);
+//       store.dispatch({
+//           type: 'GET_RECIPE_DETAILED',
+//           data: [resp.data]
+//       })
+//     });
+// }
+
 // export function getRecipe(form) {
 //   console.log("Inside get recipe ajax");
 //   let state = store.getState();
@@ -69,17 +100,7 @@ export function get(path) {
 //   });
 // }
 
-// gets the recipe details by id and puts in redux store
-export function getRecipe(id) {
-  get('/recipes/' + id)
-    .then((resp) => {
-      console.log("Get Recipe Response", resp);
-      store.dispatch({
-          type: 'GET_RECIPE_DETAILED',
-          data: [resp.data]
-      })
-    });
-}
+
 
 export function searchRecipes(form) {
   console.log("Inside search ajax");

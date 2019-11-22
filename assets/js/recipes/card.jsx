@@ -1,10 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 
-
 import { Card, Button } from 'react-bootstrap';
+import { getRecipe } from '../ajax';
+import store from '../store';
+import { connect } from 'react-redux';
 
-export default class RecipeCard extends React.Component {
+class RecipeCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,10 +14,16 @@ export default class RecipeCard extends React.Component {
         };
     }
 
-    redirect(_id) {
-        this.setState({
-            redirect: "/recipepage",
-        });
+    redirect(_local_id, id) {
+      console.log("redirect id", id);
+      this.props.dispatch({
+        type: 'CHANGE_GET_RECIPE_TEST',
+        data: { recipeId: id },
+      });
+      getRecipe();
+      this.setState({
+        redirect: "/recipepage",
+      });
     }
 
     render() {
@@ -42,5 +50,6 @@ export default class RecipeCard extends React.Component {
             </Card>
         );
     }
-
 }
+
+export default connect(({ }) => ({}))(RecipeCard)

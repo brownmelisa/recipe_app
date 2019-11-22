@@ -6,6 +6,7 @@ import {Collapse, Modal, Container, ButtonToolbar, Row, Col, Button, Table, Form
 import SearchRecipes from '../recipes/search'
 import MealsShow from './meals_show'
 import GroceryList from "./grocery_list";
+import Home from '../tabs/home';
 
 
 export default class MealplanNew extends React.Component {
@@ -101,12 +102,14 @@ export default class MealplanNew extends React.Component {
           </Col>
         </Row>
 
-        <Modal show={this.state.show_modal} onHide={this.handleClose}>
+        <Modal id="mpModal" show={this.state.show_modal} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Add to Meal Plan</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <SearchRecipes />
+            <div>
+            <Home />
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
