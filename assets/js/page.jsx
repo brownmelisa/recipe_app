@@ -6,7 +6,10 @@ import { Provider, connect } from 'react-redux';
 import store from './store';
 
 import SearchRecipes from './recipes/search';
+
 import TestPage from './test1';
+import TestNewMp from './mealplans/new_test';
+import TestNewDp from './dayplans/new_dayplan_test';
 
 export default function init_page(root) {
   let tree = (
@@ -34,7 +37,17 @@ function Page(props) {
           </Nav.Item>
           <Nav.Item>
             <NavLink to="/test" exact activeClassName="active" className="nav-link">
-              Test
+              Test Get Recipe
+            </NavLink>
+          </Nav.Item>
+          <Nav.Item>
+            <NavLink to="/testcreatemp" exact activeClassName="active" className="nav-link">
+              Test Create Meal Plan
+            </NavLink>
+          </Nav.Item>
+          <Nav.Item>
+            <NavLink to="/testcreatedp" exact activeClassName="active" className="nav-link">
+              Test Create Day Plan
             </NavLink>
           </Nav.Item>
         </Nav>
@@ -51,6 +64,14 @@ function Page(props) {
 
         <Route exact path="/test">
           <TestPage/>
+        </Route>
+
+        <Route exact path="/testcreatemp">
+          <TestNewMp/>
+        </Route>
+
+        <Route exact path="/testcreatedp">
+          <TestNewDp/>
         </Route>
       </Switch>
     </Router>

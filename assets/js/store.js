@@ -37,10 +37,31 @@ function test_get_recipe_details(st0 = {recipeId: ""}, action){
   }
 }
 
+function test_create_new_meal_plan(st0 = {mealPlanName: "", userId: ""}, action){
+  switch (action.type) {
+    case 'CHANGE_NEW_MEAL_PLAN_NAME':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
+function test_create_new_day_plan(st0 = {mealPlanName: "", date: "", breakfast: "",
+  lunch: "", dinner: "", snack: "", userId: ""}, action){
+  switch (action.type) {
+    case 'CHANGE_NEW_DAY_PLAN_NAME':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
 function forms(st0, action) {
   let reducer = combineReducers({
     search_recipes,
     test_get_recipe_details,
+    test_create_new_meal_plan,
+    test_create_new_day_plan,
   });
   return reducer(st0, action);
 }
