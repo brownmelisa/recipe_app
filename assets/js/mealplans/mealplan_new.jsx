@@ -7,6 +7,7 @@ import SearchRecipes from '../recipes/search'
 import MealsShow from './meals_show'
 import GroceryList from './grocery_list';
 import RecipesCarousel from './recipes_carousel'
+import RecipesCarouselTest from './recipes_carousel_test';
 import Home from '../tabs/home';
 
 export default class MealplanNew extends React.Component {
@@ -157,7 +158,7 @@ export default class MealplanNew extends React.Component {
           <Modal.Body>
             <div>
               <SearchRecipes />
-              <RecipesCarousel/>
+              <RecipesCarouselTest/>
             </div>
           </Modal.Body>
           <Modal.Footer>

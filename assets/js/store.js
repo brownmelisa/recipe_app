@@ -17,7 +17,7 @@ import deepFreeze from 'deep-freeze-strict';
  *      search_resp: {Map.new(
  *              1 => {id: 1, title: "", image_url: "", calories:1, fats:"1gm", *              carbs:"",   proteins: ""},
  *              ...),}
- *      recipe_by_id_resp: {detail for one recipe }
+ *      get_recipe_by_id_resp: {detail for one recipe }
  *       
  * }
  */
@@ -154,16 +154,6 @@ function get_recipe_by_id_resp(st0 = {}, action) {
       return st0;
   }
 }
-
-// gets response from querying a recipe id on the API
-// function detailed_resp(st0 = new Map(), action) {
-//   switch(action.type) {
-//     case 'GET_RECIPE_DETAILED':
-//       return Object.assign({}, st0, action.data);
-//     default:
-//       return st0;
-//   }
-// }
 
 function recipes(st0, action) {
   let reducer = combineReducers(
