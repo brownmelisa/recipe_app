@@ -3,39 +3,29 @@ import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import store from '../store';
-import { getRecipe } from '../ajax';
 
-function state2props(state, props) {
-  return {id: id, recipe: state.recipes.get(id)};
+function recipePage({ match, location, recipes, recipe }) {
+    let local_id = location.state.id;
+    let recipe_local = recipes[local_id];
+    console.log("in recipe page search resp", recipe_local)
+    console.log("in recipe page search recipe by id", recipe);
+
+    return (
+        <div>
+            <h2>Recipe Name: {recipe.title}</h2>
+            <img src={recipe.image_url} />
+            <p>Calories: {recipe.calories}</p>
+            <p>Carbs: {recipe.carbs}</p>
+            <p>Fats: {recipe.fats}</p>
+            <p>Protein: {recipe.protein}</p>
+            <div className="ingr_and_instruction">
+                <Ingredients ingredients={recipe.ingredients} />
+                <Instruction instructions={recipe.instructions} />
+            </div>
+
+        </div>
+    )
 }
-
-function RecipePage({ match, location, recipes, _recipe }) {
-  let local_id = location.state.id;
-  let recipe_local = recipes[local_id];
-  console.log("in recipe page search resp", recipe_local)
-  console.log("recipe id is", recipe_local.id);
-  console.log("in recipe page search recipe by id", _recipe);
-  let recipe = getRecipe(recipe_local.id);
-  console.log("result of ajax call", recipe);
-
-  return (
-    <div>
-      <h2>Recipe Name: {recipe.title}</h2>
-      <img src={recipe.image_url} />
-      <p>Calories: {recipe.calories}</p>
-      <p>Carbs: {recipe.carbs}</p>
-      <p>Fats: {recipe.fats}</p>
-      <p>Protein: {recipe.protein}</p>
-      <div className="ingr_and_instruction">
-        <Ingredients ingredients={recipe.ingredients} />
-        <Instruction instructions={recipe.instructions} />
-      </div>
-
-    </div>
-  )
-}
-
 
 function Ingredients({ ingredients }) {
   let ingr_list = _.map(ingredients, (item) => {
@@ -67,6 +57,5 @@ function Instruction({ instructions }) {
     </div>);
 }
 
-// let RecipePage = connect(({ recipes }) => ({ recipes: recipes.search_resp }))(recipePage)
-// export default RecipePage;
-export default connect(state2props)(RecipePage);
+let RecipePage = connect(({ recipes }) => ({ recipes: recipes.search_resp, recipe: recipes.get_recipe_by_id_resp }))(recipePage)
+export default RecipePage;

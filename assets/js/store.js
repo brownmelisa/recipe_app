@@ -13,12 +13,12 @@ import deepFreeze from 'deep-freeze-strict';
  *     1 => {id: 1, name: "Alice", email: "alice@example.com"},
  *     ...
  *   ),
- *   recipes: Map.new(
- *     search_resp: {
- *       1 => {id: 1, title: "", image_url: "", calories:1, fats:"1gm", carbs:"", proteins: ""},
- *       ...},
- *     detailed_resp: {...}
- *   ),
+ *   recipes: 
+ *      search_resp: {Map.new(
+ *              1 => {id: 1, title: "", image_url: "", calories:1, fats:"1gm", *              carbs:"",   proteins: ""},
+ *              ...),}
+ *      recipe_by_id_resp: {detail for one recipe }
+ *       
  * }
  */
 
@@ -67,18 +67,17 @@ function test_get_recipe_details(st0 = {recipeId: ""}, action){
 }
 
 function forms(st0, action) {
-  let reducer = combineReducers({
-    search_recipes,
-    test_get_recipe_details,
-    login,
-  });
-  return reducer(st0, action);
+    let reducer = combineReducers({
+        search_recipes,
+        test_get_recipe_details,
+        login,
+    });
+    return reducer(st0, action);
 }
 
 function users(st0 = new Map(), action) {
     return st0;
 }
-
 
 let st = [
   {

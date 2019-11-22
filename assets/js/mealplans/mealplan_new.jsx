@@ -5,9 +5,9 @@ import _ from 'lodash';
 import {Collapse, Modal, Container, ButtonToolbar, Row, Col, Button, Table, Form, ListGroup} from 'react-bootstrap'
 import SearchRecipes from '../recipes/search'
 import MealsShow from './meals_show'
-import GroceryList from "./grocery_list";
+import GroceryList from './grocery_list';
+import RecipesCarousel from './recipes_carousel'
 import Home from '../tabs/home';
-
 
 export default class MealplanNew extends React.Component {
   constructor(props) {
@@ -15,6 +15,47 @@ export default class MealplanNew extends React.Component {
     this.state = {
       redirect: null,
       // some dummy data in meals and ingredients
+      recipes: [{
+        "calories": 393.004,
+        "carbs": "17.1274g",
+        "fats": "14.8836g",
+        "id": 573591,
+        "image_url": "https://spoonacular.com/recipeImages/573591-312x231.jpg",
+        "protein": "45.5059g",
+        "recipe_id": 573591,
+        "title": "Maple Glazed Salmon"
+      },
+        {
+          "calories": 553.315,
+          "carbs": "81.0196g",
+          "fats": "6.70668g",
+          "id": 591705,
+          "image_url": "https://spoonacular.com/recipeImages/591705-312x231.jpg",
+          "protein": "42.8016g",
+          "recipe_id": 591705,
+          "title": "Tuna & White Bean Salad"
+        },
+        {
+          "calories": 284.076,
+          "carbs": "35.2282g",
+          "fats": "8.0963g",
+          "id": 695118,
+          "image_url": "https://spoonacular.com/recipeImages/695118-312x231.jpg",
+          "protein": "19.114g",
+          "recipe_id": 695118,
+          "title": "Tuna & White Bean Salad"
+        },
+        {
+          "calories": 404.668,
+          "carbs": "12.3164g",
+          "fats": "22.4964g",
+          "id": 775925,
+          "image_url": "https://spoonacular.com/recipeImages/775925-312x231.jpg",
+          "protein": "38.5209g",
+          "recipe_id": 775925,
+          "title": "Baked Mustard-Crusted Salmon With Asparagus and Tarragon"
+        }
+      ],
       meals: [
         {id: 210306, meal: "breakfast", title: "Very simple Margherita pizza"},
         {id: 409234, meal: "lunch", title: "recipe 2"},
@@ -50,6 +91,7 @@ export default class MealplanNew extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddMeal = this.handleAddMeal.bind(this);
   }
 
   redirect(path) {
@@ -68,6 +110,12 @@ export default class MealplanNew extends React.Component {
 
   handleShow(ev) {
     this.setState({show_modal: true});
+  }
+
+  handleAddMeal(ev, name) {
+    console.log("meal to add", ev.target);
+    alert('meal added' + ev.target.value);
+    console.log('recipe name', name);
   }
 
   render() {
@@ -108,7 +156,8 @@ export default class MealplanNew extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <div>
-            <Home />
+              <SearchRecipes />
+              <RecipesCarousel/>
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -125,3 +174,5 @@ export default class MealplanNew extends React.Component {
     );
   }
 }
+
+{/*<RecipesCarousel recipes={this.state.recipes} onAddMeal={this.handleAddMeal}/>*/}

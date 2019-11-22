@@ -15,15 +15,15 @@ class RecipeCard extends React.Component {
     }
 
     redirect(_local_id, id) {
-      console.log("redirect id", id);
-      this.props.dispatch({
-        type: 'CHANGE_GET_RECIPE_TEST',
-        data: { recipeId: id },
-      });
-      getRecipe();
-      this.setState({
-        redirect: "/recipepage",
-      });
+        console.log("redirect id", id);
+        this.props.dispatch({
+            type: 'CHANGE_GET_RECIPE_TEST',
+            data: { recipeId: id },
+        });
+        getRecipe();
+        this.setState({
+            redirect: "/recipepage",
+        });
     }
 
     render() {
@@ -35,11 +35,10 @@ class RecipeCard extends React.Component {
             }} />;
         }
 
-
         let recipe = this.props.recipe;
         return (
             <Card className="col-4">
-                <Card.Img onClick={() => this.redirect(this.props.local_id)} src={recipe.image_url} />
+                <Card.Img onClick={() => this.redirect(this.props.local_id, recipe.id)} src={recipe.image_url} />
                 <Card.Text>
                     {recipe.title}
                 </Card.Text>

@@ -48,7 +48,7 @@ function Page(props) {
             <Nav.Item>
               <NavLink to="/test" exact activeClassName="active" className="nav-link">
                 Test
-              </NavLink>
+            </NavLink>
             </Nav.Item>
           </Nav>
         </Col>
@@ -57,6 +57,7 @@ function Page(props) {
         </Col>
 
       </Navbar>
+
 
       <Switch>
         <Route exact path="/">

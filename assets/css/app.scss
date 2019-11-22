@@ -4,7 +4,7 @@
 
 $body-bg: #BBB;
 
-.rowC, .card_buttons{
+.rowC, .card_buttons, .ingr_and_instruction{
     display:flex; 
     flex-direction:row; 
 }
@@ -43,6 +43,21 @@ $body-bg: #BBB;
 
 #mpModal {
   max-width: 900px;
+  background-color: #d39e00;
+  data-color: #d39e00;
+}
+
+.ingr_and_instruction img {
+    height: 2em;
+    width: auto;
+}
+.ingr_and_instruction > div {
+        margin:30px;
+}
+
+.carouselCard {
+  padding-bottom: 30px;
+
 }
 
 
