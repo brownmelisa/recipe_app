@@ -52,13 +52,14 @@ class DayPlanNew extends React.Component {
   // the store only contains the recipe id
   recipe_changed(data, recipe_title, meal_type) {
     console.log("meal type in day plan is", meal_type);
+    this.setState({show_modal: false});
     this.setState({[meal_type]: recipe_title});
     this.changed(data);
   }
 
   // handles submit meal plan button click
   handleSubmit(event) {
-    alert('submit form clicked with value: ' + event.target.value);
+    alert('submit form clicked');
     event.preventDefault();
   }
 
@@ -106,7 +107,7 @@ class DayPlanNew extends React.Component {
                     required
                     type="date"
                     onChange={(ev) => this.changed(
-                      {date: ev.target.value, userId: user_id, mealPlanName: plan_name}
+                      {date: ev.target.value, userId: user_id.toString(), mealPlanName: plan_name}
                     )}
                   />
                 </Col>
