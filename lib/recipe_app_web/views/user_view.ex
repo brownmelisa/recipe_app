@@ -17,4 +17,8 @@ defmodule RecipeAppWeb.UserView do
       password_hash: user.password_hash,
       password_confirmation: user.password_confirmation}
   end
+
+  def render("error.json", %{errors: errors}) do
+    %{errors: errors}
+  end
 end

@@ -55,18 +55,32 @@ export function submit_login(form) {
 export function submit_signup(form) {
   let state = store.getState();
   let data = state.forms.signup;
+  if (data.password != data.password_confirmation){
+    store.dispatch({
+      type: 'CHANGE_SIGNUP',
+      data: {errors: "Password doesn't match up"},
+    }); 
+    return;
+  }
+  else{
+    store.dispatch({
+      type: 'CHANGE_SIGNUP',
+      data: {errors: ""},
+    }); 
+  }
 
   post_signup('/users', {user: data})
     .then((resp) => {
-      console.log(resp);
-      if (resp) {
-        form.redirect('/');
-      }
-      else {
+      console.log("resp",resp);
+      if (resp.errors) {
         store.dispatch({
           type: 'CHANGE_SIGNUP',
-          data: {errors: JSON.stringify(resp.errors)},
+          data: {errors: resp.errors},
         });
+      }
+      else {
+        console.log("user created")
+        form.redirect('/');
       }
     });
 
