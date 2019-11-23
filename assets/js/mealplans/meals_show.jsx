@@ -29,10 +29,15 @@ export default function MealsShow({meals}) {
     return result;
   }
 
-  let breakfast = getMealsByType("breakfast");
-  let lunch = getMealsByType("lunch");
-  let dinner = getMealsByType("dinner");
-  let snack = getMealsByType("snack");
+  let breakfast = "";
+  let lunch = "";
+  let dinner = "";
+
+  if (meals) {
+    breakfast = getMealsByType("breakfast");
+    lunch = getMealsByType("lunch");
+    dinner = getMealsByType("dinner");
+  }
 
   return (
     <div>
@@ -49,10 +54,6 @@ export default function MealsShow({meals}) {
           Dinner
         </ListGroup.Item>
         {dinner}
-        <ListGroup.Item variant="info" className="mpHeadingItem">
-          Snack
-        </ListGroup.Item>
-        {snack}
       </ListGroup>
     </div>
   );

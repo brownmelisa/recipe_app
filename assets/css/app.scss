@@ -24,7 +24,6 @@ $body-bg: #BBB;
 
 .mpBtn {
   float:right;
-  margin-top:20px;
 }
 
 .mpHeadingItem {
@@ -43,8 +42,17 @@ $body-bg: #BBB;
 
 #mpModal {
   max-width: 900px;
+}
+#mpModalHeader {
   background-color: #d39e00;
-  data-color: #d39e00;
+}
+
+#mpModalBody {
+  background-color: #ede4c5;
+}
+
+#mpModalFooter {
+  background-color: #d39e00;
 }
 
 .ingr_and_instruction img {
@@ -57,7 +65,6 @@ $body-bg: #BBB;
 
 .carouselCard {
   padding-bottom: 30px;
-
 }
 
 

@@ -4,12 +4,10 @@ import {connect} from "react-redux";
 import _ from 'lodash';
 import {getRecipe} from "../ajax";
 
-// let RecipesCarousel = connect(({ recipes }) => ({ recipes: recipes.search_resp
-// }))(recipesCarousel)
+// a dispatch function that send events from component to the redux store
 function state2props(state) {
   return state.recipes;
 }
-
 
 class RecipesCarouselTest extends React.Component {
   constructor(props) {
@@ -23,12 +21,6 @@ class RecipesCarouselTest extends React.Component {
     this.handleClickPicture = this.handleClickPicture.bind(this);
     this.handleCloseRecipeDetails = this.handleCloseRecipeDetails.bind(this);
   }
-
-  // const handleSelect = (selectedIndex, e) => {
-  //   setIndex(selectedIndex);
-  //   setDirection(e.direction);
-  // };
-
 
   handleAddMeal(name, id) {
     alert('meal added ' + name + id);
@@ -59,7 +51,7 @@ class RecipesCarouselTest extends React.Component {
       return (
         <Carousel.Item key={recipe.id}>
           <div className="row">
-            <Card className="col-6 carouselCard">
+            <Card className="col-3 carouselCard">
               <Card.Img src={recipe.image_url}
                         onClick={() => this.handleClickPicture(recipe.id)}/>
               <Card.Text>
@@ -92,10 +84,15 @@ class RecipesCarouselTest extends React.Component {
       </Carousel>
     )}
 }
+// connects a React component to a Redux store
+// It provides its connected component with the pieces of the data it needs from the store,
+// and the functions it can use to dispatch actions to the store.
 export default connect(state2props)(RecipesCarouselTest);
 
 
-// functional component using react hooks to control the movement of the carousel
+
+// function using React hooks to control the movement of the carousel
+// not actually a React Component since it doesn't return an element
 function controlCarousel() {
   // use React hooks to control movement of carousel.
   const [index, setIndex] = useState(0);
@@ -126,5 +123,4 @@ function RecipeDetails({recipeInfo, handleClose}) {
       </Card>
     </div>
   );
-
 }

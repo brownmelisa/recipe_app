@@ -58,7 +58,6 @@ function recipesCarousel({recipes}) {
 
   console.log("index and direction", index, direction);
 
-  // console.log("formatted recipes ", recipes_formatted);
   return (
     <Carousel activeIndex={index}
               direction={direction}
@@ -70,8 +69,5 @@ function recipesCarousel({recipes}) {
 }
 
 export default RecipesCarousel;
-//
-// <img className="d-block w-100" src={recipe.image_url} alt={recipe.title}/>
-// <Carousel.Caption>{recipe.title + " " + recipe.calories + "Cal"}</Carousel.Caption>
 
 
