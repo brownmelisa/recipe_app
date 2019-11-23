@@ -1,6 +1,5 @@
-import { createStore, combineReducers } from 'redux';
+import {createStore, combineReducers} from 'redux';
 import deepFreeze from 'deep-freeze-strict';
-
 
 /* Structure of store data:
  * {
@@ -22,42 +21,43 @@ import deepFreeze from 'deep-freeze-strict';
  * }
  */
 
-function login(st0 = { email: "", password: "", errors: null }, action) {
-    switch (action.type) {
-        case 'CHANGE_LOGIN':
-            return Object.assign({}, st0, action.data);
-        default:
-            return st0;
-    }
+function login(st0 = {email: "", password: "", errors: null}, action) {
+  switch (action.type) {
+    case 'CHANGE_LOGIN':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
 }
 
 let session0 = localStorage.getItem('session');
 if (session0) {
-    session0 = JSON.parse(session0);
+  session0 = JSON.parse(session0);
 }
+
 function session(st0 = session0, action) {
-    switch (action.type) {
-        case 'LOG_IN':
-            return action.data;
-        case 'LOG_OUT':
-            return null;
-        default:
-            return st0;
-    }
+  switch (action.type) {
+    case 'LOG_IN':
+      return action.data;
+    case 'LOG_OUT':
+      return null;
+    default:
+      return st0;
+  }
 }
 
 // submit the form for search for recipes by keyword
-function search_recipes(st0 = { searchTerm: "", type: "", cuisine: "" }, action) {
-    switch (action.type) {
-        case 'CHANGE_SEARCH_RECIPE':
-            return Object.assign({}, st0, action.data);
-        default:
-            return st0;
-    }
+function search_recipes(st0 = {searchTerm: "", type: "", cuisine: ""}, action) {
+  switch (action.type) {
+    case 'CHANGE_SEARCH_RECIPE':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
 }
 
 // change later
-function test_get_recipe_details(st0 = {recipeId: ""}, action){
+function test_get_recipe_details(st0 = {recipeId: ""}, action) {
   switch (action.type) {
     case 'CHANGE_GET_RECIPE_TEST':
       return Object.assign({}, st0, action.data);
@@ -66,17 +66,43 @@ function test_get_recipe_details(st0 = {recipeId: ""}, action){
   }
 }
 
+function test_create_new_meal_plan(st0 = {mealPlanName: "", userId: ""}, action) {
+  switch (action.type) {
+    case 'CHANGE_NEW_MEAL_PLAN_NAME':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
+function test_create_new_day_plan(st0 = {
+  mealPlanName: "", date: "", breakfast: "",
+  lunch: "", dinner: "", snack: "", userId: ""
+}, action) {
+  switch (action.type) {
+    case 'CHANGE_NEW_DAY_PLAN_NAME':
+      console.log("in store create new day plan", action.data);
+      // for the meals, instead of replacing need to concatenate
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
 function forms(st0, action) {
-    let reducer = combineReducers({
-        search_recipes,
-        test_get_recipe_details,
-        login,
+  let reducer = combineReducers(
+    {
+      search_recipes,
+      test_get_recipe_details,
+      test_create_new_meal_plan,
+      test_create_new_day_plan,
+      login,
     });
-    return reducer(st0, action);
+  return reducer(st0, action);
 }
 
 function users(st0 = new Map(), action) {
-    return st0;
+  return st0;
 }
 
 let st = [
@@ -157,21 +183,23 @@ function get_recipe_by_id_resp(st0 = {}, action) {
 
 function recipes(st0, action) {
   let reducer = combineReducers(
-    { search_resp,
+    {
+      search_resp,
       get_recipe_by_id_resp,
     });
   return reducer(st0, action);
 }
 
 function root_reducer(st0, action) {
-    console.log("root reducer", st0, action);
-    let reducer = combineReducers({
-        forms,
-        users,
-        recipes,
-        session,
+  console.log("root reducer", st0, action);
+  let reducer = combineReducers(
+    {
+      forms,
+      users,
+      recipes,
+      session,
     });
-    return deepFreeze(reducer(st0, action));
+  return deepFreeze(reducer(st0, action));
 }
 
 let store = createStore(root_reducer);

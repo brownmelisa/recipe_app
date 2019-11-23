@@ -6,15 +6,15 @@ defmodule RecipeAppWeb.UserControllerTest do
 
   @create_attrs %{
     email: "some email",
-    password_hash: "some password_hash",
-    username: "some username"
+    name: "some name",
+    password_hash: "some password_hash"
   }
   @update_attrs %{
     email: "some updated email",
-    password_hash: "some updated password_hash",
-    username: "some updated username"
+    name: "some updated name",
+    password_hash: "some updated password_hash"
   }
-  @invalid_attrs %{email: nil, password_hash: nil, username: nil}
+  @invalid_attrs %{email: nil, name: nil, password_hash: nil}
 
   def fixture(:user) do
     {:ok, user} = Users.create_user(@create_attrs)
@@ -42,8 +42,8 @@ defmodule RecipeAppWeb.UserControllerTest do
       assert %{
                "id" => id,
                "email" => "some email",
-               "password_hash" => "some password_hash",
-               "username" => "some username"
+               "name" => "some name",
+               "password_hash" => "some password_hash"
              } = json_response(conn, 200)["data"]
     end
 
@@ -65,8 +65,8 @@ defmodule RecipeAppWeb.UserControllerTest do
       assert %{
                "id" => id,
                "email" => "some updated email",
-               "password_hash" => "some updated password_hash",
-               "username" => "some updated username"
+               "name" => "some updated name",
+               "password_hash" => "some updated password_hash"
              } = json_response(conn, 200)["data"]
     end
 

@@ -6,9 +6,9 @@ defmodule RecipeApp.UsersTest do
   describe "users" do
     alias RecipeApp.Users.User
 
-    @valid_attrs %{email: "some email", password_hash: "some password_hash", username: "some username"}
-    @update_attrs %{email: "some updated email", password_hash: "some updated password_hash", username: "some updated username"}
-    @invalid_attrs %{email: nil, password_hash: nil, username: nil}
+    @valid_attrs %{email: "some email", name: "some name", password_hash: "some password_hash"}
+    @update_attrs %{email: "some updated email", name: "some updated name", password_hash: "some updated password_hash"}
+    @invalid_attrs %{email: nil, name: nil, password_hash: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -32,8 +32,8 @@ defmodule RecipeApp.UsersTest do
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Users.create_user(@valid_attrs)
       assert user.email == "some email"
+      assert user.name == "some name"
       assert user.password_hash == "some password_hash"
-      assert user.username == "some username"
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -44,8 +44,8 @@ defmodule RecipeApp.UsersTest do
       user = user_fixture()
       assert {:ok, %User{} = user} = Users.update_user(user, @update_attrs)
       assert user.email == "some updated email"
+      assert user.name == "some updated name"
       assert user.password_hash == "some updated password_hash"
-      assert user.username == "some updated username"
     end
 
     test "update_user/2 with invalid data returns error changeset" do

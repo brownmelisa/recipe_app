@@ -4,9 +4,12 @@ defmodule RecipeApp.Users.User do
 
   schema "users" do
     field :email, :string
-    field :password_hash, :string
     field :name, :string
+    field :password_hash, :string
     field :password, :string, virtual: true
+
+    has_many :mealplans, RecipeApp.Mealplans.Mealplan
+
     timestamps()
   end
 

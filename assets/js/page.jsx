@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom';
-import { Navbar, Nav, Col } from 'react-bootstrap';
-import { Provider, connect } from 'react-redux';
+import {BrowserRouter as Router, Switch, Route, NavLink, Link} from 'react-router-dom';
+import {Navbar, Nav, Col} from 'react-bootstrap';
+import {Provider, connect} from 'react-redux';
 
 import Home from './tabs/home'
 import Login from './tabs/login';
@@ -10,17 +10,21 @@ import store from './store';
 
 import SearchRecipes from './recipes/search';
 import RecipePage from './recipes/recipe_page'
-import TestPage from './test1';
 import MealplanNew from './mealplans/mealplan_new'
+import TestPage from './test1';
+import TestNewMp from './mealplans/new_test';
+import TestNewDp from './dayplans/new_dayplan_test';
+import TestCarousel from './mealplans/recipes_carousel';
 
 export default function init_page(root) {
   let tree = (
     <Provider store={store}>
-      <Page />
+      <Page/>
     </Provider>
   );
   ReactDOM.render(tree, root);
 }
+
 function Page(props) {
   return (
     <Router>
@@ -33,11 +37,11 @@ function Page(props) {
               </NavLink>
             </Nav.Item>
 
-            <Nav.Item>
-              <NavLink to="/recipes/search" exact activeClassName="active" className="nav-link">
-                Search Recipes
-              </NavLink>
-            </Nav.Item>
+            {/*<Nav.Item>*/}
+            {/*  <NavLink to="/recipes/search" exact activeClassName="active" className="nav-link">*/}
+            {/*    Search Recipes*/}
+            {/*  </NavLink>*/}
+            {/*</Nav.Item>*/}
 
             <Nav.Item>
               <NavLink to="/mp" exact activeClassName="active" className="nav-link">
@@ -45,15 +49,41 @@ function Page(props) {
               </NavLink>
             </Nav.Item>
 
+            {/*<Nav.Item>*/}
+            {/*  <NavLink to="/test" exact activeClassName="active" className="nav-link">*/}
+            {/*    Test*/}
+            {/*  </NavLink>*/}
+            {/*</Nav.Item>*/}
+
             <Nav.Item>
-              <NavLink to="/test" exact activeClassName="active" className="nav-link">
-                Test
-            </NavLink>
+              <NavLink to="/users" exact activeClassName="active" className="nav-link">
+                Users
+              </NavLink>
             </Nav.Item>
+
+
+            {/*<Nav.Item>*/}
+            {/*  <NavLink to="/testcreatemp" exact activeClassName="active" className="nav-link">*/}
+            {/*    Test Create Meal Plan*/}
+            {/*  </NavLink>*/}
+            {/*</Nav.Item>*/}
+
+            <Nav.Item>
+              <NavLink to="/testcreatedp" exact activeClassName="active" className="nav-link">
+                Test Create Day Plan
+              </NavLink>
+            </Nav.Item>
+
+            <Nav.Item>
+              <NavLink to="/testcarousel" exact className="nav-link">
+                Test Carousel
+              </NavLink>
+            </Nav.Item>
+
           </Nav>
         </Col>
         <Col md="4">
-          <Session />
+          <Session/>
         </Col>
 
       </Navbar>
@@ -61,16 +91,16 @@ function Page(props) {
 
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home/>
         </Route>
 
         <Route exact path="/mp">
-          <MealplanNew />
+          <MealplanNew/>
         </Route>
 
-        <Route exact path="/recipes/search">
-          <SearchRecipes />
-        </Route>
+        {/*<Route exact path="/recipes/search">*/}
+        {/*  <SearchRecipes/>*/}
+        {/*</Route>*/}
 
         <Route
           exact path='/recipepage'
@@ -82,25 +112,37 @@ function Page(props) {
         </Route>
 
         <Route exact path="/login">
-          <Login />
+          <Login/>
         </Route>
 
-        <Route exact path="/test">
-          <TestPage/>
+        {/*<Route exact path="/test">*/}
+        {/*  <TestPage/>*/}
+        {/*</Route>*/}
+
+        {/*<Route exact path="/testcreatemp">*/}
+        {/*  <TestNewMp/>*/}
+        {/*</Route>*/}
+
+        <Route exact path="/testcreatedp">
+          <TestNewDp/>
+        </Route>
+
+        <Route exact path="/testcarousel">
+          <TestCarousel/>
         </Route>
 
       </Switch>
-    </Router >
+    </Router>
   );
 }
 
-let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
+let Session = connect(({session}) => ({session}))(({session, dispatch}) => {
   function logout(ev) {
     ev.preventDefault();
     localStorage.removeItem('session');
     dispatch({
-      type: 'LOG_OUT',
-    });
+               type: 'LOG_OUT',
+             });
   }
 
   if (session) {
@@ -114,8 +156,7 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
         </Nav.Item>
       </Nav>
     );
-  }
-  else {
+  } else {
     return (
       <Nav>
         <Nav.Item>

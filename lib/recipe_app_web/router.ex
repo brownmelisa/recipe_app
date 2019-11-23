@@ -12,7 +12,7 @@ defmodule RecipeAppWeb.Router do
   pipeline :ajax do
     plug :accepts, ["json"]
     plug :fetch_session
-    plug :protect_from_forgery
+    #plug :protect_from_forgery # TODO: uncomment
     plug :put_secure_browser_headers
   end
 
@@ -23,7 +23,9 @@ defmodule RecipeAppWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     get "/recipes/search/:searchParams", RecipeController, :search
     resources "/recipes", RecipeController, except: [:new, :edit]
-
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/mealplans", MealplanController, except: [:new, :edit]
+    resources "/dayplans", DayplanController, except: [:new, :edit]
   end
 
   scope "/", RecipeAppWeb do

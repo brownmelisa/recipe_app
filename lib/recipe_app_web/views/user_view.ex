@@ -14,6 +14,6 @@ defmodule RecipeAppWeb.UserView do
     %{id: user.id,
       email: user.email,
       password_hash: user.password_hash,
-      username: user.username}
+      name: user.name}
   end
 end
