@@ -22,9 +22,9 @@ defmodule RecipeAppWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     get "/recipes/search/:searchParams", RecipeController, :search
     resources "/recipes", RecipeController, except: [:new, :edit]
-    resources "/users", UserController, except: [:new, :edit]
     resources "/mealplans", MealplanController, except: [:new, :edit]
     resources "/dayplans", DayplanController, except: [:new, :edit]
+    resources "/sessions", SessionController, only: [:create], singleton: true
   end
 
   scope "/", RecipeAppWeb do

@@ -17,7 +17,7 @@ defmodule RecipeApp.GetRecipeApi do
 
     # TODO eror handling when status code != 200
     req = Poison.decode!(response.body)
-    IO.inspect req
+    #IO.inspect req
 
     recipe = parseResponse(req)
   end
@@ -50,8 +50,8 @@ defmodule RecipeApp.GetRecipeApi do
     recipe = getIngredientsData(result, recipe)
     recipe = getInstructionsData(result, recipe)
 
-    IO.puts("result")
-    IO.inspect(recipe)
+    #IO.puts("result")
+    #IO.inspect(recipe)
 
     recipe
   end
@@ -107,8 +107,8 @@ defmodule RecipeApp.GetRecipeApi do
     instrList = if length(instructionsList) > 0 do
       instrData = hd(instructionsList)
       instrStepsList = instrData["steps"]
-      IO.puts("instrStepsList")
-      IO.inspect instrStepsList
+      #IO.puts("instrStepsList")
+      #IO.inspect instrStepsList
       Enum.reduce(instrStepsList, [], fn instrStep, acc ->
         instrMap = Map.new()
         |> Map.put(:step_number, instrStep["number"])

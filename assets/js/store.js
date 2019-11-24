@@ -18,6 +18,25 @@ import deepFreeze from 'deep-freeze-strict';
  * }
  */
 
+ function login(st0 = {email: "", password: "", errors: null}, action) {
+   switch(action.type) {
+     case 'CHANGE_LOGIN':
+       return Object.assign({}, st0, action.data);
+     default:
+       return st0;
+   }
+ }
+
+ function signup(st0 = {name: "", email: "", password: "",
+  password_confirmation: "", errors: null}, action) {
+   switch(action.type) {
+     case 'CHANGE_SIGNUP':
+       return Object.assign({}, st0, action.data);
+     default:
+       return st0;
+   }
+ }
+
 function search_recipes(st0 = {searchTerm: "", type: "", cuisine: ""}, action) {
   switch (action.type) {
     case 'CHANGE_SEARCH_RECIPE':
@@ -28,6 +47,16 @@ function search_recipes(st0 = {searchTerm: "", type: "", cuisine: ""}, action) {
 }
 
 // change later
+// Note: It is okay if the supplied userId is not correct. Will pick from session anyways.
+function test_get_mealplan_details(st0 = {mealPlanId: ""}, action){
+  switch (action.type) {
+    case 'CHANGE_GET_MEAL_PLAN':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
 function test_get_recipe_details(st0 = {recipeId: ""}, action){
   switch (action.type) {
     case 'CHANGE_GET_RECIPE_TEST':
@@ -58,12 +87,30 @@ function test_create_new_day_plan(st0 = {mealPlanName: "", date: "", breakfast: 
 
 function forms(st0, action) {
   let reducer = combineReducers({
+    login,
+    signup,
     search_recipes,
     test_get_recipe_details,
     test_create_new_meal_plan,
     test_create_new_day_plan,
+    test_get_mealplan_details,
   });
   return reducer(st0, action);
+}
+
+let session0 = localStorage.getItem('session');
+if (session0) {
+  session0 = JSON.parse(session0);
+}
+function session(st0 = session0, action) {
+  switch (action.type) {
+    case 'LOG_IN':
+      return action.data;
+    case 'LOG_OUT':
+      return null;
+    default:
+      return st0;
+  }
 }
 
 function users(st0 = new Map(), action) {
@@ -78,6 +125,7 @@ function root_reducer(st0, action) {
   console.log("root reducer", st0, action);
   let reducer = combineReducers({
     forms,
+    session,
     users,
     recipes,
   });

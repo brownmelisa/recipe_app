@@ -6,15 +6,16 @@ defmodule RecipeAppWeb.DayplanController do
 
   action_fallback RecipeAppWeb.FallbackController
 
+  plug RecipeAppWeb.Plugs.RequireAuth when action in [:create, :update, :delete]
+
   def index(conn, _params) do
     dayplans = Dayplans.list_dayplans()
     render(conn, "index.json", dayplans: dayplans)
   end
 
   def create(conn, %{"dayplan" => dayplan_params}) do
-    IO.puts("Inside day plan create contr")
-    IO.inspect dayplan_params
-    # get meal plan ID
+    currentUser = conn.assigns[:current_user]
+    dayplan_params = Map.put(dayplan_params, "user_id", to_string(currentUser.id))
     with {:ok, %Dayplan{} = dayplan} <- Dayplans.create_dayplan(dayplan_params) do
       conn
       |> put_status(:created)

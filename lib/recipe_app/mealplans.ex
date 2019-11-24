@@ -21,6 +21,12 @@ defmodule RecipeApp.Mealplans do
     Repo.all(Mealplan)
   end
 
+  def getMealPlansByUser(userId) do
+    Repo.all from m in Mealplan,
+      where: m.user_id == ^userId,
+      preload: [:user, :dayplans]
+  end
+
   @doc """
   Gets a single mealplan.
 

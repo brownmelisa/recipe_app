@@ -6,6 +6,8 @@ defmodule RecipeAppWeb.RecipeController do
 
   action_fallback RecipeAppWeb.FallbackController
 
+  plug RecipeAppWeb.Plugs.RequireAuth when action in [:create, :update, :delete]
+
   def index(conn, _params) do
     recipes = Recipes.list_recipes()
     render(conn, "index.json", recipes: recipes)

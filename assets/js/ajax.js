@@ -2,16 +2,16 @@ import store from './store';
 
 export function post(path, body) {
   let state = store.getState();
-  //let token = state.session.token;
+  let token = state.session && state.session.token;
 
   return fetch('/ajax' + path, {
     method: 'post',
     credentials: 'same-origin',
     headers: new Headers({
-      //'x-csrf-token': window.csrf_token,
+      'x-csrf-token': window.csrf_token,
       'content-type': "application/json; charset=UTF-8",
       'accept': 'application/json',
-      //'x-auth': token || "",
+      'x-auth': token || "",
     }),
     body: JSON.stringify(body),
   }).then((resp) => resp.json());
@@ -19,25 +19,53 @@ export function post(path, body) {
 
 export function get(path) {
   let state = store.getState();
-  //let token = state.session.token;
+  let token = state.session && state.session.token;
 
   return fetch('/ajax' + path, {
     method: 'get',
     credentials: 'same-origin',
     headers: new Headers({
-      //'x-csrf-token': window.csrf_token,
+      'x-csrf-token': window.csrf_token,
       'content-type': "application/json; charset=UTF-8",
       'accept': 'application/json',
-      //'x-auth': token || "",
+      'x-auth': token || "",
     }),
   }).then((resp) => resp.json());
 }
 
+//getAllMealPlans
+//getMealPlan
+
+export function getMealPlan(form)
+{
+  console.log("Inside get meal plan ajax");
+  let state = store.getState();
+  let getMpForm = state.forms.test_get_mealplan_details;
+  let mealPlanId = getMpForm.mealPlanId;
+  let url = '/mealplans/' + mealPlanId;
+  console.log('url', url);
+  get(url)
+    .then((resp) => {
+      console.log("Get Recipe Resp", resp);
+  });
+
+}
+
+export function getAllMealPlans(form)
+{
+  console.log("Inside get meal plan ajax");
+  let url = '/mealplans';
+  get(url)
+    .then((resp) => {
+      console.log("Get Recipe Resp", resp);
+  });
+}
+
+// Adds a day plan inside the given meal plan
 export function createNewDayPlan(form)
 {
   console.log("Inside create new day plan ajax");
   let state = store.getState();
-  console.log(state);
   let newDayPlanForm = state.forms.test_create_new_day_plan;
 
   let url = '/dayplans/';
@@ -119,4 +147,94 @@ export function searchRecipes(form)
     .then((resp) => {
       console.log("Search Resp", resp);
   });
+}
+
+
+// adding Danie's changes
+export function post_login(path, body) {
+  return fetch('/ajax' + path, {
+    method: 'post',
+    credentials: 'same-origin',
+    headers: new Headers({
+      'x-csrf-token': window.csrf_token,
+      'content-type': "application/json; charset=UTF-8",
+      'accept': 'application/json',
+    }),
+    body: JSON.stringify(body),
+  }).then((resp) => resp.json());
+}
+
+export function post_signup(path, body) {
+  return fetch('/ajax' + path, {
+    method: 'post',
+    credentials: 'same-origin',
+    headers: new Headers({
+      'x-csrf-token': window.csrf_token,
+      'content-type': "application/json; charset=UTF-8",
+      'accept': 'application/json',
+    }),
+    body: JSON.stringify(body),
+  }).then((resp) => resp.json());
+}
+
+
+export function submit_login(form) {
+  let state = store.getState();
+  let data = state.forms.login;
+  console.log("submit data:", data);
+
+  post_login('/sessions', data)
+    .then((resp) => {
+      console.log(resp);
+      if (resp.token) {
+        localStorage.setItem('session', JSON.stringify(resp));
+        store.dispatch({
+          type: 'LOG_IN',
+          data: resp,
+        });
+        form.redirect('/');
+      }
+      else {
+        store.dispatch({
+          type: 'CHANGE_LOGIN',
+          data: {errors: JSON.stringify(resp.errors)},
+        });
+      }
+    });
+}
+
+
+export function submit_signup(form) {
+  let state = store.getState();
+  let data = state.forms.signup;
+  if (data.password != data.password_confirmation){
+    store.dispatch({
+      type: 'CHANGE_SIGNUP',
+      data: {errors: "Password doesn't match up"},
+    });
+    return;
+  }
+  else{
+    store.dispatch({
+      type: 'CHANGE_SIGNUP',
+      data: {errors: ""},
+    });
+  }
+
+  post_signup('/users', {user: data})
+    .then((resp) => {
+      console.log("resp",resp);
+      if (resp.errors) {
+        store.dispatch({
+          type: 'CHANGE_SIGNUP',
+          data: {errors: resp.errors},
+        });
+      }
+      else {
+        console.log("user created")
+        form.redirect('/');
+      }
+    });
+
+
 }

@@ -7,6 +7,7 @@ defmodule RecipeApp.Users.User do
     field :name, :string
     field :password_hash, :string
     field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
 
     has_many :mealplans, RecipeApp.Mealplans.Mealplan
 
@@ -17,6 +18,7 @@ defmodule RecipeApp.Users.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :password_hash, :name])
+#    |> validate_confirmation(:password, message: "Password doesn't match up!")
     |> hash_password()
     |> validate_required([:email, :password_hash, :name])
   end

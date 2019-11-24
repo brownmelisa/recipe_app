@@ -3,15 +3,32 @@ defmodule RecipeAppWeb.MealplanController do
 
   alias RecipeApp.Mealplans
   alias RecipeApp.Mealplans.Mealplan
+  alias RecipeApp.GetRecipesBulkApi
 
   action_fallback RecipeAppWeb.FallbackController
 
+  plug RecipeAppWeb.Plugs.RequireAuth when action in [:create, :update, :delete, :index]
+
   def index(conn, _params) do
-    mealplans = Mealplans.list_mealplans()
-    render(conn, "index.json", mealplans: mealplans)
+    #mealplans = Mealplans.list_mealplans()
+    #render(conn, "index.json", mealplans: mealplans)
+
+    currentUser = conn.assigns[:current_user]
+    mealplans = Mealplans.getMealPlansByUser(currentUser.id)
+
+    idsString = getRecipeIdsFromMealplans(mealplans)
+    recipeMap = GetRecipesBulkApi.getRecipesBulk(idsString)
+
+    mealplans = Enum.reduce(mealplans, [], fn mp, acc ->
+      acc = acc ++ [loadRecipesInMealPlan(recipeMap, mp)]
+    end)
+
+    render(conn, "indexWithDayPlans.json", mealplans: mealplans)
   end
 
   def create(conn, %{"mealplan" => mealplan_params}) do
+    currentUser = conn.assigns[:current_user]
+    mealplan_params = Map.put(mealplan_params, "user_id", to_string(currentUser.id))
     with {:ok, %Mealplan{} = mealplan} <- Mealplans.create_mealplan(mealplan_params) do
       conn
       |> put_status(:created)
@@ -22,7 +39,12 @@ defmodule RecipeAppWeb.MealplanController do
 
   def show(conn, %{"id" => id}) do
     mealplan = Mealplans.get_mealplan!(id)
-    render(conn, "show.json", mealplan: mealplan)
+
+    idsString = getRecipeIdsFromMealplans([mealplan])
+    recipeMap = GetRecipesBulkApi.getRecipesBulk(idsString)
+    mealplan = loadRecipesInMealPlan(recipeMap, mealplan)
+
+    render(conn, "showWithDayPlans.json", mealplan: mealplan)
   end
 
   def update(conn, %{"id" => id, "mealplan" => mealplan_params}) do
@@ -40,4 +62,54 @@ defmodule RecipeAppWeb.MealplanController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  ## changes
+
+  # from dps in given mp list, get comma separated string of recipe ids to
+  # fetch through the bulk api
+  def getRecipeIdsFromMealplans(mealplanList) do
+
+    # collect all recipe_ids into a set to remove duplicates
+    idsSet = Enum.reduce(mealplanList, MapSet.new(), fn mp, acc ->
+      mpIdsSet = getRecipeIdSetFromMealPlan(mp)
+      acc = MapSet.union(acc, mpIdsSet)
+    end)
+    idsSet = MapSet.delete(idsSet, nil)
+    IO.inspect idsSet
+
+    commaSepIdStr = Enum.reduce(idsSet, "", fn idStr, acc ->
+      acc = acc <> "," <> idStr
+    end)
+
+    String.slice(commaSepIdStr, 1, String.length(commaSepIdStr))
+  end
+
+  # for each dp in given mp, get all recipes ids in a set
+  def getRecipeIdSetFromMealPlan(mealplan) do
+    dayPlanList = mealplan.dayplans
+
+    idsSet = Enum.reduce(dayPlanList, MapSet.new(), fn dp, acc ->
+      acc = MapSet.put(acc, dp.breakfast)
+      acc = MapSet.put(acc, dp.lunch)
+      acc = MapSet.put(acc, dp.dinner)
+      acc = MapSet.put(acc, dp.snack)
+    end)
+  end
+
+  # returns the same mp with recipe_id in each dp replaced by complete
+  # recipe details
+  def loadRecipesInMealPlan(recipeMap, mealplan) do
+    dayPlanList = mealplan.dayplans
+
+    newDayPlanList = Enum.map(dayPlanList, fn dp ->
+      dp = %RecipeApp.Dayplans.Dayplan{dp | breakfast: recipeMap[dp.breakfast]}
+      dp = %RecipeApp.Dayplans.Dayplan{dp | lunch: recipeMap[dp.lunch]}
+      dp = %RecipeApp.Dayplans.Dayplan{dp | dinner: recipeMap[dp.dinner]}
+      dp = %RecipeApp.Dayplans.Dayplan{dp | snack: recipeMap[dp.snack]}
+    end)
+
+    mealplan = %RecipeApp.Mealplans.Mealplan{mealplan | dayplans: newDayPlanList}
+    mealplan
+  end
+  ## changes end
 end
