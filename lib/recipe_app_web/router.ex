@@ -25,6 +25,7 @@ defmodule RecipeAppWeb.Router do
     resources "/mealplans", MealplanController, except: [:new, :edit]
     resources "/dayplans", DayplanController, except: [:new, :edit]
     resources "/sessions", SessionController, only: [:create], singleton: true
+    get "/grocerylist/:id", GrocerylistController, :show
   end
 
   scope "/", RecipeAppWeb do

@@ -33,8 +33,20 @@ export function get(path) {
   }).then((resp) => resp.json());
 }
 
-//getAllMealPlans
-//getMealPlan
+// test functions
+export function getGroceryList(form)
+{
+  console.log("Inside get gc ajax");
+  let state = store.getState();
+  let getGcForm = state.forms.test_get_grocerylist;
+  let mealPlanId = getGcForm.mealPlanId;
+  let url = '/grocerylist/' + mealPlanId;
+  console.log('url', url);
+  get(url)
+    .then((resp) => {
+      console.log("Get GC Resp", resp);
+  });
+}
 
 export function getMealPlan(form)
 {

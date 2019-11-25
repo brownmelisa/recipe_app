@@ -37,15 +37,15 @@ defmodule RecipeAppWeb.MealplanController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    mealplan = Mealplans.get_mealplan!(id)
+    def show(conn, %{"id" => id}) do
+      mealplan = Mealplans.get_mealplan!(id)
 
-    idsString = getRecipeIdsFromMealplans([mealplan])
-    recipeMap = GetRecipesBulkApi.getRecipesBulk(idsString)
-    mealplan = loadRecipesInMealPlan(recipeMap, mealplan)
+      idsString = getRecipeIdsFromMealplans([mealplan])
+      recipeMap = GetRecipesBulkApi.getRecipesBulk(idsString)
+      mealplan = loadRecipesInMealPlan(recipeMap, mealplan)
 
-    render(conn, "showWithDayPlans.json", mealplan: mealplan)
-  end
+      render(conn, "showWithDayPlans.json", mealplan: mealplan)
+    end
 
   def update(conn, %{"id" => id, "mealplan" => mealplan_params}) do
     mealplan = Mealplans.get_mealplan!(id)

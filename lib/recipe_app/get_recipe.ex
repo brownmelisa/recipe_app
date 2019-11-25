@@ -6,6 +6,7 @@ defmodule RecipeApp.GetRecipeApi do
   @ingImageUrlPrefix "https://spoonacular.com/cdn/ingredients_"
   @ingImageSize "250x250"
 
+
   def getRecipeDetails(recipeId) do
     params = validateParams()
     url = String.replace(@getRecipeUrl, "putRecipeId", recipeId)
@@ -50,8 +51,8 @@ defmodule RecipeApp.GetRecipeApi do
     recipe = getIngredientsData(result, recipe)
     recipe = getInstructionsData(result, recipe)
 
-    #IO.puts("result")
-    #IO.inspect(recipe)
+    IO.puts("result")
+    IO.inspect(recipe)
 
     recipe
   end
@@ -89,6 +90,24 @@ defmodule RecipeApp.GetRecipeApi do
         |> Map.put(:ingr_name, ing["name"])
         |> Map.put(:ingr_amount, ing["amount"])
         |> Map.put(:ingr_unit, ing["unit"])
+        # below 2 needed for grocery list
+        |> Map.put(:ingr_aisle, ing["aisle"])
+        msr = ing["measures"]
+        ingMap = if (msr != nil and is_map(msr)) do
+          if (msr["us"] != nil and is_map(msr["us"])) do
+            msrUs = msr["us"]
+            if (msrUs["unitLong"] != nil) do
+              Map.put(ingMap, :ingr_us_measure, msrUs["unitLong"])
+            else
+              Map.put(ingMap, :ingr_us_measure, "")
+            end
+          else
+            Map.put(ingMap, :ingr_us_measure, "")
+          end
+        else
+          Map.put(ingMap, :ingr_us_measure, "")
+        end
+
         acc = acc ++ [ingMap]
       end)
     else

@@ -46,6 +46,16 @@ function search_recipes(st0 = {searchTerm: "", type: "", cuisine: ""}, action) {
   }
 }
 
+
+function test_get_grocerylist(st0 = {mealPlanId: ""}, action){
+  switch (action.type) {
+    case 'CHANGE_GET_GROCERY_LIST':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
 // change later
 // Note: It is okay if the supplied userId is not correct. Will pick from session anyways.
 function test_get_mealplan_details(st0 = {mealPlanId: ""}, action){
@@ -94,6 +104,7 @@ function forms(st0, action) {
     test_create_new_meal_plan,
     test_create_new_day_plan,
     test_get_mealplan_details,
+    test_get_grocerylist,
   });
   return reducer(st0, action);
 }

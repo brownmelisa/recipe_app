@@ -15,6 +15,7 @@ import TestNewMp from './mealplans/new_test';
 import TestNewDp from './dayplans/new_dayplan_test';
 import TestGetMp from './mealplans/show_mealplan_test';
 import TestGetAllMps from './mealplans/show_mealplans_by_user_test';
+import TestGetGc from './grocerylists/show';
 
 export default function init_page(root) {
   let tree = (
@@ -66,6 +67,11 @@ function Page(props) {
               Test Get MPs for user
             </NavLink>
           </Nav.Item>
+          <Nav.Item>
+            <NavLink to="/testgetgc" exact activeClassName="active" className="nav-link">
+              Test Get GC for meal plan
+            </NavLink>
+          </Nav.Item>
         </Nav>
         </Col>
 
@@ -101,6 +107,10 @@ function Page(props) {
 
         <Route exact path="/testgetallmps">
           <TestGetAllMps/>
+        </Route>
+
+        <Route exact path="/testgetgc">
+          <TestGetGc/>
         </Route>
 
         <Route exact path="/login">
