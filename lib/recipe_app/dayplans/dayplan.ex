@@ -8,7 +8,7 @@ defmodule RecipeApp.Dayplans.Dayplan do
     field :dinner, :string
     field :lunch, :string
     field :snack, :string
-    #field :mealplan_id, :id
+    #field :mealplan_id, :id 
 
     belongs_to :mealplan, RecipeApp.Mealplans.Mealplan
 
