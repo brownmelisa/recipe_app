@@ -130,6 +130,10 @@ export function getRecipe(form)
   get(url)
     .then((resp) => {
       console.log("Get Recipe Resp", resp);
+      store.dispatch({
+        type: "GET_RECIPES_BY_ID_RESP",
+        data: resp
+      })
   });
 }
 
@@ -158,6 +162,10 @@ export function searchRecipes(form)
   get(url)
     .then((resp) => {
       console.log("Search Resp", resp);
+      store.dispatch({
+        type: "SEARCH_RECIPES_RESP",
+        data: resp.data
+      })
   });
 }
 

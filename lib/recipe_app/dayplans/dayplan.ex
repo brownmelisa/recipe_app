@@ -19,6 +19,6 @@ defmodule RecipeApp.Dayplans.Dayplan do
   def changeset(dayplan, attrs) do
     dayplan
     |> cast(attrs, [:date, :breakfast, :lunch, :dinner, :snack, :mealplan_id])
-    |> validate_required([:date, :breakfast, :lunch, :dinner, :mealplan_id])
+    |> validate_required([:date, :mealplan_id])
   end
 end

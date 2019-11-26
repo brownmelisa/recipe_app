@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import store from '../store';
@@ -78,33 +78,46 @@ class SearchRecipes extends React.Component
 
     return(
       <div>
-        <h2>Search Recipe Page</h2>
-        <Form.Group controlId="searchTerm">
-          <Form.Label>Search: </Form.Label>
-          <Form.Control type="text"
-            onChange={(ev) => this.searchTermChanged(ev)}/>
-        </Form.Group>
-        <Form.Group controlId="cuisine">
-          <Form.Label>Cuisine: </Form.Label>
-          <Form.Control type="text"
-            onChange={(ev) => this.cuisineChanged(ev)}/>
-        </Form.Group>
-        <Form.Group controlId="mealType">
-          <Form.Label>Meal Type: </Form.Label>
-          <Form.Control as="select"
-            onChange={(ev) => this.mealTypeChanged(ev)}>
-            <option></option>
-            <option>Breakfast</option>
-            <option>Lunch</option>
-            <option>Dinner</option>
-          </Form.Control>
-        </Form.Group>
+        <h2>Search Recipe</h2>
+        <Row className='rowC'>
+
+          <div>
+            <Form.Group controlId="searchTerm">
+              <Form.Label>Keywords: </Form.Label>
+              <Form.Control type="text"
+                onChange={(ev) => this.searchTermChanged(ev)} />
+            </Form.Group>
+          </div>
+
+          <div>
+            <Form.Group controlId="cuisine">
+              <Form.Label>Cuisine: </Form.Label>
+              <Form.Control type="text"
+                onChange={(ev) => this.cuisineChanged(ev)} />
+            </Form.Group>
+          </div>
+          <div>
+            <Form.Group controlId="mealType">
+              <Form.Label>Meal Type: </Form.Label>
+              <Form.Control as="select"
+                onChange={(ev) => this.mealTypeChanged(ev)}>
+                <option></option>
+                <option>Breakfast</option>
+                <option>Lunch</option>
+                <option>Dinner</option>
+                <option>Snack</option>
+              </Form.Control>
+            </Form.Group>
+          </div>
+        </Row>
+
+
         <Form.Group controlId="submit">
           <Button variant="primary"
-                  onClick={() => searchRecipes(this)}>
-                  Search</Button>
+            onClick={() => searchRecipes(this)}>
+            Search</Button>
         </Form.Group>
-      </div>
+        </div>
 
     );
   }

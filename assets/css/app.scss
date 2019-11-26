@@ -3,3 +3,70 @@
 @import "~bootstrap/scss/bootstrap";
 
 $body-bg: #BBB;
+
+.rowC, .card_buttons, .ingr_and_instruction{
+    display:flex;
+    flex-direction:row;
+}
+.rowC > div {
+    margin: 20px;
+}
+
+.card_buttons > button {
+    margin:10px;
+}
+
+// Meal Plan
+#mpHeader {
+  text-align:center;
+  padding-top:30px;
+  padding-bottom:30px;
+}
+.mpBtn {
+  float:right;
+}
+.mpHeadingItem {
+  padding-top:20px;
+  font-size: 18px;
+}
+#savePlanBtn {
+  margin-top:20px;
+  align-items:center;
+}
+#groceryList {
+  border-style: dotted;
+}
+
+
+// Popup (Modal)
+#mpModal {
+  max-width: 900px;
+}
+#mpModalHeader {
+  background-color: #d39e00;
+}
+#mpModalBody {
+  background-color: #ede4c5;
+}
+#mpModalFooter {
+  background-color: #d39e00;
+}
+
+
+// Recipe Ingredients
+.ingr_and_instruction img {
+    height: 2em;
+    width: auto;
+}
+.ingr_and_instruction > div {
+        margin:30px;
+}
+
+
+// Carousel
+#carouselMain{
+  background-color: #f0d989;
+}
+.carouselCard {
+  padding-bottom: 30px;
+}

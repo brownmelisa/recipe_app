@@ -1,7 +1,8 @@
 defmodule RecipeApp.SearchRecipesApi do
   use HTTPoison.Base
 
-  @apiKey "bade8991b27847e2ae7bb94267b2c229"
+  #@apiKey "bade8991b27847e2ae7bb94267b2c229"
+  @apiKey "39df7e856b3042a78356c7e7b8479c73"
   @searchUrl "https://api.spoonacular.com/recipes/complexSearch?"
 
   def searchRecipes(params) do

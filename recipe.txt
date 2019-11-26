@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "calories": 328.363,
+      "carbs": "18.8986g",
+      "fats": "17.6389g",
+      "id": 205880,
+      "image_url": "https://spoonacular.com/recipeImages/205880-312x231.jpg",
+      "protein": "27.2989g",
+      "recipe_id": 205880,
+      "title": "Sunday Brunch: Shrimp Arepas"
+    },
+    {
+      "calories": 375.03,
+      "carbs": "2.88312g",
+      "fats": "24.9508g",
+      "id": 478215,
+      "image_url": "https://spoonacular.com/recipeImages/478215-312x231.jpg",
+      "protein": "34.4748g",
+      "recipe_id": 478215,
+      "title": "Salmon for Breakfast"
+    },
+    {
+      "calories": 1050.51,
+      "carbs": "62.2125g",
+      "fats": "75.0004g",
+      "id": 532497,
+      "image_url": "https://spoonacular.com/recipeImages/532497-312x231.jpg",
+      "protein": "31.8914g",
+      "recipe_id": 532497,
+      "title": "Smoked Salmon Quick Quiche for Breakfast or Brinner"
+    },
+    {
+      "calories": 840.96,
+      "carbs": "73.0898g",
+      "fats": "31.2246g",
+      "id": 566250,
+      "image_url": "https://spoonacular.com/recipeImages/566250-312x231.jpg",
+      "protein": "64.924g",
+      "recipe_id": 566250,
+      "title": "Salmon Breakfast Quesadillas"
+    },
+    {
+      "calories": 146.488,
+      "carbs": "10.4071g",
+      "fats": "3.802g",
+      "id": 799490,
+      "image_url": "https://spoonacular.com/recipeImages/799490-312x231.jpg",
+      "protein": "18.0926g",
+      "recipe_id": 799490,
+      "title": "Breakfast Shrimp Egg White Muffin Cups"
+    }
+  ]
+}

@@ -49,7 +49,7 @@ class TestGetMp extends React.Component
     return(
       <div>
         <h2>Test page for getting meal plan details</h2>
-        <h4>API for getting a meal plan by name and user:</h4>
+        <h4>API for getting a meal plan by ID:</h4>
         <Form.Group controlId="mealPlanId">
           <Form.Label>Enter Meal Plan ID: </Form.Label>
           <Form.Control type="text"
