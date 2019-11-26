@@ -1,6 +1,7 @@
 defmodule RecipeApp.Recipes do
   alias RecipeApp.SearchRecipesApi
   alias RecipeApp.GetRecipeApi
+  alias RecipeApp.RecipeCache
   @moduledoc """
   The Recipes context.
   """
@@ -127,7 +128,11 @@ defmodule RecipeApp.Recipes do
   end
 
   def getRecipe(recipeId) do
-    GetRecipeApi.getRecipeDetails(recipeId)
+    if RecipeCache.keyExistsInCache?(recipeId) do
+      RecipeCache.getFromCache(recipeId)
+    else
+      GetRecipeApi.getRecipeDetails(recipeId)
+    end
   end
 
 end

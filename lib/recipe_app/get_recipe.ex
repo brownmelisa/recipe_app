@@ -1,8 +1,10 @@
 defmodule RecipeApp.GetRecipeApi do
   use HTTPoison.Base
 
-  #@apiKey "bade8991b27847e2ae7bb94267b2c229"
-  @apiKey "39df7e856b3042a78356c7e7b8479c73"
+  alias RecipeApp.RecipeCache
+
+  @apiKey "bade8991b27847e2ae7bb94267b2c229"
+  #@apiKey "39df7e856b3042a78356c7e7b8479c73"
   @getRecipeUrl "https://api.spoonacular.com/recipes/putRecipeId/information?"
   @ingImageUrlPrefix "https://spoonacular.com/cdn/ingredients_"
   @ingImageSize "250x250"
@@ -22,6 +24,11 @@ defmodule RecipeApp.GetRecipeApi do
     #IO.inspect req
 
     recipe = parseResponse(req)
+
+    # add recipe to cache
+    RecipeCache.putInCache(recipeId, recipe)
+
+    recipe
   end
 
   # handle api specific params
@@ -52,8 +59,8 @@ defmodule RecipeApp.GetRecipeApi do
     recipe = getIngredientsData(result, recipe)
     recipe = getInstructionsData(result, recipe)
 
-    IO.puts("result")
-    IO.inspect(recipe)
+    #IO.puts("result")
+    #IO.inspect(recipe)
 
     recipe
   end

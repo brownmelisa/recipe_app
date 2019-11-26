@@ -4,6 +4,7 @@ defmodule RecipeAppWeb.MealplanController do
   alias RecipeApp.Mealplans
   alias RecipeApp.Mealplans.Mealplan
   alias RecipeApp.GetRecipesBulkApi
+  alias RecipeApp.RecipeCache
 
   action_fallback RecipeAppWeb.FallbackController
 
@@ -15,9 +16,9 @@ defmodule RecipeAppWeb.MealplanController do
 
     currentUser = conn.assigns[:current_user]
     mealplans = Mealplans.getMealPlansByUser(currentUser.id)
-
-    idsString = getRecipeIdsFromMealplans(mealplans)
-    recipeMap = GetRecipesBulkApi.getRecipesBulk(idsString)
+    
+    idsSet = getRecipeIdsFromMealplans(mealplans)
+    recipeMap = fetchRecipes(idsSet)
 
     mealplans = Enum.reduce(mealplans, [], fn mp, acc ->
       acc = acc ++ [loadRecipesInMealPlan(recipeMap, mp)]
@@ -40,8 +41,9 @@ defmodule RecipeAppWeb.MealplanController do
     def show(conn, %{"id" => id}) do
       mealplan = Mealplans.get_mealplan!(id)
 
-      idsString = getRecipeIdsFromMealplans([mealplan])
-      recipeMap = GetRecipesBulkApi.getRecipesBulk(idsString)
+      idsSet = getRecipeIdsFromMealplans([mealplan])
+      recipeMap = fetchRecipes(idsSet)
+
       mealplan = loadRecipesInMealPlan(recipeMap, mealplan)
 
       render(conn, "showWithDayPlans.json", mealplan: mealplan)
@@ -63,7 +65,52 @@ defmodule RecipeAppWeb.MealplanController do
     end
   end
 
-  ## changes
+  ## helpers
+  def fetchRecipes(idsSet) do
+
+    IO.puts("Recipe Ids to fetch: ")
+    IO.inspect idsSet
+
+    # get from cache
+    keySet = RecipeCache.getCacheKeySet()
+    recipeIdsCache = MapSet.intersection(keySet, idsSet)
+
+    #IO.puts("keys to get from cache")
+    #IO.inspect recipeIdsCache
+
+    recipeMapFromCache = if MapSet.size(recipeIdsCache) > 0 do
+      RecipeCache.getManyFromCache(recipeIdsCache)
+    else
+      %{}
+    end
+
+    IO.puts("Recipes fetched from cache")
+    IO.inspect Map.keys(recipeMapFromCache)
+
+    recipeIdsApi = MapSet.difference(idsSet, recipeIdsCache)
+
+    idsString = convertIdSetIntoString(recipeIdsApi)
+    recipeMapFromApi = if String.length(idsString) != 0 do
+      GetRecipesBulkApi.getRecipesBulk(idsString)
+    else
+      %{}
+    end
+
+    IO.puts("Recipes fetched through api")
+    IO.inspect Map.keys(recipeMapFromApi)
+
+    # combine results
+    Map.merge(recipeMapFromCache, recipeMapFromApi)
+  end
+
+  # get comma sep string
+  def convertIdSetIntoString(idsSet) do
+    commaSepIdStr = Enum.reduce(idsSet, "", fn idStr, acc ->
+      acc = acc <> "," <> idStr
+    end)
+
+    String.slice(commaSepIdStr, 1, String.length(commaSepIdStr))
+  end
 
   # from dps in given mp list, get comma separated string of recipe ids to
   # fetch through the bulk api
@@ -75,13 +122,8 @@ defmodule RecipeAppWeb.MealplanController do
       acc = MapSet.union(acc, mpIdsSet)
     end)
     idsSet = MapSet.delete(idsSet, nil)
-    IO.inspect idsSet
 
-    commaSepIdStr = Enum.reduce(idsSet, "", fn idStr, acc ->
-      acc = acc <> "," <> idStr
-    end)
-
-    String.slice(commaSepIdStr, 1, String.length(commaSepIdStr))
+    idsSet
   end
 
   # for each dp in given mp, get all recipes ids in a set

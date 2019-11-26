@@ -3,6 +3,7 @@ defmodule RecipeAppWeb.GrocerylistController do
   alias RecipeApp.GetRecipesBulkApi
   alias RecipeApp.Mealplans
   alias RecipeApp.Mealplans.Mealplan
+  alias RecipeApp.RecipeCache
 
   # Custom controller for viewing grocery lists for meal plans
 
@@ -23,13 +24,9 @@ defmodule RecipeAppWeb.GrocerylistController do
     mealplan = Mealplans.get_mealplan!(id)
 
     idsList = getRecipeIdListFromMealPlan(mealplan)
-    idsString = getCommaSepRecipeIdString(idsList)
 
-    recipeMap = if String.length(idsString) != 0 do
-      GetRecipesBulkApi.getRecipesBulk(idsString)
-    else
-      %{}
-    end
+    idsSet = MapSet.new(idsList)
+    recipeMap = fetchRecipes(idsSet)
 
     # groceryMap -> id => {name, amount, ...}
 
@@ -112,6 +109,42 @@ defmodule RecipeAppWeb.GrocerylistController do
     end)
   end
 
+  def fetchRecipes(idsSet) do
+
+    IO.puts("Recipe Ids to fetch: ")
+    IO.inspect idsSet
+
+    # get from cache
+    keySet = RecipeCache.getCacheKeySet()
+    recipeIdsCache = MapSet.intersection(keySet, idsSet)
+
+    #IO.puts("keys to get from cache")
+    #IO.inspect recipeIdsCache
+
+    recipeMapFromCache = if MapSet.size(recipeIdsCache) > 0 do
+      RecipeCache.getManyFromCache(recipeIdsCache)
+    else
+      %{}
+    end
+
+    IO.puts("Recipes fetched from cache")
+    IO.inspect Map.keys(recipeMapFromCache)
+
+    recipeIdsApi = MapSet.difference(idsSet, recipeIdsCache)
+
+    idsString = convertIdSetIntoString(recipeIdsApi)
+    recipeMapFromApi = if String.length(idsString) != 0 do
+      GetRecipesBulkApi.getRecipesBulk(idsString)
+    else
+      %{}
+    end
+
+    IO.puts("Recipes fetched through api")
+    IO.inspect Map.keys(recipeMapFromApi)
+
+    # combine results
+    Map.merge(recipeMapFromCache, recipeMapFromApi)
+  end
 
   # returns a list of recipe ids from the meal plan
   # need duplicates as well for the grocery list amounts
@@ -145,5 +178,14 @@ defmodule RecipeAppWeb.GrocerylistController do
   def getFloat(str) do
     {floatVal, _} = Float.parse(str)
     floatVal
+  end
+
+  # get comma sep string
+  def convertIdSetIntoString(idsSet) do
+    commaSepIdStr = Enum.reduce(idsSet, "", fn idStr, acc ->
+      acc = acc <> "," <> idStr
+    end)
+
+    String.slice(commaSepIdStr, 1, String.length(commaSepIdStr))
   end
 end
