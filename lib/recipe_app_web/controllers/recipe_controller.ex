@@ -50,11 +50,8 @@ defmodule RecipeAppWeb.RecipeController do
   end
 
   def search(conn, %{"searchParams" => params}) do
-    IO.puts("Inside search")
     recipes = Recipes.searchRecipes(params)
     render(conn, "index.json", recipes: recipes)
   end
-
-
 
 end

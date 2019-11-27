@@ -2,9 +2,10 @@ defmodule RecipeApp.GetRecipesBulkApi do
   use HTTPoison.Base
 
   alias RecipeApp.GetRecipeApi
+  alias RecipeApp.RecipeCache
 
-  #@apiKey "bade8991b27847e2ae7bb94267b2c229"
-  @apiKey "39df7e856b3042a78356c7e7b8479c73"
+  @apiKey "bade8991b27847e2ae7bb94267b2c229"
+  #@apiKey "39df7e856b3042a78356c7e7b8479c73"
   @getRecipeBulkUrl "https://api.spoonacular.com/recipes/informationBulk?"
 
   def getRecipesBulk(ids) do
@@ -29,6 +30,11 @@ defmodule RecipeApp.GetRecipesBulkApi do
 
     #IO.puts("recipeMap")
     #IO.inspect recipeMap
+
+    # add recipes to cache
+    Enum.each(recipeMap, fn {k,v} ->
+      RecipeCache.putInCache(k,v)
+    end)
 
     recipeMap
   end

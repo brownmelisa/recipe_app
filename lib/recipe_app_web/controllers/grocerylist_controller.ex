@@ -3,6 +3,7 @@ defmodule RecipeAppWeb.GrocerylistController do
   alias RecipeApp.GetRecipesBulkApi
   alias RecipeApp.Mealplans
   alias RecipeApp.Mealplans.Mealplan
+  alias RecipeApp.RecipeCache
 
   # Custom controller for viewing grocery lists for meal plans
 
@@ -23,13 +24,9 @@ defmodule RecipeAppWeb.GrocerylistController do
     mealplan = Mealplans.get_mealplan!(id)
 
     idsList = getRecipeIdListFromMealPlan(mealplan)
-    idsString = getCommaSepRecipeIdString(idsList)
 
-    recipeMap = if String.length(idsString) != 0 do
-      GetRecipesBulkApi.getRecipesBulk(idsString)
-    else
-      %{}
-    end
+    idsSet = MapSet.new(idsList)
+    recipeMap = fetchRecipes(idsSet)
 
     # groceryMap -> id => {name, amount, ...}
 
@@ -73,12 +70,12 @@ defmodule RecipeAppWeb.GrocerylistController do
   def generateGroceryItemsListFromMap(groceryMap) do
     Enum.reduce(groceryMap, [], fn {grocId, val}, acc ->
       groceryItem = Map.new()
-      |> Map.put(:id, grocId)
-      |> Map.put(:name, val[:name])
-      |> Map.put(:amount, val[:amount])
-      |> Map.put(:unit, val[:unit])
-      |> Map.put(:aisle, val[:aisle])
-      |> Map.put(:image_url, val[:image_url])
+                    |> Map.put(:id, grocId)
+                    |> Map.put(:name, val[:name])
+                    |> Map.put(:amount, val[:amount])
+                    |> Map.put(:unit, val[:unit])
+                    |> Map.put(:aisle, val[:aisle])
+                    |> Map.put(:image_url, val[:image_url])
       acc = acc ++ [groceryItem]
     end)
   end
@@ -90,7 +87,7 @@ defmodule RecipeAppWeb.GrocerylistController do
 
     Enum.reduce(ingredientsList, groceryMap, fn ingr, acc ->
       updCond = (Map.has_key?(acc, ingr[:ingr_id])) and
-        (acc[ingr[:ingr_id]][:unit] == ingr[:ingr_unit])
+                (acc[ingr[:ingr_id]][:unit] == ingr[:ingr_unit])
       acc = if updCond do
         # update entry
         groceryItem = acc[ingr[:ingr_id]]
@@ -100,18 +97,54 @@ defmodule RecipeAppWeb.GrocerylistController do
       else
         # add entry
         groceryItem = %{}
-        |> Map.put(:name, ingr[:ingr_name])
-        |> Map.put(:amount, ingr[:ingr_amount])
-        #|> Map.put(:unit, ingr[:ingr_us_measure])
-        |> Map.put(:unit, ingr[:ingr_unit])
-        |> Map.put(:aisle, ingr[:ingr_aisle])
-        |> Map.put(:image_url, ingr[:ingr_image_url])
+                      |> Map.put(:name, ingr[:ingr_name])
+                      |> Map.put(:amount, ingr[:ingr_amount])
+          #|> Map.put(:unit, ingr[:ingr_us_measure])
+                      |> Map.put(:unit, ingr[:ingr_unit])
+                      |> Map.put(:aisle, ingr[:ingr_aisle])
+                      |> Map.put(:image_url, ingr[:ingr_image_url])
 
         Map.put(acc, ingr[:ingr_id], groceryItem)
       end
     end)
   end
 
+  def fetchRecipes(idsSet) do
+
+    IO.puts("Recipe Ids to fetch: ")
+    IO.inspect idsSet
+
+    # get from cache
+    keySet = RecipeCache.getCacheKeySet()
+    recipeIdsCache = MapSet.intersection(keySet, idsSet)
+
+    #IO.puts("keys to get from cache")
+    #IO.inspect recipeIdsCache
+
+    recipeMapFromCache = if MapSet.size(recipeIdsCache) > 0 do
+      RecipeCache.getManyFromCache(recipeIdsCache)
+    else
+      %{}
+    end
+
+    IO.puts("Recipes fetched from cache")
+    IO.inspect Map.keys(recipeMapFromCache)
+
+    recipeIdsApi = MapSet.difference(idsSet, recipeIdsCache)
+
+    idsString = convertIdSetIntoString(recipeIdsApi)
+    recipeMapFromApi = if String.length(idsString) != 0 do
+      GetRecipesBulkApi.getRecipesBulk(idsString)
+    else
+      %{}
+    end
+
+    IO.puts("Recipes fetched through api")
+    IO.inspect Map.keys(recipeMapFromApi)
+
+    # combine results
+    Map.merge(recipeMapFromCache, recipeMapFromApi)
+  end
 
   # returns a list of recipe ids from the meal plan
   # need duplicates as well for the grocery list amounts
@@ -145,5 +178,14 @@ defmodule RecipeAppWeb.GrocerylistController do
   def getFloat(str) do
     {floatVal, _} = Float.parse(str)
     floatVal
+  end
+
+  # get comma sep string
+  def convertIdSetIntoString(idsSet) do
+    commaSepIdStr = Enum.reduce(idsSet, "", fn idStr, acc ->
+      acc = acc <> "," <> idStr
+    end)
+
+    String.slice(commaSepIdStr, 1, String.length(commaSepIdStr))
   end
 end

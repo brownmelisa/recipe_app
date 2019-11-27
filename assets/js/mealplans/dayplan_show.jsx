@@ -2,23 +2,12 @@ import React from 'react';
 import {ListGroup} from 'react-bootstrap';
 
 /**
- * Meals_show is a functional component that renders a list of meals that is passed into the function.
- * The recipe names are displayed underneath the corresponding meal (Breakfast, Lunch, Dinner, Snack).
- * If there are no entries for a meal, the meal type will still display, but with no recipe names
- * listed under it.
- *
- * Breakfast
- *   western omelet
- *   caramel latte
- * Lunch
- *   pear salad
- * ...
  *
  * @param meals   a list of json objects that contain recipes information
  * @returns {*}   displays a list of recipe names by meal type
  */
 
-export default function MealsShow({meals}) {
+export default function DayPlanShow({meals}) {
   // get the recipe names categorized by meals
   function getMealsByType(type) {
     let result = meals.map( (recipe) => {

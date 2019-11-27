@@ -114,7 +114,6 @@ import deepFreeze from 'deep-freeze-strict';
    }
  }
 
-
  function get_recipe_by_id_resp(st0 = {}, action) {
   switch (action.type) {
     case 'GET_RECIPES_BY_ID_RESP':
@@ -123,7 +122,6 @@ import deepFreeze from 'deep-freeze-strict';
       return st0;
   }
 }
-
 
 function test_get_grocerylist(st0 = {mealPlanId: ""}, action){
   switch (action.type) {
@@ -216,6 +214,63 @@ function recipes(st0, action) {
   return reducer(st0, action);
 }
 
+function create_new_mealplan_resp(st0 = {}, action) {
+  switch (action.type) {
+    case 'CREATE_NEW_MEALPLAN_RESP':
+      return Object.assign({}, action.data);
+    default:
+      return st0;
+  }
+}
+
+function create_new_dayplan_resp(st0 = {}, action) {
+  switch (action.type) {
+    case 'CREATE_NEW_DAYPLAN_RESP':
+      return Object.assign({}, action.data);
+    default:
+      return st0;
+  }
+}
+
+function get_mealplan_by_id(st0 = {}, action) {
+  switch (action.type) {
+    case 'GET_MEALPLAN_BY_ID_RESP':
+      return Object.assign({}, action.data);
+    default:
+      return st0;
+  }
+}
+
+function get_gl_by_mpid_resp(st0 = {}, action) {
+  switch (action.type) {
+    case 'GET_GL_BY_MPID_RESP':
+      return Object.assign({}, action.data);
+    default:
+      return st0;
+  }
+}
+
+function get_all_mealplans(st0 = {}, action) {
+  switch (action.type) {
+    case 'GET_ALL_MEALPLANS_RESP':
+      return Object.assign({}, action.data);
+    default:
+      return st0;
+  }
+}
+function mealplans(st0, action) {
+  let reducer = combineReducers(
+    {
+      create_new_mealplan_resp,
+      create_new_dayplan_resp,
+      get_mealplan_by_id,
+      get_gl_by_mpid_resp,
+      get_all_mealplans,
+    }
+  );
+  return reducer(st0, action);
+}
+
 function root_reducer(st0, action) {
   console.log("root reducer", st0, action);
   let reducer = combineReducers({
@@ -223,6 +278,7 @@ function root_reducer(st0, action) {
     users,
     recipes,
     session,
+    mealplans,
   });
   return deepFreeze(reducer(st0, action));
 }

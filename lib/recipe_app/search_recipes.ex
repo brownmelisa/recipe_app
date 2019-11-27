@@ -1,8 +1,8 @@
 defmodule RecipeApp.SearchRecipesApi do
   use HTTPoison.Base
 
-  #@apiKey "bade8991b27847e2ae7bb94267b2c229"
-  @apiKey "39df7e856b3042a78356c7e7b8479c73"
+  @apiKey "bade8991b27847e2ae7bb94267b2c229"
+  #@apiKey "39df7e856b3042a78356c7e7b8479c73"
   @searchUrl "https://api.spoonacular.com/recipes/complexSearch?"
 
   def searchRecipes(params) do
@@ -14,6 +14,7 @@ defmodule RecipeApp.SearchRecipesApi do
 
     # TODO eror handling when status code != 200
     req = Poison.decode!(response.body)
+    #IO.inspect req
 
     recipes = parseResponse(req)
     IO.inspect recipes
@@ -24,12 +25,12 @@ defmodule RecipeApp.SearchRecipesApi do
   # make api specific changes to params
   def validateParams(params) do
     params = Map.put(params, "apiKey", @apiKey)
-    |> Map.put("number", 5) # no of results returned
-    # api does not return nutrition information w/o below params
-    |> Map.put("minFat", 0)
-    |> Map.put("minCarbs", 0)
-    |> Map.put("minProtein", 0)
-    |> Map.put("minCalories", 0)
+             |> Map.put("number", 5) # no of results returned
+      # api does not return nutrition information w/o below params
+             |> Map.put("minFat", 0)
+             |> Map.put("minCarbs", 0)
+             |> Map.put("minProtein", 0)
+             |> Map.put("minCalories", 0)
 
     # type of meal for lunch and dinner reqd by api = main course
     params = cond do

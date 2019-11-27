@@ -36,7 +36,9 @@ $body-bg: #BBB;
 #groceryList {
   border-style: dotted;
 }
-
+.dailyMPHeading{
+  background-color: #d3d9df;
+}
 
 // Popup (Modal)
 #mpModal {
@@ -69,4 +71,13 @@ $body-bg: #BBB;
 }
 .carouselCard {
   padding-bottom: 30px;
+}
+
+// Meal plan dashboard
+.p_meal_detail {
+    font-size : 14px;
+    background-color : #ceddf5;
+    padding : 0 0 0 15px;
+    margin : 0;
+    line-height : 16px;
 }

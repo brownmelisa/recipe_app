@@ -78,7 +78,6 @@ class RecipesCarousel extends React.Component {
                 {recipe.title + " " + recipe.calories + " Cal"}
               </Card.Text>
               <div className="card_buttons">
-                <Button variant="primary">Favorite</Button>
                 <Button variant="primary"
                         onClick={() =>
                           this.props.onAddRecipe( {[mealType]: recipe.id.toString()}, recipe.title, mealType)

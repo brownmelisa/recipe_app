@@ -1,3 +1,4 @@
+
 defmodule RecipeApp.Repo.Migrations.CreateDayplans do
   use Ecto.Migration
 
@@ -8,7 +9,7 @@ defmodule RecipeApp.Repo.Migrations.CreateDayplans do
       add :lunch, :string
       add :dinner, :string
       add :snack, :string
-      add :mealplan_id, references(:mealplans, on_delete: :nothing)
+      add :mealplan_id, references(:mealplans, on_delete: :delete_all)
 
       timestamps()
     end

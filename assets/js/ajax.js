@@ -33,6 +33,23 @@ export function get(path) {
   }).then((resp) => resp.json());
 }
 
+export function deleteHttpMethod(path) {
+  console.log("Inside delete ajax handler");
+  let state = store.getState();
+  let token = state.session && state.session.token;
+
+  return fetch('/ajax' + path, {
+    method: 'delete',
+    credentials: 'same-origin',
+    headers: new Headers({
+                           'x-csrf-token': window.csrf_token,
+                           'content-type': "application/json; charset=UTF-8",
+                           'accept': 'application/json',
+                           'x-auth': token || "",
+                         }),
+  }).then((resp) => resp.json());
+}
+
 // test functions
 export function getGroceryList(form)
 {
@@ -45,6 +62,10 @@ export function getGroceryList(form)
   get(url)
     .then((resp) => {
       console.log("Get GC Resp", resp);
+      store.dispatch({
+        type: "GET_GL_BY_MPID_RESP",
+        data: resp
+      })
   });
 }
 
@@ -59,9 +80,32 @@ export function getMealPlan(form)
   get(url)
     .then((resp) => {
       console.log("Get Recipe Resp", resp);
+      store.dispatch({
+        type: "GET_MEALPLAN_BY_ID_RESP",
+        data: resp
+      })
   });
-
 }
+
+export function deleteMealPlan(form)
+{
+  console.log("Inside ddelete meal plan ajax");
+  let state = store.getState();
+  let getMpForm = state.forms.test_get_mealplan_details;
+  let mealPlanId = getMpForm.mealPlanId;
+
+  let url = '/mealplans/' + mealPlanId;
+  console.log('url', url);
+  deleteHttpMethod(url)
+    .then((resp) => {
+      console.log("Delete MP Resp", resp);
+      store.dispatch({
+                       type: "GET_ALL_MEALPLANS_RESP",
+                       data: resp
+                     })
+    });
+}
+
 
 export function getAllMealPlans(form)
 {
@@ -70,6 +114,10 @@ export function getAllMealPlans(form)
   get(url)
     .then((resp) => {
       console.log("Get Recipe Resp", resp);
+      store.dispatch({
+        type: "GET_ALL_MEALPLANS_RESP",
+        data: resp
+      })
   });
 }
 
@@ -95,6 +143,10 @@ export function createNewDayPlan(form)
     }
   }).then((resp) => {
       console.log("Create Day Plan Resp", resp);
+      store.dispatch({
+        type: "CREATE_NEW_DAYPLAN_RESP",
+        data: resp.data
+      })
   });
 
 }
@@ -116,6 +168,10 @@ export function createNewMealPlan(form)
     }
   }).then((resp) => {
       console.log("Create Meal Plan Resp", resp);
+      store.dispatch({
+        type: "CREATE_NEW_MEALPLAN_RESP",
+        data: resp.data
+      })
   });
 }
 
