@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import CommentInput from '../comments/input'
+import CommentList from '../comments/list'
 
 function recipePage({ match, location, recipes, recipe }) {
     let local_id = location.state.id;
@@ -22,6 +24,10 @@ function recipePage({ match, location, recipes, recipe }) {
                 <Ingredients ingredients={recipe.ingredients} />
                 <Instruction instructions={recipe.instructions} />
             </div>
+            <div className = "comments">
+              <CommentList recipe_id = {recipe_local.recipe_id}/>
+              <CommentInput recipe_id = {recipe_local.recipe_id}/>	 
+	    </div>
 
         </div>
     )
@@ -59,3 +65,5 @@ function Instruction({ instructions }) {
 
 let RecipePage = connect(({ recipes }) => ({ recipes: recipes.search_resp, recipe: recipes.get_recipe_by_id_resp }))(recipePage)
 export default RecipePage;
+
+

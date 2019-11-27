@@ -26,6 +26,7 @@ defmodule RecipeAppWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     resources "/mealplans", MealplanController, except: [:new, :edit]
     resources "/dayplans", DayplanController, except: [:new, :edit]
+    resources "/comments", CommentController, except: [:new, :edit]
   end
 
   scope "/", RecipeAppWeb do

@@ -97,12 +97,44 @@ function forms(st0, action) {
       test_create_new_meal_plan,
       test_create_new_day_plan,
       login,
+      new_comments,
     });
   return reducer(st0, action);
 }
 
+function new_comments(st0 = {user_id: 0, recipe_id: 0, comments: "", errors: null}, action) {
+  switch (action.type) {
+    case 'CHANGE_COMMENTS':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
 function users(st0 = new Map(), action) {
-  return st0;
+  switch (action.type) {
+    case 'ADD_USERS':
+      let st1 = new Map(st0);
+      for (let user of action.data) {
+        st1.set(user.id, user);
+      }
+      return st1;
+    default:
+      return st0;
+  }
+}
+
+function comments(st0 = new Map(), action) {
+  switch (action.type) {
+    case 'ADD_COMMENTS':
+      let st1 = new Map(st0);
+      for (let comment of action.data) {
+        st1.set(comment.id, comment);
+      }
+      return st1;
+    default:
+      return st0;
+  }
 }
 
 let st = [
@@ -198,6 +230,7 @@ function root_reducer(st0, action) {
       users,
       recipes,
       session,
+      comments,
     });
   return deepFreeze(reducer(st0, action));
 }

@@ -40,6 +40,79 @@ export function submit_login(form) {
     });
 }
 
+export function list_users() {
+  get('/users')
+    .then((resp) => {
+      console.log("list_users", resp);
+      store.dispatch({
+        type: 'ADD_USERS',
+        data: resp.data,
+      });
+    });
+}
+
+
+export function list_comments() {
+  console.log("getting all comments");
+  get('/comments')
+    .then((resp) => {
+      console.log("list_comments", resp);
+      store.dispatch({
+        type: 'ADD_COMMENTS',
+        data: resp.data,
+      });
+    });
+}
+
+export function submit_comments(form){
+  let state = store.getState();
+  let data = state.forms.new_comments;
+  if (!data.comments){
+    store.dispatch({
+      type: 'CHANGE_COMMENTS',
+      data: {errors: "Comment is blank"},
+    });
+  }	
+  else{
+    store.dispatch({
+      type: 'CHANGE_COMMENTS',
+      data: {errors: null},
+    });
+  }
+  console.log("creating a new comment");
+  post('/comments', {
+      comment: {
+        recipe_id: data.recipe_id,
+        user_id: data.user_id,
+        comments: data.comments,
+      }
+    }).then((resp) => {
+      console.log("response", resp);
+      if (resp.data) {
+        if (state.comments.size == 0){
+	  list_comments();
+	}
+	else{
+          store.dispatch({
+            type: 'ADD_COMMENTS',
+            data: [resp.data],
+          });
+	}
+        store.dispatch({
+          type: 'CHANGE_COMMENTS',
+          data: {comments: ""},
+        });
+	form.clearInputBox();
+      }
+      else {
+        store.dispatch({
+          type: 'CHANGE_COMMENTS',
+          data: {errors: JSON.stringify(resp.errors)},
+        });
+      }
+    });
+}
+
 export function get(path) {
   let state = store.getState();
   //let token = state.session.token;

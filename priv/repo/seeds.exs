@@ -13,6 +13,7 @@
 
 alias RecipeApp.Repo
 alias RecipeApp.Users.User
+alias RecipeApp.Comments.Comment
 
 
 pw = Argon2.hash_pwd_salt("password1234")
@@ -23,3 +24,7 @@ Repo.insert!(%User{name: "Carol Anderson", email: "carol@acme.com", password_has
 Repo.insert!(%User{name: "Dave Anderson", email: "dave@acme.com", password_hash: pw})
 Repo.insert!(%User{name: "Peter Anderson", email: "peter@acme.com", password_hash: pw})
 Repo.insert!(%User{name: "Danie Hao", email: "danie@acme.com", password_hash: pw})
+
+Repo.insert!(%Comment{recipe_id: 573591, user_id: 5, comments: "It is good!"})
+Repo.insert!(%Comment{recipe_id: 573591, user_id: 3, comments: "It is excellent!"})
+Repo.insert!(%Comment{recipe_id: 573590, user_id: 5, comments: "It is good!"})
