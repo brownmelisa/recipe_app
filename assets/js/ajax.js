@@ -33,6 +33,23 @@ export function get(path) {
   }).then((resp) => resp.json());
 }
 
+export function deleteHttpMethod(path) {
+  console.log("Inside delete ajax handler");
+  let state = store.getState();
+  let token = state.session && state.session.token;
+
+  return fetch('/ajax' + path, {
+    method: 'delete',
+    credentials: 'same-origin',
+    headers: new Headers({
+      'x-csrf-token': window.csrf_token,
+      'content-type': "application/json; charset=UTF-8",
+      'accept': 'application/json',
+      'x-auth': token || "",
+    }),
+  }).then((resp) => resp.json());
+}
+
 // test functions
 export function getGroceryList(form)
 {
@@ -45,6 +62,21 @@ export function getGroceryList(form)
   get(url)
     .then((resp) => {
       console.log("Get GC Resp", resp);
+  });
+}
+
+export function deleteMealPlan(form)
+{
+  console.log("Inside ddelete meal plan ajax");
+  let state = store.getState();
+  let getMpForm = state.forms.test_get_mealplan_details;
+  let mealPlanId = getMpForm.mealPlanId;
+
+  let url = '/mealplans/' + mealPlanId;
+  console.log('url', url);
+  deleteHttpMethod(url)
+    .then((resp) => {
+      console.log("Delete MP Resp", resp);
   });
 }
 

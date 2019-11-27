@@ -16,7 +16,7 @@ defmodule RecipeAppWeb.MealplanController do
 
     currentUser = conn.assigns[:current_user]
     mealplans = Mealplans.getMealPlansByUser(currentUser.id)
-    
+
     idsSet = getRecipeIdsFromMealplans(mealplans)
     recipeMap = fetchRecipes(idsSet)
 
@@ -58,10 +58,12 @@ defmodule RecipeAppWeb.MealplanController do
   end
 
   def delete(conn, %{"id" => id}) do
+    IO.puts("Inside mp delete controller")
     mealplan = Mealplans.get_mealplan!(id)
 
     with {:ok, %Mealplan{}} <- Mealplans.delete_mealplan(mealplan) do
-      send_resp(conn, :no_content, "")
+      #send_resp(conn, :no_content, "")
+      index(conn, %{})
     end
   end
 
