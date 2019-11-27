@@ -5,7 +5,7 @@ import {Form, Button, Alert, Card, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {getAllMealPlans, getGroceryList} from '../ajax';
+import {deleteMealPlan, getAllMealPlans, getGroceryList} from '../ajax';
 import RecipePage from './../recipes/recipe_page';
 import GroceryList from "./grocery_list";
 
@@ -101,7 +101,7 @@ function MealPlanCard({mp, redirect }) {
       <div>
         <Button onClick={() => redirect(mp.id) }>grocery list</Button>
         <Button>details</Button>
-        <Button>delete</Button>
+        <Button onClick={() => deleteMealPlan() }>delete</Button>
       </div>
       {console.log("meal plan id in card", mp.id)}
     </Card>

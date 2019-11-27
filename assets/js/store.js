@@ -243,7 +243,7 @@ function get_mealplan_by_id(st0 = {}, action) {
 
 function get_gl_by_mpid_resp(st0 = {}, action) {
   switch (action.type) {
-    case 'GET_GL_BY_MPID_RESPONSE':
+    case 'GET_GL_BY_MPID_RESP':
       return Object.assign({}, action.data);
     default:
       return st0;
