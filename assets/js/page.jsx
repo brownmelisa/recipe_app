@@ -14,7 +14,7 @@ import Signup from './signup';
 import SearchRecipes from './recipes/search';
 
 import RecipePage from './recipes/recipe_page'
-import MealplanNew from './mealplans/mealplan_new'
+import MealPlanNew from './mealplans/mealplan_new'
 import TestPage from './test1';
 import TestNewMp from './mealplans/new_test';
 import TestNewDp from './dayplans/new_dayplan_test';
@@ -23,6 +23,8 @@ import TestGetAllMps from './mealplans/show_mealplans_by_user_test';
 import TestGetGc from './grocerylists/show';
 
 import TestCarousel from './mealplans/recipes_carousel';
+import MealPlansAll from './mealplans/mealplans_all_show';
+import GroceryList from "./mealplans/grocery_list";
 
 export default function init_page(root) {
   let tree = (
@@ -52,8 +54,14 @@ function Page(props) {
             {/*</Nav.Item>*/}
 
             <Nav.Item>
+              <NavLink to="/mp/new" exact activeClassName="active" className="nav-link">
+                New Meal Plan
+              </NavLink>
+            </Nav.Item>
+
+            <Nav.Item>
               <NavLink to="/mp" exact activeClassName="active" className="nav-link">
-                Meal Plan
+                My Meal Plans
               </NavLink>
             </Nav.Item>
 
@@ -71,11 +79,11 @@ function Page(props) {
             {/*  </NavLink>*/}
             {/*</Nav.Item>*/}
 
-            <Nav.Item>
-              <NavLink to="/testcreatedp" exact activeClassName="active" className="nav-link">
-                Test Create Day Plan
-              </NavLink>
-            </Nav.Item>
+            {/*<Nav.Item>*/}
+            {/*  <NavLink to="/testcreatedp" exact activeClassName="active" className="nav-link">*/}
+            {/*    Test Create Day Plan*/}
+            {/*  </NavLink>*/}
+            {/*</Nav.Item>*/}
 
             <Nav.Item>
               <NavLink to="/testcarousel" exact className="nav-link">
@@ -111,8 +119,12 @@ function Page(props) {
           <Home/>
         </Route>
 
+        <Route exact path="/mp/new">
+          <MealPlanNew/>
+        </Route>
+
         <Route exact path="/mp">
-          <MealplanNew/>
+          <MealPlansAll/>
         </Route>
 
         {/*<Route exact path="/recipes/search">*/}
@@ -153,6 +165,13 @@ function Page(props) {
         <Route exact path="/testgetgc">
           <TestGetGc/>
         </Route>
+
+        <Route exact path="/grocery/:id"
+               render={
+                 (props) => <GroceryList id={props.match.params.id} />
+        } />
+
+
       </Switch>
     </Router>
   );

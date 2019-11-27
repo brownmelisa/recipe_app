@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
 import {Redirect} from 'react-router';
 import _ from 'lodash';
 
-import {Modal, Row, Col, Button, Table, Form, Alert} from 'react-bootstrap'
+import {Modal, Row, Col, Button, Table, ListGroup, Form, Alert} from 'react-bootstrap'
 import SearchRecipes from '../recipes/search'
 import RecipesCarousel from './recipes_carousel'
 import {createNewDayPlan} from "../ajax";
@@ -39,13 +40,12 @@ class DayPlanNew extends React.Component {
     this.setState({redirect: path});
   }
 
-
   // handles any form changes and update store
   changed(data) {
     this.props.dispatch({
-      type: 'CHANGE_NEW_DAY_PLAN_NAME',
-      data: data,
-    });
+                          type: 'CHANGE_NEW_DAY_PLAN_NAME',
+                          data: data,
+                        });
   }
 
   // this function is necessary to get the recipe title
@@ -59,8 +59,12 @@ class DayPlanNew extends React.Component {
 
   // handles submit meal plan button click
   handleSubmit(event) {
-    alert('submit form clicked');
     event.preventDefault();
+    this.setState({breakfast:""});
+    this.setState({lunch:""});
+    this.setState({dinner:""});
+    this.setState({snack:""});
+    ReactDOM.findDOMNode(this.messageForm).reset();
   }
 
   // handles closing the modal
@@ -86,124 +90,89 @@ class DayPlanNew extends React.Component {
     console.log('recipe name', name);
   }
 
+  handleButtonClick(params) {
+    console.log('this in handle button is', params);
+    if (this.props.forms.test_create_new_day_plan.breakfast
+        || this.props.forms.test_create_new_day_plan.lunch
+        || this.props.forms.test_create_new_day_plan.dinner
+        || this.props.forms.test_create_new_day_plan.snack
+    ) {
+      createNewDayPlan(params);
+    } else {
+      alert("must add at least one meal");
+    }
+  }
+
   render() {
     let user_id = this.props.session.user_id;
     let plan_name = this.props.plan_name;
+    console.log("props in dayplan new", this.props);
 
-    console.log("printing out props in day", this.props);
     return (
       <div>
-        <h1 id="mpHeader">
-          Daily Meal Plan
-        </h1>
-        <Row>
-          <Col sm={4} md={6}>
+        <h1 id="mpHeader">Daily Meal Plan</h1>
+        <Form
+          id='dayplanForm'
+          className="dpForm"
+          ref={ dpForm => this.messageForm = dpForm }
+          onSubmit={this.handleSubmit.bind(this)}
+        >
+          <Form.Group as={Row} controlId="mealPlanDate">
+            <Form.Label column sm="2">Date</Form.Label>
+            <Col sm="10">
+              <Form.Control
+                required
+                type="date"
+                onChange={(ev) => this.changed(
+                  {date: ev.target.value, userId: user_id.toString(), mealPlanName: plan_name}
+                )}
+              />
+            </Col>
+          </Form.Group>
 
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Group as={Row} controlId="mealPlanDate">
-                <Form.Label column sm="2">Date</Form.Label>
-                <Col sm="10">
-                  <Form.Control
-                    required
-                    type="date"
-                    onChange={(ev) => this.changed(
-                      {date: ev.target.value, userId: user_id.toString(), mealPlanName: plan_name}
-                    )}
-                  />
-                </Col>
-              </Form.Group>
+          {this.state.show_alert == true &&
+           <Alert variant="danger">create a plan name first</Alert>
+          }
 
-              {this.state.show_alert == true &&
-               <Alert variant="danger">create a plan name first</Alert>
-              }
+          <ListGroup>
+            <ListGroup.Item className="dailyMPHeading">
+              BREAKFAST
+              <Button className="mpBtn" onClick={() => this.handleShow("breakfast")}>+</Button>
+            </ListGroup.Item>
+            {this.state.breakfast && <ListGroup.Item>{this.state.breakfast}</ListGroup.Item>}
+          </ListGroup>
 
-              <Table striped hover id="breakfastTable">
-                <thead>
-                <tr>
-                  <th width="80%">BREAKFAST</th>
-                  <th width="20%">
-                    <Button className="mpBtn"
-                            onClick={() => this.handleShow("breakfast")}>
-                      +
-                    </Button>
-                  </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td>sample</td></tr>
-                {this.state.breakfast && <tr><td>{this.state.breakfast}</td></tr>}
-                </tbody>
-              </Table>
+          <ListGroup>
+            <ListGroup.Item className="dailyMPHeading">
+              LUNCH
+              <Button className="mpBtn" onClick={() => this.handleShow("lunch")}>+</Button>
+            </ListGroup.Item>
+            {this.state.lunch && <ListGroup.Item>{this.state.lunch}</ListGroup.Item>}
+          </ListGroup>
 
-              <Table striped hover id="lunchTable">
-                <thead>
-                <tr>
-                  <th width="80">LUNCH</th>
-                  <th width="20%">
-                    <Button className="mpBtn"
-                            onClick={() => this.handleShow("lunch")}>
-                      +
-                    </Button>
-                  </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td>sample</td></tr>
-                {this.state.lunch && <tr><td>{this.state.lunch}</td></tr>}
-                </tbody>
-              </Table>
+          <ListGroup>
+            <ListGroup.Item className="dailyMPHeading">
+              DINNER
+              <Button className="mpBtn" onClick={() => this.handleShow("dinner")}>+</Button>
+            </ListGroup.Item>
+            {this.state.dinner && <ListGroup.Item>{this.state.dinner}</ListGroup.Item>}
+          </ListGroup>
 
-              <Table striped hover id="dinnerTable">
-                <thead>
-                <tr>
-                  <th width="80">DINNER</th>
-                  <th width="20%">
-                    <Button className="mpBtn"
-                            onClick={() => this.handleShow("dinner")}>
-                      +
-                    </Button>
-                  </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td>sample</td></tr>
-                {this.state.dinner && <tr><td>{this.state.dinner}</td></tr>}
-                </tbody>
-              </Table>
+          <ListGroup>
+            <ListGroup.Item className="dailyMPHeading">
+              SNACK
+              <Button className="mpBtn" onClick={() => this.handleShow("snack")}>+</Button>
+            </ListGroup.Item>
+            {this.state.snack && <ListGroup.Item>{this.state.snack}</ListGroup.Item>}
+          </ListGroup>
 
-              <Table striped hover id="dinnerTable">
-                <thead>
-                <tr>
-                  <th width="80">SNACK</th>
-                  <th width="20%">
-                    <Button className="mpBtn"
-                            onClick={() => this.handleShow("snack")}>
-                      +
-                    </Button>
-                  </th>
-                </tr>
-                </thead>
-                <tbody>
-                  <tr><td>sample</td></tr>
-                  {this.state.snack && <tr><td>{this.state.snack}</td></tr>}
-                </tbody>
-              </Table>
-
-              <Button id="savePlanBtn"
-                      type="submit"
-                      onClick={() => createNewDayPlan(this)}>
-                Save Daily Plan
-              </Button>
-            </Form>
-
-
-          </Col>
-
-          <Col sm={4} md={6}>
-            maybe add a nutrient chart here
-            <br />
-          </Col>
-        </Row>
+          {console.log("in the render", this)}
+          <Button id="savePlanBtn"
+                  type="submit"
+                  onClick={() => this.handleButtonClick(this)}>
+            Save Daily Plan
+          </Button>
+        </Form>
 
         <Modal id="mpModal"
                show={this.state.show_modal}
@@ -213,20 +182,15 @@ class DayPlanNew extends React.Component {
           </Modal.Header>
           <Modal.Body id="mpModalBody">
             <div>
-              <SearchRecipes />
-              <RecipesCarousel mealType={this.state.meal_type}
-                               // planName={this.props.plan_name}
-                               onAddRecipe={this.recipe_changed}
+              <SearchRecipes/>
+              <RecipesCarousel
+                mealType={this.state.meal_type}
+                onAddRecipe={this.recipe_changed}
               />
             </div>
           </Modal.Body>
           <Modal.Footer id="mpModalFooter">
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.handleClose}>
-              Save Changes
-            </Button>
+            <Button variant="secondary" onClick={this.handleClose}>Close</Button>
           </Modal.Footer>
         </Modal>
 

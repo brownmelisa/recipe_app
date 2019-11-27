@@ -1,0 +1,56 @@
+{
+  "data": {
+    "approxMinCost": 34.46,
+    "groceryItems": [
+      {
+        "aisle": "Spices and Seasonings",
+        "amount": 1.5,
+        "id": 2009,
+        "image_url": "https://spoonacular.com/cdn/ingredients_250x250/chili-powder.jpg",
+        "name": "chili powder",
+        "unit": "tbsp"
+      },
+      {
+        "aisle": "Spices and Seasonings",
+        "amount": 1.5,
+        "id": 2028,
+        "image_url": "https://spoonacular.com/cdn/ingredients_250x250/paprika.jpg",
+        "name": "paprika",
+        "unit": "tbsp"
+      },
+      {
+        "aisle": "Seafood",
+        "amount": 3,
+        "id": 15076,
+        "image_url": "https://spoonacular.com/cdn/ingredients_250x250/salmon.png",
+        "name": "salmon",
+        "unit": "lb"
+      },
+      {
+        "aisle": "Cereal",
+        "amount": 6,
+        "id": 19911,
+        "image_url": "https://spoonacular.com/cdn/ingredients_250x250/maple-syrup.png",
+        "name": "maple syrup",
+        "unit": "tbsp"
+      },
+      {
+        "aisle": "Baking",
+        "amount": 3,
+        "id": 93831,
+        "image_url": "https://spoonacular.com/cdn/ingredients_250x250/brown-sugar-pile.jpg",
+        "name": "coconut sugar",
+        "unit": "tsp"
+      },
+      {
+        "aisle": "Spices and Seasonings",
+        "amount": 0.75,
+        "id": 1012047,
+        "image_url": "https://spoonacular.com/cdn/ingredients_250x250/salt.jpg",
+        "name": "sea-salt",
+        "unit": "tsp"
+      }
+    ],
+    "mealPlanName": "mealplan3"
+  }
+}

@@ -25,7 +25,7 @@ defmodule RecipeAppWeb.RecipeView do
   end
 
   def render("recipe_details.json", %{recipe: recipe}) do
-    IO.puts("inside recipe details view")
+    #IO.puts("inside recipe details view")
     %{id: recipe.id,
       recipe_id: recipe.recipe_id,
       title: recipe.title,

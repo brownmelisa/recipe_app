@@ -6,12 +6,14 @@ defmodule RecipeApp.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
       RecipeApp.Repo,
       # Start the endpoint when the application starts
-      RecipeAppWeb.Endpoint
+      RecipeAppWeb.Endpoint,
+      worker(Cachex, [:my_cache, []])
       # Starts a worker by calling: RecipeApp.Worker.start_link(arg)
       # {RecipeApp.Worker, arg},
     ]
