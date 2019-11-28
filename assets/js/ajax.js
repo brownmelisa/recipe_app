@@ -42,17 +42,34 @@ export function deleteHttpMethod(path) {
     method: 'delete',
     credentials: 'same-origin',
     headers: new Headers({
-                           'x-csrf-token': window.csrf_token,
-                           'content-type': "application/json; charset=UTF-8",
-                           'accept': 'application/json',
-                           'x-auth': token || "",
-                         }),
+      'x-csrf-token': window.csrf_token,
+      'content-type': "application/json; charset=UTF-8",
+      'accept': 'application/json',
+      'x-auth': token || "",
+    }),
   }).then((resp) => resp.json());
 }
 
+// CHANGE THIS or improve this function. Don't know how to handle server response.
+export function deleteHttpDayPlanMethod(path) {
+  console.log("Inside delete ajax handler");
+  let state = store.getState();
+  let token = state.session && state.session.token;
+
+  return fetch('/ajax' + path, {
+    method: 'delete',
+    credentials: 'same-origin',
+    headers: new Headers({
+      'x-csrf-token': window.csrf_token,
+      'content-type': "application/json; charset=UTF-8",
+      'accept': 'application/json',
+      'x-auth': token || "",
+    }),
+  });
+}
+
 // test functions
-export function getGroceryList(form)
-{
+export function getGroceryList(form) {
   console.log("Inside get gc ajax");
   let state = store.getState();
   let getGcForm = state.forms.test_get_grocerylist;
@@ -66,11 +83,10 @@ export function getGroceryList(form)
         type: "GET_GL_BY_MPID_RESP",
         data: resp
       })
-  });
+    });
 }
 
-export function getMealPlan(form)
-{
+export function getMealPlan(form) {
   console.log("Inside get meal plan ajax");
   let state = store.getState();
   let getMpForm = state.forms.test_get_mealplan_details;
@@ -84,11 +100,10 @@ export function getMealPlan(form)
         type: "GET_MEALPLAN_BY_ID_RESP",
         data: resp
       })
-  });
+    });
 }
 
-export function deleteMealPlan(form)
-{
+export function deleteMealPlan(form) {
   console.log("Inside ddelete meal plan ajax");
   let state = store.getState();
   let getMpForm = state.forms.test_get_mealplan_details;
@@ -100,15 +115,28 @@ export function deleteMealPlan(form)
     .then((resp) => {
       console.log("Delete MP Resp", resp);
       store.dispatch({
-                       type: "GET_ALL_MEALPLANS_RESP",
-                       data: resp
-                     })
+        type: "GET_ALL_MEALPLANS_RESP",
+        data: resp
+      })
+    });
+}
+
+export function deleteDayPlan(dayPlanId) {
+  console.log("Inside delete day plan ajax");
+  // let state = store.getState();
+  // let dayPlanId = state.forms.deleteDayPlan.dayPlanId;
+  let url = '/dayplans/' + dayPlanId;
+  console.log('url', url);
+  deleteHttpDayPlanMethod(url)
+    .then((_resp) => {
+      console.log("Delete MP Resp", _resp);
+      let resp = "dommy";
+      getAllMealPlans(resp)
     });
 }
 
 
-export function getAllMealPlans(form)
-{
+export function getAllMealPlans(form) {
   console.log("Inside get meal plan ajax");
   let url = '/mealplans';
   get(url)
@@ -118,12 +146,11 @@ export function getAllMealPlans(form)
         type: "GET_ALL_MEALPLANS_RESP",
         data: resp
       })
-  });
+    });
 }
 
 // Adds a day plan inside the given meal plan
-export function createNewDayPlan(form)
-{
+export function createNewDayPlan(form) {
   console.log("Inside create new day plan ajax");
   let state = store.getState();
   let newDayPlanForm = state.forms.test_create_new_day_plan;
@@ -142,18 +169,17 @@ export function createNewDayPlan(form)
       snack: newDayPlanForm.snack,
     }
   }).then((resp) => {
-      console.log("Create Day Plan Resp", resp);
-      store.dispatch({
-        type: "CREATE_NEW_DAYPLAN_RESP",
-        data: resp.data
-      })
+    console.log("Create Day Plan Resp", resp);
+    store.dispatch({
+      type: "CREATE_NEW_DAYPLAN_RESP",
+      data: resp.data
+    })
   });
 
 }
 
 
-export function createNewMealPlan(form)
-{
+export function createNewMealPlan(form) {
   console.log("Inside create new meal plan ajax");
   let state = store.getState();
   let newMealPlanForm = state.forms.test_create_new_meal_plan;
@@ -167,16 +193,15 @@ export function createNewMealPlan(form)
       user_id: userId
     }
   }).then((resp) => {
-      console.log("Create Meal Plan Resp", resp);
-      store.dispatch({
-        type: "CREATE_NEW_MEALPLAN_RESP",
-        data: resp.data
-      })
+    console.log("Create Meal Plan Resp", resp);
+    store.dispatch({
+      type: "CREATE_NEW_MEALPLAN_RESP",
+      data: resp.data
+    })
   });
 }
 
-export function getRecipe(form)
-{
+export function getRecipe(form) {
   console.log("Inside get recipe ajax");
   let state = store.getState();
   let recipeId = state.forms.test_get_recipe_details.recipeId;
@@ -190,11 +215,10 @@ export function getRecipe(form)
         type: "GET_RECIPES_BY_ID_RESP",
         data: resp
       })
-  });
+    });
 }
 
-export function searchRecipes(form)
-{
+export function searchRecipes(form) {
   console.log("Inside search ajax");
   let state = store.getState();
   let searchForm = state.forms.search_recipes;
@@ -204,14 +228,14 @@ export function searchRecipes(form)
   let type = searchForm.type;
 
   let url = '/recipes/search/';
-  if(searchTerm.length > 0)
+  if (searchTerm.length > 0)
     url = url + 'query=' + searchTerm;
   else
     return; // TODO: show error message
 
-  if(cuisine.length > 0)
+  if (cuisine.length > 0)
     url = url + '&cuisine=' + cuisine;
-  if(type.length > 0)
+  if (type.length > 0)
     url = url + '&type=' + type;
   console.log('url ', url);
 
@@ -222,7 +246,7 @@ export function searchRecipes(form)
         type: "SEARCH_RECIPES_RESP",
         data: resp.data
       })
-  });
+    });
 }
 
 
@@ -273,7 +297,7 @@ export function submit_login(form) {
       else {
         store.dispatch({
           type: 'CHANGE_LOGIN',
-          data: {errors: JSON.stringify(resp.errors)},
+          data: { errors: JSON.stringify(resp.errors) },
         });
       }
     });
@@ -283,27 +307,27 @@ export function submit_login(form) {
 export function submit_signup(form) {
   let state = store.getState();
   let data = state.forms.signup;
-  if (data.password != data.password_confirmation){
+  if (data.password != data.password_confirmation) {
     store.dispatch({
       type: 'CHANGE_SIGNUP',
-      data: {errors: "Password doesn't match up"},
+      data: { errors: "Password doesn't match up" },
     });
     return;
   }
-  else{
+  else {
     store.dispatch({
       type: 'CHANGE_SIGNUP',
-      data: {errors: ""},
+      data: { errors: "" },
     });
   }
 
-  post_signup('/users', {user: data})
+  post_signup('/users', { user: data })
     .then((resp) => {
-      console.log("resp",resp);
+      console.log("resp", resp);
       if (resp.errors) {
         store.dispatch({
           type: 'CHANGE_SIGNUP',
-          data: {errors: resp.errors},
+          data: { errors: resp.errors },
         });
       }
       else {

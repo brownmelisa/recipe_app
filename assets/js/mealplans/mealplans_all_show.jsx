@@ -5,7 +5,7 @@ import { Form, Button, Alert, Card, Row, Accordion } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { deleteMealPlan, getAllMealPlans, getGroceryList } from '../ajax';
+import { deleteMealPlan, getAllMealPlans, getGroceryList, deleteDayPlan } from '../ajax';
 import RecipePage from './../recipes/recipe_page';
 import GroceryList from "./grocery_list";
 import MealDescription from "./meal_description";
@@ -147,6 +147,7 @@ function DayPlanList({ dp }) {
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
               <h6>{dp.date}</h6>
             </Accordion.Toggle>
+            <Button onClick={() => { deleteDayPlan(dp.id) }}>delete</Button>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>{detail}</Card.Body>

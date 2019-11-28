@@ -41,7 +41,7 @@ defmodule RecipeAppWeb.DayplanController do
     dayplan = Dayplans.get_dayplan!(id)
 
     with {:ok, %Dayplan{}} <- Dayplans.delete_dayplan(dayplan) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, :ok, "")
     end
   end
 end
