@@ -21,17 +21,16 @@ class MealPlansAll extends React.Component {
       redirect: null,
     };
     getAllMealPlans(this);
-    this.redirect = this.redirect.bind(this);
-
+    this.redirectToGrocery = this.redirectToGrocery.bind(this);
   }
 
 
-  // redirectToCreateMP() {
-  //   console.log("redirecting to new meal plan");
-  //   this.setState({redirect: "/mp/new" });
-  // }
+  redirectToCreateMP() {
+    console.log("redirecting to new meal plan");
+    this.setState({ redirect: "/mp/new" });
+  }
 
-  redirect(mpid) {
+  redirectToGrocery(mpid) {
     console.log("redirecting to grocery list");
     this.props.dispatch({
       type: 'CHANGE_GET_GROCERY_LIST',
@@ -42,26 +41,23 @@ class MealPlansAll extends React.Component {
   }
 
   render() {
-    console.log("All Mealplans", this.props);
+    console.log("All Mealplans", this.props.mealplans);
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
 
     // redirect to create new meal plan if none exist
-    // if (!this.props.mealplans.get_all_mealplans.data) {
-    //   // display something before redirecting
-    //   return <Redirect to="/mp/new" />;
-    // }
-
-    // On initial load press the button
-    if (!this.props.mealplans.get_all_mealplans.data) {
+    if (this.props.mealplans.get_all_mealplans.data == undefined
+      || this.props.mealplans.get_all_mealplans.data.length < 1) {
+      // display something before redirecting
       return (
-        <div className="container">
-          <h2>MY MEAL PLANS DASHBOARD</h2>
-          <Form.Group controlId="submit">
-            <Button variant="primary"
-              onClick={() => getAllMealPlans(this)}>
-              Get</Button>
-          </Form.Group>
+        <div>
+          <Alert variant="warning" dismissible
+            onClose={() => this.redirectToCreateMP()}>
+            Let's create some meal plans first.
+          </Alert>
         </div>
-      );
+      )
     }
 
     // display the meal plan cards if they are loaded into store
@@ -70,7 +66,7 @@ class MealPlansAll extends React.Component {
 
     let mealplans = this.props.mealplans.get_all_mealplans.data;
     let mealplans_parsed = mealplans.map(mp => {
-      return (<MealPlanCard key={mp.id} mp={mp} redirect={this.redirect} />);
+      return (<MealPlanCard key={mp.id} mp={mp} redirect={this.redirectToGrocery} />);
     });
 
     return (

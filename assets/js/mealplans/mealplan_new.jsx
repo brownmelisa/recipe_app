@@ -1,17 +1,11 @@
 import React from 'react';
-import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
-import _ from 'lodash';
 
 import {Modal, Row, Col, Button, Table, Form} from 'react-bootstrap'
 import DayPlanNew from './dayplan_new';
 import MealPlanShow from './mealplan_show';
-import SearchRecipes from '../recipes/search'
 import {createNewDayPlan, createNewMealPlan, getMealPlan} from "../ajax";
 
-// Send events from component to redux store.
-// Return "state" instead of "state.forms.test_create_new_meal_plan"
-// so that we can access the session data in props.
 function state2props(state) {
   return state;
 }
@@ -21,16 +15,11 @@ class MealPlanNew extends React.Component {
     super(props);
 
     this.state = {
-      redirect: null,
       show_form: true,
-      plan_name: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  redirect(path) {
-    this.setState({redirect: path});
+    this.refreshPage = this.refreshPage.bind(this);
   }
 
   changed(data) {
@@ -40,48 +29,46 @@ class MealPlanNew extends React.Component {
                         })
   }
 
+  // handle submit for a day plan
   handleSubmit(ev) {
     // prevent page reload after submitting form
     ev.preventDefault();
-    // a very convoluted way to get the meal plan name for a submitted meal plan
-    // and keep it in local state in order to pass it down to DayMealPlan component
-    let mp_name = ev.target.elements.mealPlanName.value;
-    this.setState({plan_name: mp_name});
-    // one the user submit a meal plan name, the form should disappear
+    // once the user submit a meal plan name, the form should disappear
     this.setState({show_form: false});
   }
 
+  refreshPage(ev) {
+    this.setState( {show_form: true} );
+  }
 
   render() {
     let user_id = this.props.session.user_id;
-    console.log("PRINTING from create new meal plan", this.props.mealplans);
     let mealplan = this.props.mealplans.create_new_mealplan_resp;
-    console.log("meal plan in new is", mealplan);
-    // let mealplan_info = getMealPlan(mealplan_id);
-    // console.log("mealplan info contains", mealplan_info);
 
-    // get the meal plan id of the current meal plan
-    // run ajax call on that meal plan
-    // pass it into the MealPlanShow component
+    let bottom =
+      <Row>
+        <Col sm={4} md={6}>
+          <DayPlanNew plan_name={mealplan.meal_plan_name}/>
+        </Col>
+        <Col sm={4} md={6}>
+          <MealPlanShow mealplan={mealplan.meal_plan_name}/>
+        </Col>
+      </Row>;
 
     // Don't show the meal plan form if the user already created one
-    if (this.state.show_form === false) {
-      let plan_name = this.state.plan_name;
+    if (this.state.show_form === false || this.props.redirect_from === true) {
       return (
         <div>
-          <h4>{plan_name} PLAN</h4>
           <Row>
-            <Col sm={4} md={6}>
-              <DayPlanNew plan_name={plan_name}/>
-            </Col>
-            <Col sm={4} md={6}>
-              <MealPlanShow mealplan={mealplan}/>
-            </Col>
+            <h4>MEAL PLAN NAME: {mealplan.meal_plan_name}</h4>
+            <Button variant="danger" onClick={this.refreshPage}>Create New Meal Plan</Button>
           </Row>
+          {bottom}
         </div>
       );
     }
 
+    // Otherwise show the meal plan form at the top of page
     return (
       <div>
         <h2>Create a New Meal Plan</h2>
@@ -104,17 +91,8 @@ class MealPlanNew extends React.Component {
               create meal plan</Button>
           </Form.Group>
         </Form>
-
-        {/*Show Daily Meal Plan form and Details of Current Meal Plan*/}
         <br/>
-        <Row>
-          <Col sm={4} md={6}>
-            <DayPlanNew plan_name={this.state.plan_name}/>
-          </Col>
-          <Col sm={4} md={6}>
-            <MealPlanShow mealplan_id={mealplan}/>
-          </Col>
-        </Row>
+        {bottom}
       </div>
     );
   }
@@ -122,3 +100,4 @@ class MealPlanNew extends React.Component {
 
 // connects component to Redux store, so it can get data and use functions from the store.
 export default connect(state2props)(MealPlanNew);
+
