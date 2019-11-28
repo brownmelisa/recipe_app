@@ -99,7 +99,7 @@ function MealPlanCard({ mp, redirect }) {
       <div>
         <Button onClick={() => redirect(mp.id)}>grocery list</Button>
         <Button>details</Button>
-        <Button onClick={() => deleteMealPlan()}>delete</Button>
+        <Button onClick={() => deleteMealPlan(mp.id)}>delete</Button>
       </div>
       {console.log("meal plan id in card", mp.id)}
     </Card>

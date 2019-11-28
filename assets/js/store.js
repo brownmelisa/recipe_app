@@ -106,11 +106,18 @@ function search_resp(st0 = st, action) {
   }
 }
 
+let search_st0 = {
+  searchTerm: null, type: null, cuisine: null, multiIngredient: null, maxCal: null, maxFat: null, maxProtein: null, maxCab: null
+};
 // submit the form for search for recipes by keyword
-function search_recipes(st0 = { searchTerm: "", type: "", cuisine: "" }, action) {
+// Initialize all param to null to be congruent to search.jsx where invalid 
+// input to set the state to null.
+function search_recipes(st0 = search_st0, action) {
   switch (action.type) {
     case 'CHANGE_SEARCH_RECIPE':
       return Object.assign({}, st0, action.data);
+    case 'CLEAR_SEARCH_RECIPE':
+      return Object.assign({}, st0, search_st0);
     default:
       return st0;
   }

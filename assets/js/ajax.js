@@ -103,11 +103,11 @@ export function getMealPlan(form) {
     });
 }
 
-export function deleteMealPlan(form) {
-  console.log("Inside ddelete meal plan ajax");
-  let state = store.getState();
-  let getMpForm = state.forms.test_get_mealplan_details;
-  let mealPlanId = getMpForm.mealPlanId;
+export function deleteMealPlan(mealPlanId) {
+  console.log("Inside delete meal plan ajax");
+  // let state = store.getState();
+  // let getMpForm = state.forms.test_get_mealplan_details;
+  // let mealPlanId = getMpForm.mealPlanId;
 
   let url = '/mealplans/' + mealPlanId;
   console.log('url', url);
@@ -218,6 +218,7 @@ export function getRecipe(form) {
     });
 }
 
+// After search response return, function would both dispatch resp to store and // also dipatch to redux to clear previous search parameters.
 export function searchRecipes(form) {
   console.log("Inside search ajax");
   let state = store.getState();
@@ -226,22 +227,44 @@ export function searchRecipes(form) {
   let searchTerm = searchForm.searchTerm;
   let cuisine = searchForm.cuisine;
   let type = searchForm.type;
-
+  let multiIngre = searchForm.multiIngredient;
+  let maxCal = searchForm.maxCal;
+  let maxCarb = searchForm.maxCarb;
+  let maxProtein = searchForm.maxProtein;
+  let maxFat = searchForm.maxFat;
   let url = '/recipes/search/';
+  console.log("search form", searchForm)
   if (searchTerm.length > 0)
     url = url + 'query=' + searchTerm;
   else
     return; // TODO: show error message
 
-  if (cuisine.length > 0)
+  if (cuisine)
     url = url + '&cuisine=' + cuisine;
-  if (type.length > 0)
+  if (type)
     url = url + '&type=' + type;
+
+  if (multiIngre)
+    url = url + '&includeIngredients=' + multiIngre
+
+  if (maxCal > 0)
+    url = url + '&maxCalories=' + maxCal
+
+  if (maxFat > 0)
+    url = url + '&maxFat=' + maxFat
+  if (maxProtein > 0)
+    url = url + '&maxProtein=' + maxProtein
+  if (maxCarb > 0)
+    url = url + '&maxCarbs=' + maxCarb
   console.log('url ', url);
 
   get(url)
     .then((resp) => {
       console.log("Search Resp", resp);
+      store.dispatch({
+        type: "CLEAR_SEARCH_RECIPE",
+        data: null
+      })
       store.dispatch({
         type: "SEARCH_RECIPES_RESP",
         data: resp.data
