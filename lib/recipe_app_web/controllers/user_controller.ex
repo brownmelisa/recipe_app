@@ -24,7 +24,7 @@ defmodule RecipeAppWeb.UserController do
     else
       with {:ok, %User{} = user} <- Users.create_user(user_params) do
         conn
-        |> put_flash(:info, "User Created!")
+#        |> put_flash(:info, "User Created!")
         |> put_status(:created)
         |> put_resp_header("location", Routes.user_path(conn, :show, user))
         |> render("show.json", user: user)

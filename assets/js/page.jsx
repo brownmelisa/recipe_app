@@ -138,6 +138,10 @@ function Page(props) {
         <Route exact path="/login">
           <Login/>
         </Route>
+
+        <Route exact path="/signup">
+          <Signup/>
+        </Route>
         {/*<Route exact path="/test">*/}
         {/*  <TestPage/>*/}
         {/*</Route>*/}

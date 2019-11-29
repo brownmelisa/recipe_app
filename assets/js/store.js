@@ -176,6 +176,7 @@ function forms(st0, action) {
   let reducer = combineReducers({
     login,
     signup,
+    new_comments,
     search_recipes,
     test_get_recipe_details,
     test_create_new_meal_plan,
@@ -184,6 +185,41 @@ function forms(st0, action) {
     test_get_grocerylist,
   });
   return reducer(st0, action);
+}
+
+function new_comments(st0 = {user_id: 0, recipe_id: 0, comments: "", errors: null}, action) {
+  switch (action.type) {
+    case 'CHANGE_COMMENTS':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
+  }
+}
+
+function users(st0 = new Map(), action) {
+  switch (action.type) {
+    case 'ADD_USERS':
+      let st1 = new Map(st0);
+      for (let user of action.data) {
+        st1.set(user.id, user);
+      }
+      return st1;
+    default:
+      return st0;
+  }
+}
+
+function comments(st0 = new Map(), action) {
+  switch (action.type) {
+    case 'ADD_COMMENTS':
+      let st1 = new Map(st0);
+      for (let comment of action.data) {
+        st1.set(comment.id, comment);
+      }
+      return st1;
+    default:
+      return st0;
+  }
 }
 
 let session0 = localStorage.getItem('session');
@@ -199,10 +235,6 @@ function session(st0 = session0, action) {
     default:
       return st0;
   }
-}
-
-function users(st0 = new Map(), action) {
-  return st0;
 }
 
 function recipes(st0, action) {
@@ -279,6 +311,7 @@ function root_reducer(st0, action) {
     recipes,
     session,
     mealplans,
+    comments,
   });
   return deepFreeze(reducer(st0, action));
 }
