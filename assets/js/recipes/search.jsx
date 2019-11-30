@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router';
-import { Form, Button, Alert, Col, Row, Collapse } from 'react-bootstrap';
+import { Form, Button, Alert, Row, Collapse } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import store from '../store';
 
 
 import { searchRecipes } from '../ajax';
@@ -43,6 +41,9 @@ class SearchRecipes extends React.Component {
     let keyword = this.props.search_recipes.searchTerm;
     if (!(keyword)) {
       this.setState({ display_error: true })
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -199,8 +200,7 @@ class SearchRecipes extends React.Component {
       <Form.Group controlId="submit">
         <Button variant="primary"
           onClick={(ev) => {
-            this.validate_search()
-            if (this.state.display_error) {
+            if (this.validate_search()) {
               searchRecipes(this)
             }
           }}>
