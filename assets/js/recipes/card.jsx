@@ -15,15 +15,15 @@ class RecipeCard extends React.Component {
     }
 
     redirect(_local_id, id) {
-      console.log("redirect id", id);
-      this.props.dispatch({
-        type: 'CHANGE_GET_RECIPE_TEST',
-        data: { recipeId: id },
-      });
-      getRecipe();
-      this.setState({
-        redirect: "/recipepage",
-      });
+        console.log("redirect id", id);
+        this.props.dispatch({
+            type: 'CHANGE_GET_RECIPE_TEST',
+            data: { recipeId: id },
+        });
+        getRecipe();
+        this.setState({
+            redirect: "/recipepage",
+        });
     }
 
     render() {
@@ -42,10 +42,10 @@ class RecipeCard extends React.Component {
                 <Card.Text>
                     {recipe.title}
                 </Card.Text>
-                <div className="card_buttons">
+                {/* <div className="card_buttons">
                     <Button variant="primary">Favorite</Button>
                     <Button variant="primary">Add to Meal Plan</Button>
-                </div>
+                </div> */}
             </Card>
         );
     }

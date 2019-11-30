@@ -4,13 +4,11 @@
 
 $body-bg: #BBB;
 
-.rowC, .card_buttons, .ingr_and_instruction{
+.card_buttons, .ingr_and_instruction{
     display:flex;
     flex-direction:row;
 }
-.rowC > div {
-    margin: 20px;
-}
+
 
 .card_buttons > button {
     margin:10px;
