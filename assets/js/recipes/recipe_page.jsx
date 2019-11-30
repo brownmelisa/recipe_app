@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import ReactFrappeChart from "react-frappe-charts";
+
 
 function recipePage({ match, location, recipes, recipe }) {
   let local_id = location.state.id;
@@ -14,14 +16,21 @@ function recipePage({ match, location, recipes, recipe }) {
     <div>
       <h2>Recipe Name: {recipe.title}</h2>
       <img src={recipe.image_url} />
+      <p>Preparation time(min): {recipe.preparationMinutes}</p>
+      <p>Cooking time(min): {recipe.cookingMinutes}</p>
+      <p>Serings(person): {recipe.servings}</p>
       <p>Calories: {recipe.calories}</p>
       <p>Carbs: {recipe.carbs}</p>
       <p>Fats: {recipe.fats}</p>
       <p>Protein: {recipe.protein}</p>
+      <div className="rm-3">
+        <NutritionPie fats={recipe.percentFat} carbs={recipe.percentCarbs} protein={recipe.percentProtein} />
+      </div>
       <div className="ingr_and_instruction">
         <Ingredients ingredients={recipe.ingredients} />
         <Instruction instructions={recipe.instructions} />
       </div>
+
 
     </div>
   )
@@ -55,6 +64,33 @@ function Instruction({ instructions }) {
       <h3>Instructions</h3>
       <ol> {inst_list} </ol>
     </div>);
+}
+
+function NutritionPie({ fats, carbs, protein }) {
+  let data = {
+    labels: [
+      'Carbonhydrate',
+      'Fat',
+      'Protein'
+    ],
+    datasets: [
+      {
+        values: [carbs, fats, protein]
+      },
+    ]
+  };
+  return (
+    <div>
+      <ReactFrappeChart title="Nutrition chart"
+        type="pie"
+        axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
+        data={data}
+        colors={["#2947ff", "#f44336", "#aeff62"]}
+        height={400}
+        width={400}
+      />
+
+    </div>)
 }
 
 let RecipePage = connect(({ recipes }) => ({ recipes: recipes.search_resp, recipe: recipes.get_recipe_by_id_resp }))(recipePage)

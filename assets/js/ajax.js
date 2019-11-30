@@ -234,7 +234,7 @@ export function searchRecipes(form) {
   let maxFat = searchForm.maxFat;
   let url = '/recipes/search/';
   console.log("search form", searchForm)
-  if (searchTerm.length > 0)
+  if (searchTerm && searchTerm.length > 0)
     url = url + 'query=' + searchTerm;
   else
     return; // TODO: show error message
@@ -261,10 +261,7 @@ export function searchRecipes(form) {
   get(url)
     .then((resp) => {
       console.log("Search Resp", resp);
-      store.dispatch({
-        type: "CLEAR_SEARCH_RECIPE",
-        data: null
-      })
+
       store.dispatch({
         type: "SEARCH_RECIPES_RESP",
         data: resp.data

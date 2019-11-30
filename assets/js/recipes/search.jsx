@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import store from '../store';
 
+
 import { searchRecipes } from '../ajax';
 
 function state2props(state) {
-  return ({});
+  return ({ search_recipes: state.forms.search_recipes });
 }
 
 class SearchRecipes extends React.Component {
@@ -19,6 +20,7 @@ class SearchRecipes extends React.Component {
     this.state = {
       open_collapse: false,
       redirect: null,
+      display_error: false,
     }
   }
 
@@ -35,6 +37,13 @@ class SearchRecipes extends React.Component {
       type: 'CHANGE_SEARCH_RECIPE',
       data: data,
     });
+  }
+
+  validate_search() {
+    let keyword = this.props.search_recipes.searchTerm;
+    if (!(keyword)) {
+      this.setState({ display_error: true })
+    }
   }
 
   searchTermChanged(ev) {
@@ -140,67 +149,80 @@ class SearchRecipes extends React.Component {
     }
 
     console.log(this);
+    let body = <div>
+      <h2>Search Recipe</h2>
+      <Form className="form-inline">
 
-    return (
-      <div>
-        <h2>Search Recipe</h2>
-        <Row className='rowC'>
+        <div>
+          <Form.Group className="m-3" controlId="searchTerm">
+            <Form.Label>Keywords(required):</Form.Label>
+            <Form.Control type="text"
+              value={this.props.searchTerm}
+              onChange={(ev) => this.searchTermChanged(ev)} />
+          </Form.Group>
+        </div>
 
-          <div>
-            <Form.Group controlId="searchTerm">
-              <Form.Label>Keywords: </Form.Label>
-              <Form.Control type="text"
-                onChange={(ev) => this.searchTermChanged(ev)} />
-            </Form.Group>
-          </div>
+        <div>
+          <Form.Group className="m-3" controlId="cuisine">
+            <Form.Label>Cuisine: </Form.Label>
+            <Form.Control type="text"
+              onChange={(ev) => this.cuisineChanged(ev)} />
+          </Form.Group>
+        </div>
+        <div>
+          <Form.Group className="m-3" controlId="mealType">
+            <Form.Label>Meal Type: </Form.Label>
+            <Form.Control as="select"
+              onChange={(ev) => this.mealTypeChanged(ev)}>
+              <option></option>
+              <option>Breakfast</option>
+              <option>Lunch</option>
+              <option>Dinner</option>
+              <option>Snack</option>
+            </Form.Control>
+          </Form.Group>
+        </div>
+        <Button
+          onClick={() => this.change_collapse()}
+          aria-controls="example-collapse-text"
+          aria-expanded={this.state.open_collapse}
+          variant="link">
+          Advance Search
+        </Button>
+      </Form>
 
-          <div>
-            <Form.Group controlId="cuisine">
-              <Form.Label>Cuisine: </Form.Label>
-              <Form.Control type="text"
-                onChange={(ev) => this.cuisineChanged(ev)} />
-            </Form.Group>
-          </div>
-          <div>
-            <Form.Group controlId="mealType">
-              <Form.Label>Meal Type: </Form.Label>
-              <Form.Control as="select"
-                onChange={(ev) => this.mealTypeChanged(ev)}>
-                <option></option>
-                <option>Breakfast</option>
-                <option>Lunch</option>
-                <option>Dinner</option>
-                <option>Snack</option>
-              </Form.Control>
-            </Form.Group>
-          </div>
-          <Button
-            onClick={() => this.change_collapse()}
-            aria-controls="example-collapse-text"
-            aria-expanded={this.state.open_collapse}
-            variant="link">
-            Advance Search
-          </Button>
-          <Collapse in={this.state.open_collapse}>
-            <div className="card card-body">
-              {this.advance_search()}
-            </div>
-          </Collapse>
-
-        </Row>
-
-
-        <Form.Group controlId="submit">
-          <Button variant="primary"
-            onClick={(ev) => {
-              event.preventDefault();
+      <Collapse in={this.state.open_collapse}>
+        <div className="card card-body">
+          {this.advance_search()}
+        </div>
+      </Collapse>
+      <Form.Group controlId="submit">
+        <Button variant="primary"
+          onClick={(ev) => {
+            this.validate_search()
+            if (this.state.display_error) {
               searchRecipes(this)
-            }}>
-            Search</Button>
-        </Form.Group>
-      </div>
+            }
+          }}>
+          Search</Button>
+      </Form.Group>
+    </div>;
+    if (this.state.display_error) {
+      return (
+        <div>
+          <Alert variant="danger" dismissible
+            onClose={() => { this.setState({ display_error: false }) }}>
+            Keywords is required
+          </Alert>
+          {body}
+        </div>
+      );
+    } else {
+      return (<div>
+        {body}
+      </div>)
+    }
 
-    );
   }
 
 }

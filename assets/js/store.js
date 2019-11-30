@@ -116,8 +116,6 @@ function search_recipes(st0 = search_st0, action) {
   switch (action.type) {
     case 'CHANGE_SEARCH_RECIPE':
       return Object.assign({}, st0, action.data);
-    case 'CLEAR_SEARCH_RECIPE':
-      return Object.assign({}, st0, search_st0);
     default:
       return st0;
   }
