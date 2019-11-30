@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import ReactFrappeChart from "react-frappe-charts";
-
+import FrappeChart from '../util/chart';
 
 function recipePage({ match, location, recipes, recipe }) {
   let local_id = location.state.id;
@@ -16,9 +15,8 @@ function recipePage({ match, location, recipes, recipe }) {
     <div>
       <h2>Recipe Name: {recipe.title}</h2>
       <img src={recipe.image_url} />
-      <p>Preparation time(min): {recipe.preparationMinutes}</p>
-      <p>Cooking time(min): {recipe.cookingMinutes}</p>
-      <p>Serings(person): {recipe.servings}</p>
+      <p>Total cooking time(min): {recipe.cookingMinutes + recipe.preparationMinutes + recipe.readyInMinutes}</p>
+      <p>Servings(person): {recipe.servings}</p>
       <p>Calories: {recipe.calories}</p>
       <p>Carbs: {recipe.carbs}</p>
       <p>Fats: {recipe.fats}</p>
@@ -81,11 +79,11 @@ function NutritionPie({ fats, carbs, protein }) {
   };
   return (
     <div>
-      <ReactFrappeChart title="Nutrition chart"
+      <FrappeChart title="Nutrition chart"
         type="pie"
         axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
         data={data}
-        colors={["#2947ff", "#f44336", "#aeff62"]}
+        colors={["#3480eb", "#c93412", "#aeff62"]}
         height={400}
         width={400}
       />
