@@ -6,12 +6,9 @@ import _ from 'lodash';
 import {Modal, Row, Col, Button, Table, ListGroup, Form, Alert} from 'react-bootstrap'
 import SearchRecipes from '../recipes/search'
 import RecipesCarousel from './recipes_carousel'
-import {createNewDayPlan} from "../ajax";
+import {createNewDayPlan, getAllMealPlans} from "../ajax";
 import {connect} from "react-redux";
 
-// Send events from component to redux store.
-// Return "state" instead of "state.forms.test_create_new_day_plan"
-// so that we can access the session data in props.
 function state2props(state) {
   return state;
 }
@@ -43,15 +40,14 @@ class DayPlanNew extends React.Component {
   // handles any form changes and update store
   changed(data) {
     this.props.dispatch({
-                          type: 'CHANGE_NEW_DAY_PLAN_NAME',
-                          data: data,
-                        });
+      type: 'CHANGE_NEW_DAY_PLAN_NAME',
+      data: data,
+    });
   }
 
   // this function is necessary to get the recipe title
   // the store only contains the recipe id
   recipe_changed(data, recipe_title, meal_type) {
-    console.log("meal type in day plan is", meal_type);
     this.setState({show_modal: false});
     this.setState({[meal_type]: recipe_title});
     this.changed(data);
@@ -90,6 +86,7 @@ class DayPlanNew extends React.Component {
     console.log('recipe name', name);
   }
 
+  // Don't allow users to submit an empty day plan
   handleButtonClick(params) {
     console.log('this in handle button is', params);
     if (this.props.forms.test_create_new_day_plan.breakfast
@@ -98,6 +95,7 @@ class DayPlanNew extends React.Component {
         || this.props.forms.test_create_new_day_plan.snack
     ) {
       createNewDayPlan(params);
+      getAllMealPlans(this);
     } else {
       alert("must add at least one meal");
     }
@@ -106,7 +104,6 @@ class DayPlanNew extends React.Component {
   render() {
     let user_id = this.props.session.user_id;
     let plan_name = this.props.plan_name;
-    console.log("props in dayplan new", this.props);
 
     return (
       <div>
@@ -166,7 +163,6 @@ class DayPlanNew extends React.Component {
             {this.state.snack && <ListGroup.Item>{this.state.snack}</ListGroup.Item>}
           </ListGroup>
 
-          {console.log("in the render", this)}
           <Button id="savePlanBtn"
                   type="submit"
                   onClick={() => this.handleButtonClick(this)}>

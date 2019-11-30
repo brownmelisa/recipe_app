@@ -42,11 +42,11 @@ export function deleteHttpMethod(path) {
     method: 'delete',
     credentials: 'same-origin',
     headers: new Headers({
-                           'x-csrf-token': window.csrf_token,
-                           'content-type': "application/json; charset=UTF-8",
-                           'accept': 'application/json',
-                           'x-auth': token || "",
-                         }),
+     'x-csrf-token': window.csrf_token,
+     'content-type': "application/json; charset=UTF-8",
+     'accept': 'application/json',
+     'x-auth': token || "",
+    }),
   }).then((resp) => resp.json());
 }
 
@@ -65,7 +65,8 @@ export function getGroceryList(form)
       store.dispatch({
         type: "GET_GL_BY_MPID_RESP",
         data: resp
-      })
+      });
+      form.redirect('/grocery/' + mealPlanId);
   });
 }
 
@@ -89,7 +90,7 @@ export function getMealPlan(form)
 
 export function deleteMealPlan(form)
 {
-  console.log("Inside ddelete meal plan ajax");
+  console.log("Inside delete meal plan ajax");
   let state = store.getState();
   let getMpForm = state.forms.test_get_mealplan_details;
   let mealPlanId = getMpForm.mealPlanId;
@@ -100,8 +101,8 @@ export function deleteMealPlan(form)
     .then((resp) => {
       console.log("Delete MP Resp", resp);
       store.dispatch({
-                       type: "GET_ALL_MEALPLANS_RESP",
-                       data: resp
+         type: "GET_ALL_MEALPLANS_RESP",
+         data: resp
                      })
     });
 }
