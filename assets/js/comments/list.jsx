@@ -1,6 +1,7 @@
 import React,{ Component } from 'react'
 import {connect} from 'react-redux';
 import {list_users, list_comments} from '../ajax';
+import {Form} from "react-bootstrap";
 
 function state2props(state, props){
     return {recipe_id: props.recipe_id, users: state.users, comments: state.comments}
@@ -28,14 +29,15 @@ class CommentList extends Component {
             }
         }
         console.log("comments filtered", com_filtered);
-        let com_show = com_filtered.map(x => <div>
-            <h4>{users.get(x.user_id).name}</h4>
-            <p>{x.comments}</p>
-        </div>)
+        let com_show = com_filtered.map(x =>
+            <p className = "List">{users.get(x.user_id).name}: &nbsp; &nbsp;{x.comments}</p>
+        )
         return (
-            <div>
-                <h2>CommentList</h2>
+            <div className = "CommentList">
+                <h3>Comments</h3>
+                <div className = "List">
                 {com_show}
+                </div>
             </div>
         )
     }

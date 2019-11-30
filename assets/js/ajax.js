@@ -307,7 +307,16 @@ export function submit_signup(form) {
         });
       }
       else {
-        console.log("user created")
+        console.log("user created");
+        if (state.users.size == 0){
+          list_users();
+        }
+        else{
+          store.dispatch({
+            type: 'ADD_USERS',
+            data: [resp.data],
+          });
+        }
         form.redirect('/');
       }
     });

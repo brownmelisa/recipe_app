@@ -39,15 +39,16 @@ class  CommentInput extends Component{
         return (
             <div className = 'comment-input'>
                 <Form.Group controlId="comments_input">
-                    <Form.Label>User Name: {user.name}</Form.Label>
+                    <Form.Label id = 'username'>User Name:&nbsp; &nbsp;{user.name}</Form.Label>
+                    <br></br>
                     <Form.Control as="textarea" rows="3"
                                   onChange={(ev) => this.changed({comments: ev.target.value}) }/>
                 </Form.Group>
                 {error_msg}
                 <Form.Group controlId="submit">
-                    <Button variant="primary"
+                    <button class="btn btn-primary float-right"
                             onClick={() => submit_comments(this)}>
-                        Submit</Button>
+                        Submit</button>
                 </Form.Group>
             </div>
         )

@@ -27,7 +27,7 @@
     resources "/sessions", SessionController, only: [:create], singleton: true
     get "/grocerylist/:id", GrocerylistController, :show
     resources "/comments", CommentController, except: [:new, :edit]
-  end
+       end
 
   scope "/", RecipeAppWeb do
     pipe_through :browser
