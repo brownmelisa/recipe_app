@@ -110,7 +110,7 @@ let search_st0 = {
   searchTerm: null, type: null, cuisine: null, multiIngredient: null, maxCal: null, maxFat: null, maxProtein: null, maxCab: null
 };
 // submit the form for search for recipes by keyword
-// Initialize all param to null to be congruent to search.jsx where invalid 
+// Initialize all param to null to be congruent to search.jsx where invalid
 // input to set the state to null.
 function search_recipes(st0 = search_st0, action) {
   switch (action.type) {
@@ -258,10 +258,10 @@ function session(st0 = session0, action) {
 
 function recipes(st0, action) {
   let reducer = combineReducers(
-    {
-      search_resp,
-      get_recipe_by_id_resp,
-    });
+      {
+        search_resp,
+        get_recipe_by_id_resp,
+      });
   return reducer(st0, action);
 }
 
@@ -311,13 +311,13 @@ function get_all_mealplans(st0 = {}, action) {
 }
 function mealplans(st0, action) {
   let reducer = combineReducers(
-    {
-      create_new_mealplan_resp,
-      create_new_dayplan_resp,
-      get_mealplan_by_id,
-      get_gl_by_mpid_resp,
-      get_all_mealplans,
-    }
+      {
+        create_new_mealplan_resp,
+        create_new_dayplan_resp,
+        get_mealplan_by_id,
+        get_gl_by_mpid_resp,
+        get_all_mealplans,
+      }
   );
   return reducer(st0, action);
 }
