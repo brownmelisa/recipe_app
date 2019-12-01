@@ -1,8 +1,7 @@
 defmodule RecipeApp.SearchRecipesApi do
   use HTTPoison.Base
+  alias RecipeApp.SpoonacularKey
 
-  @apiKey "bade8991b27847e2ae7bb94267b2c229"
-  #@apiKey "39df7e856b3042a78356c7e7b8479c73"
   @searchUrl "https://api.spoonacular.com/recipes/complexSearch?"
 
   def searchRecipes(params) do
@@ -12,7 +11,6 @@ defmodule RecipeApp.SearchRecipesApi do
     response = HTTPoison.get!(URI.encode(url))
     #IO.inspect response
 
-    # TODO eror handling when status code != 200
     req = Poison.decode!(response.body)
     #IO.inspect req
 
@@ -24,7 +22,7 @@ defmodule RecipeApp.SearchRecipesApi do
 
   # make api specific changes to params
   def validateParams(params) do
-    params = Map.put(params, "apiKey", @apiKey)
+    params = Map.put(params, "apiKey", SpoonacularKey.getApiKey())
              |> Map.put("number", 5) # no of results returned
       # api does not return nutrition information w/o below params
              |> Map.put("minFat", 0)

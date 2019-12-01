@@ -85,7 +85,7 @@ function Page(props) {
             {/*  </NavLink>*/}
             {/*</Nav.Item>*/}
 
-            <Nav.Item>
+            {/*<Nav.Item>
               <NavLink to="/testcarousel" exact className="nav-link">
                 Test Carousel
               </NavLink>
@@ -105,7 +105,7 @@ function Page(props) {
               <NavLink to="/testgetgc" exact activeClassName="active" className="nav-link">
                 Test Get GC for meal plan
               </NavLink>
-            </Nav.Item>
+            </Nav.Item>*/}
 
           </Nav>
         </Col>
@@ -122,6 +122,16 @@ function Page(props) {
         <Route exact path="/mp/new">
           <MealPlanNew/>
         </Route>
+
+        {/*<Route exact path="/mp/new" render= { () =>
+          (!store.getState().session) ?
+          (<h3 style =
+            {{fontFamily:"verdana",textAlign:"center", paddingTop:"30px"}}>
+              Please login to create Meal Plans.
+          </h3>) : (<MealPlanNew/>)
+        }/>*/}
+
+
 
         <Route exact path="/mp">
           <MealPlansAll/>
@@ -189,6 +199,7 @@ let Session = connect(({session}) => ({session}))(({session, dispatch}) => {
     dispatch({
       type: 'LOG_OUT',
     });
+
   }
 
   if (session) {

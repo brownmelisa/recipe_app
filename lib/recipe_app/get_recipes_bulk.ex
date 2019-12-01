@@ -3,9 +3,8 @@ defmodule RecipeApp.GetRecipesBulkApi do
 
   alias RecipeApp.GetRecipeApi
   alias RecipeApp.RecipeCache
+  alias RecipeApp.SpoonacularKey
 
-  @apiKey "bade8991b27847e2ae7bb94267b2c229"
-  #@apiKey "39df7e856b3042a78356c7e7b8479c73"
   @getRecipeBulkUrl "https://api.spoonacular.com/recipes/informationBulk?"
 
   def getRecipesBulk(ids) do
@@ -18,7 +17,6 @@ defmodule RecipeApp.GetRecipesBulkApi do
     response = HTTPoison.get!(URI.encode(url))
     #IO.inspect response
 
-    # TODO eror handling when status code != 200
     recipeList = Poison.decode!(response.body)
     #IO.puts("request")
     #IO.inspect recipeList
@@ -41,7 +39,7 @@ defmodule RecipeApp.GetRecipesBulkApi do
 
   def validateParams(_ids) do
     params = Map.new()
-    Map.put(params, "apiKey", @apiKey)
+    Map.put(params, "apiKey", SpoonacularKey.getApiKey())
     |> Map.put("includeNutrition", true)
     # |> Map.put("ids", ids) # will encode commas
   end

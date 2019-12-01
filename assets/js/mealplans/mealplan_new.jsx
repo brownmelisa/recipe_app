@@ -42,6 +42,17 @@ class MealPlanNew extends React.Component {
   }
 
   render() {
+
+    if(!this.props.session)
+    {
+      return (
+        <h3 style =
+          {{fontFamily:"verdana",textAlign:"center", paddingTop:"30px"}}>
+            Please login to create Meal Plans.
+        </h3>
+      );
+    }
+
     let user_id = this.props.session.user_id;
     let mealplan = this.props.mealplans.create_new_mealplan_resp;
 
@@ -100,4 +111,3 @@ class MealPlanNew extends React.Component {
 
 // connects component to Redux store, so it can get data and use functions from the store.
 export default connect(state2props)(MealPlanNew);
-
