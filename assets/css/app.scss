@@ -4,13 +4,11 @@
 
 $body-bg: #BBB;
 
-.rowC, .card_buttons, .ingr_and_instruction{
+.card_buttons, .ingr_and_instruction{
     display:flex;
     flex-direction:row;
 }
-.rowC > div {
-    margin: 20px;
-}
+
 
 .card_buttons > button {
     margin:10px;
@@ -92,3 +90,29 @@ $body-bg: #BBB;
 }
 
 
+// Comments
+.comments {
+  width: 100%;
+  margin: 10px auto;
+  font-size: 14px;
+  border: 1px solid #f1f1f1;
+  padding: 20px;
+}
+
+.comment-input{
+  padding: 50px;
+}
+
+#username{
+  font-size: 18px;
+}
+
+.CommentList{
+  padding-left: 50px;
+  padding-top: 20px;
+}
+
+.List{
+  padding-top: 20px;
+  font-size: 18px;
+}

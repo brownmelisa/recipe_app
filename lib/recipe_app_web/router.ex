@@ -1,4 +1,4 @@
-defmodule RecipeAppWeb.Router do
+    defmodule RecipeAppWeb.Router do
   use RecipeAppWeb, :router
 
   pipeline :browser do
@@ -26,7 +26,8 @@ defmodule RecipeAppWeb.Router do
     resources "/dayplans", DayplanController, except: [:new, :edit]
     resources "/sessions", SessionController, only: [:create], singleton: true
     get "/grocerylist/:id", GrocerylistController, :show
-  end
+    resources "/comments", CommentController, except: [:new, :edit]
+       end
 
   scope "/", RecipeAppWeb do
     pipe_through :browser

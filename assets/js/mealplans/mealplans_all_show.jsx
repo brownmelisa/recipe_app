@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Redirect} from 'react-router';
-import {Form, Button, Alert, Card, Row, Modal} from 'react-bootstrap';
+import {Button, Alert, Card, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-
-import {deleteMealPlan, getAllMealPlans, getGroceryList} from '../ajax';
 import MealPlanCard from './mealplan_card';
+
+import { deleteMealPlan, getAllMealPlans, getGroceryList, deleteDayPlan } from '../ajax';
+import MealDescription from "./meal_description";
 
 function state2props(state) {
   return state;
@@ -63,8 +64,8 @@ class MealPlansAll extends React.Component {
       return (
         <div>
           <Alert variant="warning" dismissible
-                 onClose={() => this.redirectToCreateMP()}>
-                 Let's create some meal plans first.
+            onClose={() => this.redirectToCreateMP()}>
+            Let's create some meal plans first.
           </Alert>
         </div>
       )
@@ -92,3 +93,6 @@ class MealPlansAll extends React.Component {
 }
 
 export default connect(state2props)(MealPlansAll);
+
+
+

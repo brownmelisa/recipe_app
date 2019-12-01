@@ -99,6 +99,16 @@ defmodule RecipeApp.Recipes do
           Map.put(acc, "cuisine", String.replace(str, "cuisine=", ""))
         String.contains?(str, "type=") ->
           Map.put(acc, "type", String.replace(str, "type=", ""))
+        String.contains?(str, "includeIngredients=") ->
+          Map.put(acc, "includeIngredients", String.replace(str, "includeIngredients=", ""))
+        String.contains?(str, "maxCalories") ->
+          Map.put(acc, "maxCalories", String.replace(str, "maxCalories=", ""))
+        String.contains?(str, "maxFat") ->
+          Map.put(acc, "maxFat", String.replace(str, "maxFat=", ""))
+        String.contains?(str, "maxCarbs") ->
+          Map.put(acc, "maxCabs", String.replace(str, "maxCabs=", ""))
+        String.contains?(str, "maxProtein") ->
+          Map.put(acc, "maxProtein", String.replace(str, "maxProtein=", ""))
         true -> acc
       end
     end)

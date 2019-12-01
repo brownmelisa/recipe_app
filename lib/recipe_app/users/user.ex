@@ -17,10 +17,10 @@ defmodule RecipeApp.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password_hash, :name])
+    |> cast(attrs, [:name, :email, :password, :password_confirmation])
 #    |> validate_confirmation(:password, message: "Password doesn't match up!")
     |> hash_password()
-    |> validate_required([:email, :password_hash, :name])
+    |> validate_required([:name, :email, :password_hash])
   end
 
   def hash_password(cset) do
