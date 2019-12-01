@@ -1,10 +1,7 @@
 # RecipeApp
 web dev group project 2
 
-Pocket-Friendly Recipes App
-
-Our app is geared toward students who want to be frugal on food costs. It will
-pull recipes from the Spoonacular API and allow users to upload their own.
+Recipes App
 
 Members:
 
@@ -32,4 +29,9 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
 
-References: http://huziketang.mangojuice.top/books/react/lesson15
+References:
+
+  * http://www.ccs.neu.edu/home/ntuck/courses/2019/09/cs5610/
+  * https://hexdocs.pm/cachex/Cachex.html
+  * https://elixirforum.com/t/using-cachex-in-phoenix-working-example/12458
+  * http://huziketang.mangojuice.top/books/react/lesson15

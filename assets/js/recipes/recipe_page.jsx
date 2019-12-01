@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import CommentInput from '../comments/input'
 import CommentList from '../comments/list'
-import FrappeChart from '../util/chart';
+import { VictoryPie } from "victory";
 
 function recipePage({ match, location, recipes, recipe }) {
   let local_id = location.state.id;
@@ -68,31 +68,51 @@ function Instruction({ instructions }) {
 }
 
 function NutritionPie({ fats, carbs, protein }) {
-  let data = {
-    labels: [
-      'Carbonhydrate',
-      'Fat',
-      'Protein'
-    ],
-    datasets: [
-      {
-        values: [carbs, fats, protein]
-      },
-    ]
-  };
+  console.log("nutrition", fats, carbs, protein)
   return (
-    <div>
-      <FrappeChart title="Nutrition chart"
-        type="pie"
-        axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
-        data={data}
-        colors={["#3480eb", "#c93412", "#aeff62"]}
-        height={400}
-        width={400}
+    <div style={{ height: 300 }, { width: 300 }}>
+      <VictoryPie
+        width={200}
+        height={200}
+        labelRadius={({ innerRadius }) => innerRadius + 60}
+        colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+        data={[
+          { x: "Fat", y: fats },
+          { x: "Carbonhydrate", y: carbs },
+          { x: "Protein", y: protein }
+        ]}
+        style={{ labels: { fill: "black", fontSize: 10 } }}
       />
-
-    </div>)
+    </div>
+  )
 }
+
+// function NutritionPie({ fats, carbs, protein }) {
+//   let data = {
+//     labels: [
+//       'Carbonhydrate',
+//       'Fat',
+//       'Protein'
+//     ],
+//     datasets: [
+//       {
+//         values: [carbs, fats, protein]
+//       },
+//     ]
+//   };
+//   return (
+//     <div>
+//       <FrappeChart title="Nutrition chart"
+//         type="pie"
+//         axisOptions={{ xAxisMode: "tick", yAxisMode: "tick", xIsSeries: 1 }}
+//         data={data}
+//         colors={["#3480eb", "#c93412", "#aeff62"]}
+//         height={400}
+//         width={400}
+//       />
+
+//     </div>)
+// }
 
 let RecipePage = connect(({ recipes }) => ({ recipes: recipes.search_resp, recipe: recipes.get_recipe_by_id_resp }))(recipePage)
 export default RecipePage;

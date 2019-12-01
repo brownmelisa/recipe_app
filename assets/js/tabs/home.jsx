@@ -30,8 +30,20 @@ let Home = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
         );
     }
     else {
+        // {/*<h1>Please click login link in the navigation bar</h1>*/}
         return (
-            <h1>Please click login link in the navigation bar</h1>
+
+        <div>
+          <h2 style =
+            {{fontFamily:"verdana",textAlign:"center", paddingTop:"30px"}}>
+              Welcome to the Recipe App.
+          </h2>
+          <h3 style =
+            {{fontFamily:"verdana",textAlign:"center", paddingTop:"30px"}}>
+              Please login to search recipes.
+          </h3>
+        </div>
+
         );
     }
 });

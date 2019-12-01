@@ -29,9 +29,12 @@ class CommentList extends Component {
             }
         }
         console.log("comments filtered", com_filtered);
-        let com_show = com_filtered.map(x =>
-            <p className = "List">{users.get(x.user_id).name}: &nbsp; &nbsp;{x.comments}</p>
-        )
+        let com_show = com_filtered.map((x,index) => <div key={"comment" + index}>
+            <h4>
+              {(!users.get(x.user_id))? "Test User" : users.get(x.user_id).name}
+            </h4>
+            <p>{x.comments}</p>
+        </div>)
         return (
             <div className = "CommentList">
                 <h3>Comments</h3>

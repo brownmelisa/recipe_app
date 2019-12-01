@@ -88,7 +88,6 @@ defmodule RecipeApp.Recipes do
     SearchRecipesApi.searchRecipes(searchParamsMap)
   end
 
-  # a hacky solution that converts searchParams string into a map
   def getSearchParamMap(searchParams) do
     paramList = String.split(searchParams, "&")
     Enum.reduce(paramList, %{}, fn str, acc ->
