@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import _ from 'lodash';
 import {getRecipe} from "../ajax";
 import RecipeDetails from "./recipe_details";
+import CarouselDisplay from "./carousel_display";
 
 // a dispatch function that send events from component to the redux store
 function state2props(state) {
@@ -66,31 +67,31 @@ class RecipesCarousel extends React.Component {
     console.log("printing out props in recipes", this.props);
     let mealType = this.props.mealType;
 
-    let recipes_formatted = _.map(recipes, (recipe) => {
-      return (
-        <Carousel.Item key={recipe.id}>
-          <div className="row">
-            <Col md="2"/>
-            <Card className="col-3 carouselCard">
-              <Card.Img src={recipe.image_url}
-                        onClick={() => this.handleClickPicture(recipe.id)}/>
-              <Card.Text>
-                {recipe.title + " " + recipe.calories + " Cal"}
-              </Card.Text>
-              <div className="card_buttons">
-                <Button variant="primary"
-                        onClick={() =>
-                          this.props.onAddRecipe( {[mealType]: recipe.id.toString()}, recipe.title, mealType)
-                        }
-                >
-                  Add to Meal Plan
-                </Button>
-              </div>
-            </Card>
-          </div>
-        </Carousel.Item>
-      )
-    });
+    // let recipes_formatted = _.map(recipes, (recipe) => {
+    //   return (
+    //     <Carousel.Item key={recipe.id}>
+    //       <div className="row">
+    //         <Col md="2"/>
+    //         <Card className="col-3 carouselCard">
+    //           <Card.Img src={recipe.image_url}
+    //                     onClick={() => this.handleClickPicture(recipe.id)}/>
+    //           <Card.Text>
+    //             {recipe.title + " " + recipe.calories + " Cal"}
+    //           </Card.Text>
+    //           <div className="card_buttons">
+    //             <Button variant="primary"
+    //                     onClick={() =>
+    //                       this.props.onAddRecipe( {[mealType]: recipe.id.toString()}, recipe.title, mealType)
+    //                     }
+    //             >
+    //               Add to Meal Plan
+    //             </Button>
+    //           </div>
+    //         </Card>
+    //       </div>
+    //     </Carousel.Item>
+    //   )
+    // });
 
     if (this.state.displayRecipe === true) {
       return (
@@ -107,7 +108,8 @@ class RecipesCarousel extends React.Component {
                 onSelect={controlCarousel.handleSelect}
                 interval="300000"
                 id="carouselMain">"
-        {recipes_formatted}
+        {/*{recipes_formatted}*/}
+        <CarouselDisplay recipes={recipes}/>
       </Carousel>
     )}
 }
@@ -115,7 +117,6 @@ class RecipesCarousel extends React.Component {
 // It provides its connected component with the pieces of the data it needs from the store,
 // and the functions it can use to dispatch actions to the store.
 export default connect(state2props)(RecipesCarousel);
-
 
 
 // function using React hooks to control the movement of the carousel

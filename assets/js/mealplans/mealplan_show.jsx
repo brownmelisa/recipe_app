@@ -37,16 +37,17 @@ class MealPlanShow extends React.Component {
   }
 
   getTotalDailyCalories(dp) {
-    let meals = ["breakfast", "lunch", "dinner", "snack"];
-    let total_cal = meals.map(meal_name => {
-                if (dp[meal_name]) {
-                  console.log("calories: ", dp[meal_name].calories);
-                  return this.acc += dp[meal_name].calories
-                }
-              }, {acc: 0}
-      );
-    console.log("total calories", total_cal);
-    return total_cal;
+    // let meals = ["breakfast", "lunch", "dinner", "snack"];
+    // let total_cal = meals.map(meal_name => {
+    //             if (dp[meal_name]) {
+    //               console.log("calories: ", dp[meal_name].calories);
+    //               return this.acc += dp[meal_name].calories
+    //             }
+    //           }, {acc: 0}
+    //   );
+    // console.log("total calories", total_cal);
+    // return total_cal;
+    return 2000;
   }
 
   noDayPlanExists(get_all_mp_results){
@@ -82,7 +83,7 @@ class MealPlanShow extends React.Component {
   render() {
     console.log("In mealplan show", this.props);
 
-    getComments()
+    // getComments()
 
     // meal plan not yet created
     // Use lodash isEmpty() function to check for empty object
