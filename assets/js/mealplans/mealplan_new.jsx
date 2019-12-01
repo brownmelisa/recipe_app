@@ -51,7 +51,7 @@ class MealPlanNew extends React.Component {
           <DayPlanNew plan_name={mealplan.meal_plan_name}/>
         </Col>
         <Col sm={4} md={6}>
-          <MealPlanShow mealplan={mealplan}/>
+          <MealPlanShow mealplan={mealplan} />
         </Col>
       </Row>;
 
@@ -61,9 +61,9 @@ class MealPlanNew extends React.Component {
         <div>
           <Row>
             <h4>MEAL PLAN NAME: {mealplan.meal_plan_name}</h4>
-            <Button variant="danger" onClick={this.refreshPage}>Create New Meal Plan</Button>
           </Row>
           {bottom}
+          <Button variant="danger" onClick={this.refreshPage}>Create New Meal Plan</Button>
         </div>
       );
     }

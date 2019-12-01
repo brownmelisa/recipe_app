@@ -39,6 +39,16 @@ import deepFreeze from 'deep-freeze-strict';
 
  let st = [
    {
+     "calories": 424.257,
+     "carbs": "69.1916g",
+     "fats": "6.91303g",
+     "id": 661886,
+     "image_url": "https://spoonacular.com/recipeImages/661886-312x231.jpg",
+     "protein": "19.0184g",
+     "recipe_id": 661886,
+     "title": "Strawberry Shortcake Pancakes"
+   },
+   {
      "calories": 393.004,
      "carbs": "17.1274g",
      "fats": "14.8836g",
@@ -57,6 +67,36 @@ import deepFreeze from 'deep-freeze-strict';
      "protein": "42.8016g",
      "recipe_id": 591705,
      "title": "Tuna & White Bean Salad"
+   },
+   {
+     "calories": 635.252,
+     "carbs": "85.6748g",
+     "fats": "20.8417g",
+     "id": 209875,
+     "image_url": "https://spoonacular.com/recipeImages/209875-312x231.jpg",
+     "protein": "25.6952g",
+     "recipe_id": 209875,
+     "title": "Very simple Margherita pizza"
+   },
+   {
+     "calories": 744.713,
+     "carbs": "119.363g",
+     "fats": "24.3239g",
+     "id": 222807,
+     "image_url": "https://spoonacular.com/recipeImages/222807-312x231.jpg",
+     "protein": "14.8254g",
+     "recipe_id": 222807,
+     "title": "Butternut & rosemary pizza"
+   },
+   {
+     "calories": 310.396,
+     "carbs": "51.7962g",
+     "fats": "8.41926g",
+     "id": 481601,
+     "image_url": "https://spoonacular.com/recipeImages/481601-312x231.jpg",
+     "protein": "9.097g",
+     "recipe_id": 481601,
+     "title": "Neapolitan Pizza and Honey Whole Wheat Dough"
    },
    {
      "calories": 284.076,
@@ -87,8 +127,9 @@ import deepFreeze from 'deep-freeze-strict';
      "protein": "38.5209g",
      "recipe_id": 775925,
      "title": "Baked Mustard-Crusted Salmon With Asparagus and Tarragon"
-   }
+   },
  ];
+
 
  function search_resp(st0 = st, action) {
    switch (action.type) {

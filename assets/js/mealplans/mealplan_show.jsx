@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
+import {Col, Row, ListGroup, Table} from 'react-bootstrap';
 
 import {connect} from 'react-redux';
 import {get, getAllMealPlans, getMealPlan} from '../ajax';
@@ -20,6 +21,7 @@ class MealPlanShow extends React.Component {
     this.loadDetails = this.loadDetails.bind(this);
     this.getTotalDailyCalories = this.getTotalDailyCalories.bind(this);
     this.noDayPlanExists = this.noDayPlanExists.bind(this);
+    this.getMealPlanCalories = this.getMealPlanCalories.bind(this);
     getAllMealPlans(this);
   }
 
@@ -37,57 +39,50 @@ class MealPlanShow extends React.Component {
   }
 
   getTotalDailyCalories(dp) {
-    // let meals = ["breakfast", "lunch", "dinner", "snack"];
-    // let total_cal = meals.map(meal_name => {
-    //             if (dp[meal_name]) {
-    //               console.log("calories: ", dp[meal_name].calories);
-    //               return this.acc += dp[meal_name].calories
-    //             }
-    //           }, {acc: 0}
-    //   );
-    // console.log("total calories", total_cal);
-    // return total_cal;
+    console.log("dp in get total daily caloried is", dp);
+    let meals = ["breakfast", "lunch", "dinner", "snack"];
+    let cal_array = meals.map(function (meal) {
+      if(dp[meal]) {
+        return dp[meal].calories;
+      }
+    });
+    let filtered_num = cal_array.filter(Number);
+    let total_cal = filtered_num.reduce((acc, cur) => {
+      return acc + cur;
+    });
+    // getAllMealPlans(this);
+    return parseInt(total_cal);
+  }
+
+  getMealPlanCalories(current_mp) {
+    console.log("current meal plan is", current_mp);
+    console.log("day plan is", current_mp[0].dayPlans[0]);
+    // let calorie_array = current_mp[0].dayPlans.map( function (dp) {
+    //   console.log("dp in get meal plan is", dp);
+    //   return this.getTotalDailyCalories(dp);
+    // });
+    // console.log("calorie array is", calorie_array);
     return 2000;
   }
 
+  // checks if day plan exists for current meal plan
   noDayPlanExists(get_all_mp_results){
-    // no day plans created at all for this user
-    if (get_all_mp_results.data === undefined) {
-      console.log("no day plans created");
-      return true;
-    }
     let get_mps = get_all_mp_results.data;
     let current_mealplan = get_mps.filter(mp => mp.id === this.props.mealplan.id);
-
-    console.log("current meal plan is", current_mealplan);
-    console.log("current meal plan equal null", current_mealplan === null);
-    console.log("current meal plan zero", current_mealplan[0]);
-    console.log("current meal plan dayplans", current_mealplan[0].dayPlans);
-
-    // console.log("current meal plan length", current_mealplan[0].dayPlans.length);
-
-    // console.log("current meal plan is", current_mealplan[0].dayPlans);
-
-    // day plans exist for current meal plan
-    if (current_mealplan !== null && current_mealplan.length > 0) {
-      console.log("print ");
-      // day plans are created, but not for this meal plan
-      return false;
+    // current meal doesn't have day plan
+    if (current_mealplan.length === 0 || current_mealplan[0].dayPlans.length === 0) {
+      return true;
     }
-
-    console.log("returning true");
-    return true;
+    return false;
   }
 
 
   render() {
     console.log("In mealplan show", this.props);
-
-    // getComments()
-
     // meal plan not yet created
     // Use lodash isEmpty() function to check for empty object
-    if (_.isEmpty(this.props.mealplan) || this.noDayPlanExists(this.props.mealplans.get_all_mealplans)) {
+    if (_.isEmpty(this.props.mealplan)
+        || this.noDayPlanExists(this.props.mealplans.get_all_mealplans)) {
       console.log("in empty");
       return (
         <div>
@@ -101,20 +96,34 @@ class MealPlanShow extends React.Component {
 
     let dp_parsed =
       current_mealplan[0].dayPlans.map(dp => {
+        console.log("dp is", dp);
         return (
-          <div>
-            <p>{dp.date}</p>
-            <p>total daily cal: {this.getTotalDailyCalories(dp)}</p>
-          </div>
+          <tr key={dp.id}>
+            <td>{dp.date}</td>
+            <td>{this.getTotalDailyCalories(dp)}</td>
+          </tr>
         )
       });
 
     return (
       <div>
-        <h1>Show Current Meal Plan Details</h1>
+        <h1>Meal Plan Details</h1>
         <p>Meal Plan Name: {this.props.mealplan.meal_plan_name}</p>
-        <p>Plan Created for Dates</p>
-        {dp_parsed}
+        <Table striped bordered hover>
+          <thead>
+          <tr>
+            <th>Meal Plan Date</th>
+            <th>Total Daily Calories</th>
+          </tr>
+          </thead>
+          <tbody>
+          {dp_parsed}
+          <tr>
+            <td>Total Mealplan Calories</td>
+            <td>{this.getMealPlanCalories(current_mealplan)}</td>
+          </tr>
+          </tbody>
+        </Table>
       </div>
     );
   }

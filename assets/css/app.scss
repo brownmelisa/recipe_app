@@ -51,13 +51,13 @@ $body-bg: #BBB;
   max-width: 900px;
 }
 #mpModalHeader {
-  background-color: #d39e00;
+  background-color: #45b552;
 }
 #mpModalBody {
-  background-color: #ede4c5;
+  background-color: #b4b8bf;
 }
 #mpModalFooter {
-  background-color: #d39e00;
+  background-color: #45b552;
 }
 
 
@@ -73,10 +73,13 @@ $body-bg: #BBB;
 
 // Carousel
 #carouselMain{
-  background-color: #f0d989;
+  background-color: #b4b8bf;
 }
 .carouselCard {
   padding-bottom: 30px;
+}
+.firstCard {
+  margin-left: 46px;
 }
 
 // Meal plan dashboard
@@ -87,3 +90,5 @@ $body-bg: #BBB;
     margin : 0;
     line-height : 16px;
 }
+
+
