@@ -118,10 +118,10 @@ class MealPlanShow extends React.Component {
           </thead>
           <tbody>
           {dp_parsed}
-          <tr>
-            <td>Total Mealplan Calories</td>
-            <td>{this.getMealPlanCalories(current_mealplan)}</td>
-          </tr>
+          {/*<tr>*/}
+          {/*  <td>Total Mealplan Calories</td>*/}
+          {/*  <td>{this.getMealPlanCalories(current_mealplan)}</td>*/}
+          {/*</tr>*/}
           </tbody>
         </Table>
       </div>

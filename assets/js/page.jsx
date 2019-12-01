@@ -91,21 +91,21 @@ function Page(props) {
               </NavLink>
             </Nav.Item>
 
-            <Nav.Item>
-              <NavLink to="/testgetmp" exact activeClassName="active" className="nav-link">
-                Test Get Meal Plan Details
-              </NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/testgetallmps" exact activeClassName="active" className="nav-link">
-                Test Get MPs for user
-              </NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/testgetgc" exact activeClassName="active" className="nav-link">
-                Test Get GC for meal plan
-              </NavLink>
-            </Nav.Item>
+            {/*<Nav.Item>*/}
+            {/*  <NavLink to="/testgetmp" exact activeClassName="active" className="nav-link">*/}
+            {/*    Test Get Meal Plan Details*/}
+            {/*  </NavLink>*/}
+            {/*</Nav.Item>*/}
+            {/*<Nav.Item>*/}
+            {/*  <NavLink to="/testgetallmps" exact activeClassName="active" className="nav-link">*/}
+            {/*    Test Get MPs for user*/}
+            {/*  </NavLink>*/}
+            {/*</Nav.Item>*/}
+            {/*<Nav.Item>*/}
+            {/*  <NavLink to="/testgetgc" exact activeClassName="active" className="nav-link">*/}
+            {/*    Test Get GC for meal plan*/}
+            {/*  </NavLink>*/}
+            {/*</Nav.Item>*/}
 
           </Nav>
         </Col>

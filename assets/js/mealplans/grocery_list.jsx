@@ -19,23 +19,6 @@ class GroceryList extends React.Component {
     // getGroceryList(this);
   }
 
-  // redirect(path) {
-  //   this.setState({
-  //                   redirect: path,
-  //                 });
-  // }
-
-  // get the recipe names categorized by meals
-  // let items = _.map([...groceries], item => {
-  //   return (
-  //     <tr key={item.id}>
-  //       <td>{item.name}</td>
-  //       <td>{item.amount + " " + item.unit} </td>
-  //       <td>{item.aisle}</td>
-  //     </tr>
-  //   );
-  // });
-
   render() {
     // if (this.state.redirect) {
     //   return <Redirect to={this.state.redirect} />
@@ -48,12 +31,13 @@ class GroceryList extends React.Component {
         return (
           <tr key={item.id}>
             <td>{item.name} <img className="glImage" src={item.image_url} /></td>
-            <td>{item.amount} {item.unit}</td>
+            <td>{Math.round(item.amount * 100) / 100} {item.unit}</td>
             <td>{item.aisle}</td>
           </tr>
         )
       }
     );
+
 
     return (
       <div>

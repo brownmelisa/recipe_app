@@ -80,6 +80,31 @@ $body-bg: #BBB;
   margin-left: 46px;
 }
 
+// Recipe Detail Component
+.rdImage {
+  width: 100%;
+}
+.rdTitle {
+  margin: 15px 0 10px 0;
+}
+.rdBtn {
+  margin: 10px 10px 0 0;
+}
+.rdNutrition {
+  //font-weight: bold;
+  font-size : 18px;
+  margin : 0;
+  line-height : 30px;
+}
+.rdNutritionDiv {
+  margin-top: 60px;
+}
+.rdIngrImage {
+  height: 2em;
+  width: auto;
+}
+
+
 // Meal plan dashboard
 .p_meal_detail {
     font-size : 14px;
