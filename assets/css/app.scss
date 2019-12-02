@@ -5,13 +5,13 @@
 $body-bg: #BBB;
 
 .card_buttons, .ingr_and_instruction{
-    display:flex;
-    flex-direction:row;
+  display:flex;
+  flex-direction:row;
 }
 
 
 .card_buttons > button {
-    margin:10px;
+  margin:10px;
 }
 
 // Meal Plan
@@ -37,48 +37,83 @@ $body-bg: #BBB;
 .dailyMPHeading{
   background-color: #d3d9df;
 }
+.glImage {
+  height: 20px;
+  width: 20px;
+  //max-width: 100%;
+  //height: auto;
+}
 
 // Popup (Modal)
 #mpModal {
   max-width: 900px;
 }
 #mpModalHeader {
-  background-color: #d39e00;
+  background-color: #45b552;
 }
 #mpModalBody {
-  background-color: #ede4c5;
+  background-color: #b4b8bf;
 }
 #mpModalFooter {
-  background-color: #d39e00;
+  background-color: #45b552;
 }
 
 
 // Recipe Ingredients
 .ingr_and_instruction img {
-    height: 2em;
-    width: auto;
+  height: 2em;
+  width: auto;
 }
 .ingr_and_instruction > div {
-        margin:30px;
+  margin:30px;
 }
 
 
 // Carousel
 #carouselMain{
-  background-color: #f0d989;
+  background-color: #b4b8bf;
 }
 .carouselCard {
   padding-bottom: 30px;
 }
+.firstCard {
+  margin-left: 46px;
+}
+
+// Recipe Detail Component
+.rdImage {
+  width: 100%;
+}
+.rdTitle {
+  margin: 15px 0 10px 0;
+}
+.rdBtn {
+  margin: 10px 10px 0 0;
+}
+.rdNutrition {
+  //font-weight: bold;
+  font-size : 18px;
+  margin : 0;
+  line-height : 30px;
+}
+.rdNutritionDiv {
+  margin-top: 60px;
+}
+.rdIngrImage {
+  height: 2em;
+  width: auto;
+}
+
 
 // Meal plan dashboard
 .p_meal_detail {
-    font-size : 14px;
-    background-color : #ceddf5;
-    padding : 0 0 0 15px;
-    margin : 0;
-    line-height : 16px;
+  font-size : 14px;
+  background-color : #ceddf5;
+  padding : 0 0 0 15px;
+  margin : 0;
+  line-height : 16px;
 }
+
 
 // Comments
 .comments {

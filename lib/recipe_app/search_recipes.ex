@@ -23,7 +23,7 @@ defmodule RecipeApp.SearchRecipesApi do
   # make api specific changes to params
   def validateParams(params) do
     params = Map.put(params, "apiKey", SpoonacularKey.getApiKey())
-             |> Map.put("number", 5) # no of results returned
+             |> Map.put("number", 9) # no of results returned
       # api does not return nutrition information w/o below params
              |> Map.put("minFat", 0)
              |> Map.put("minCarbs", 0)

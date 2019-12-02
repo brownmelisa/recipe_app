@@ -6,7 +6,7 @@ import _ from 'lodash';
 import {Modal, Row, Col, Button, Table, ListGroup, Form, Alert} from 'react-bootstrap'
 import SearchRecipes from '../recipes/search'
 import RecipesCarousel from './recipes_carousel'
-import {createNewDayPlan} from "../ajax";
+import {createNewDayPlan, getAllMealPlans} from "../ajax";
 import {connect} from "react-redux";
 
 // Send events from component to redux store.
@@ -98,6 +98,7 @@ class DayPlanNew extends React.Component {
         || this.props.forms.test_create_new_day_plan.snack
     ) {
       createNewDayPlan(params);
+      getAllMealPlans(this);
     } else {
       alert("must add at least one meal");
     }

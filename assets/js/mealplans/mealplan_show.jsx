@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
+import {Col, Row, ListGroup, Table} from 'react-bootstrap';
 
 import {connect} from 'react-redux';
-import {get, getMealPlan} from '../ajax';
+import {get, getAllMealPlans, getMealPlan} from '../ajax';
+
 
 // This component shows all the mealplans for the current loggin in User
 function state2props(state) {
@@ -17,6 +20,10 @@ class MealPlanShow extends React.Component {
       dates: [],
     };
     this.loadDetails = this.loadDetails.bind(this);
+    this.getTotalDailyCalories = this.getTotalDailyCalories.bind(this);
+    this.noDayPlanExists = this.noDayPlanExists.bind(this);
+    this.getMealPlanCalories = this.getMealPlanCalories.bind(this);
+    getAllMealPlans(this);
   }
 
   redirect(path) {
@@ -32,12 +39,52 @@ class MealPlanShow extends React.Component {
     }
   }
 
+  getTotalDailyCalories(dp) {
+    console.log("dp in get total daily caloried is", dp);
+    let meals = ["breakfast", "lunch", "dinner", "snack"];
+    let cal_array = meals.map(function (meal) {
+      if(dp[meal]) {
+        return dp[meal].calories;
+      }
+    });
+    let filtered_num = cal_array.filter(Number);
+    let total_cal = filtered_num.reduce((acc, cur) => {
+      return acc + cur;
+    });
+    // getAllMealPlans(this);
+    return parseInt(total_cal);
+  }
+
+  getMealPlanCalories(current_mp) {
+    console.log("current meal plan is", current_mp);
+    console.log("day plan is", current_mp[0].dayPlans[0]);
+    // let calorie_array = current_mp[0].dayPlans.map( function (dp) {
+    //   console.log("dp in get meal plan is", dp);
+    //   return this.getTotalDailyCalories(dp);
+    // });
+    // console.log("calorie array is", calorie_array);
+    return 2000;
+  }
+
+  // checks if day plan exists for current meal plan
+  noDayPlanExists(get_all_mp_results){
+    let get_mps = get_all_mp_results.data;
+    let current_mealplan = get_mps.filter(mp => mp.id === this.props.mealplan.id);
+    // current meal doesn't have day plan
+    if (current_mealplan.length === 0 || current_mealplan[0].dayPlans.length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+
   render() {
     console.log("In mealplan show", this.props);
-    console.log("dayplans", this.state.dates);
-
     // meal plan not yet created
-    if (!this.props.mealplan) {
+    // Use lodash isEmpty() function to check for empty object
+    if (_.isEmpty(this.props.mealplan)
+        || this.noDayPlanExists(this.props.mealplans.get_all_mealplans)) {
+      console.log("in empty");
       return (
         <div>
           <h3>This meal plan is empty</h3>
@@ -45,117 +92,42 @@ class MealPlanShow extends React.Component {
       )
     }
 
+    let get_mps = this.props.mealplans.get_all_mealplans.data;
+    let current_mealplan = get_mps.filter(mp => mp.id === this.props.mealplan.id);
+
+    let dp_parsed =
+      current_mealplan[0].dayPlans.map(dp => {
+        console.log("dp is", dp);
+        return (
+          <tr key={dp.id}>
+            <td>{dp.date}</td>
+            <td>{this.getTotalDailyCalories(dp)}</td>
+          </tr>
+        )
+      });
+
     return (
       <div>
-        <h1>Show Current Meal Plan Details</h1>
-        <p>Meal Plan ID: {this.props.mealplan.id}</p>
+        <h1>Meal Plan Details</h1>
         <p>Meal Plan Name: {this.props.mealplan.meal_plan_name}</p>
-        <p>Plan Created for Dates</p>
-        {this.loadDetails()}
-        <p>{this.state.dates}</p>
+        <Table striped bordered hover>
+          <thead>
+          <tr>
+            <th>Meal Plan Date</th>
+            <th>Total Daily Calories</th>
+          </tr>
+          </thead>
+          <tbody>
+          {dp_parsed}
+          {/*<tr>*/}
+          {/*  <td>Total Mealplan Calories</td>*/}
+          {/*  <td>{this.getMealPlanCalories(current_mealplan)}</td>*/}
+          {/*</tr>*/}
+          </tbody>
+        </Table>
       </div>
     );
   }
 }
 
 export default connect(state2props)(MealPlanShow);
-
-
-
-// END OF CODE, THE REST IS COMMENTS ON DATA FORMAT
-/**
- * Summary Data for user with 3 meal plans, mealplan3 has two day plans. The other 2
- * meal plans have one day plan each. The newest is on top.
- * data:[
- *     0: {
- *         dayPlans: [
- *             0: {
- *                 breakfast: null
- *                 date: "2019-11-17"
- *                 dinner: null
- *                 id: 3   //this is the day plan id
- *                 lunch: null
- *                 snack: {
- *                     calories: 393,
- *                     carbs: "17.13g",
- *                     cookingMinutes: 10,
- *                     fats: "14.88g",
- *                     glutenFree: true,
- *                     id: 573591,       // this is the recipe id
- *                     image_url: "https://spoonacular.com/recipeImages/573591-556x370.jpg",
- *                     ingredients: (6) [
- *                         0: {
- *                            ingr_amount: 0.5,
- *                            ingr_id: 2009,
- *                            ingr_image_url: "https://spoonacular.com/cdn/ingredients_250x250/chili-powder.jpg",
- *                            ingr_name: "chili powder",
- *                            ingr_unit: "tbsp"
- *                            },
- *                         1: {…},
- *                         2: {…},
- *                         3: {…},
- *                         4: {…},
- *                         5: {…}
- *                      ],
- *                     instructions: (5) [
- *                         0: {step: "Place oven on broil", step_number: 1},
- *                         1: {…},
- *                         2: {step: "Cover salmon filets with dry rub", step_number: 3},
- *                         3: {…},
- *                         4: {…}
- *                     ],
- *                     percentCarbs: 17.82,
- *                     percentFat: 34.84,
- *                     percentProtein: 47.34,
- *                     preparationMinutes: 5,
- *                     pricePerServing: 5.7429,
- *                     protein: "45.51g",
- *                     readyInMinutes: 15,
- *                     recipe_id: 573591,
- *                     servings: 2,
- *                     title: "Maple Glazed Salmon",
- *                     vegan: false,
- *                     vegetarian: false,
- *                 }
- *             },
- *             1: {
- *                 breakfast: null
- *                 date: "2019-11-28"
- *                 dinner: {...}
- *                 id: 4   //this is the day plan id
- *                 lunch: null
- *                 snack: {...}
- *              },
- *         ] length: 2 // length of dayplans, not sure where this goes
- *         id: 3,    // this is the meal plan id
- *         meal_plan_name: "mealplan3"
- *     }
- *     1: {
- *         dayPlans: [
- *             0: {
- *                 breakfast: null
- *                 date: "2019-11-27"
- *                 ...
- *             }
- *         ],
- *         id: 2,    // this is the meal plan id
- *         meal_plan_name: "my mealplan2"
- *     }
- *     2: {
- *         dayPlans: [
- *             0: {
- *                 breakfast: null
- *                 date: "2019-11-17"
- *                 dinner: null
- *                 id: 2   //this is the day plan id
- *                 lunch: null
- *                 snack: {...}
- *             }
- *        ]
- *        id: 1,    // this is the meal plan id
- *        meal_plan_name: "mealplan1"
- *      ]
- *     length: 3      // how many meal plans the user has
- * }
- *
- */

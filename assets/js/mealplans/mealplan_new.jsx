@@ -29,7 +29,7 @@ class MealPlanNew extends React.Component {
                         })
   }
 
-  // handle submit for a day plan
+  // handle submit for a meal plan
   handleSubmit(ev) {
     // prevent page reload after submitting form
     ev.preventDefault();
@@ -62,7 +62,7 @@ class MealPlanNew extends React.Component {
           <DayPlanNew plan_name={mealplan.meal_plan_name}/>
         </Col>
         <Col sm={4} md={6}>
-          <MealPlanShow mealplan={mealplan.meal_plan_name}/>
+          <MealPlanShow mealplan={mealplan}/>
         </Col>
       </Row>;
 

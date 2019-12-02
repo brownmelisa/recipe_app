@@ -188,7 +188,7 @@ class SearchRecipes extends React.Component {
           aria-controls="example-collapse-text"
           aria-expanded={this.state.open_collapse}
           variant="link">
-          Advance Search
+          Advanced Search
         </Button>
       </Form>
 

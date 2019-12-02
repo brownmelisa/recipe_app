@@ -82,7 +82,8 @@ export function getGroceryList(form) {
       store.dispatch({
         type: "GET_GL_BY_MPID_RESP",
         data: resp
-      })
+      });
+      form.redirect('/grocery/' + mealPlanId);
     });
 }
 

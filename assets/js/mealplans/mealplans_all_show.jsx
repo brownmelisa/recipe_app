@@ -9,6 +9,7 @@ import { deleteMealPlan, getAllMealPlans, getGroceryList, deleteDayPlan } from '
 import RecipePage from './../recipes/recipe_page';
 import GroceryList from "./grocery_list";
 import MealDescription from "./meal_description";
+import MealPlanCard from './mealplan_card';
 
 function state2props(state) {
   return state;
@@ -47,11 +48,11 @@ class MealPlansAll extends React.Component {
   }
 
   handleDeleteMealPlan(mpid) {
-    this.props.dispatch({
-                          type: 'CHANGE_GET_MEAL_PLAN',
-                          data: {mealPlanId: mpid},
-                        });
-    deleteMealPlan(this);
+    // this.props.dispatch({
+    //                       type: 'CHANGE_GET_MEAL_PLAN',
+    //                       data: {mealPlanId: mpid},
+    //                     });
+    deleteMealPlan(mpid);
   }
 
   render() {

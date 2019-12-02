@@ -5,13 +5,13 @@ import {Form, Button, Alert, Card, Row, Modal, Accordion} from 'react-bootstrap'
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {deleteMealPlan, getAllMealPlans, getGroceryList} from '../ajax';
+import {deleteMealPlan, getAllMealPlans, getGroceryList, deleteDayPlan} from '../ajax';
 import RecipePage from './../recipes/recipe_page';
 import GroceryList from "./grocery_list";
 import SearchRecipes from "../recipes/search";
 import RecipesCarousel from "./recipes_carousel";
 import DayPlanNew from "./dayplan_new";
-import MealDescription from "./meal_description";
+// import MealDescription from "./meal_description";
 
 function state2props(state) {
   return state;
