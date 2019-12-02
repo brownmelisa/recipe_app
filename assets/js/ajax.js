@@ -171,10 +171,10 @@ export function createNewDayPlan(form) {
     }
   }).then((resp) => {
     console.log("Create Day Plan Resp", resp);
-    store.dispatch({
-      type: "CREATE_NEW_DAYPLAN_RESP",
-      data: resp.data
-    })
+    // store.dispatch({
+    //   type: "CREATE_NEW_DAYPLAN_RESP",
+    //   data: resp.data
+    // })
   });
 
 }
@@ -353,10 +353,10 @@ export function submit_signup(form) {
       }
       else {
         console.log("user created");
-        if (state.users.size == 0){
+        if (state.users.size == 0) {
           list_users();
         }
-        else{
+        else {
           store.dispatch({
             type: 'ADD_USERS',
             data: [resp.data],
@@ -367,19 +367,19 @@ export function submit_signup(form) {
     });
 }
 
-export function submit_comments(form){
+export function submit_comments(form) {
   let state = store.getState();
   let data = state.forms.new_comments;
-  if (!data.comments){
+  if (!data.comments) {
     store.dispatch({
       type: 'CHANGE_COMMENTS',
-      data: {errors: "Comment is blank"},
+      data: { errors: "Comment is blank" },
     });
   }
-  else{
+  else {
     store.dispatch({
       type: 'CHANGE_COMMENTS',
-      data: {errors: null},
+      data: { errors: null },
     });
   }
   console.log("creating a new comment");
@@ -392,10 +392,10 @@ export function submit_comments(form){
   }).then((resp) => {
     console.log("response", resp);
     if (resp.data) {
-      if (state.comments.size == 0){
+      if (state.comments.size == 0) {
         list_comments();
       }
-      else{
+      else {
         store.dispatch({
           type: 'ADD_COMMENTS',
           data: [resp.data],
@@ -403,14 +403,14 @@ export function submit_comments(form){
       }
       store.dispatch({
         type: 'CHANGE_COMMENTS',
-        data: {comments: ""},
+        data: { comments: "" },
       });
       form.clearInputBox();
     }
     else {
       store.dispatch({
         type: 'CHANGE_COMMENTS',
-        data: {errors: JSON.stringify(resp.errors)},
+        data: { errors: JSON.stringify(resp.errors) },
       });
     }
   });
@@ -418,24 +418,24 @@ export function submit_comments(form){
 
 export function list_users() {
   get('/users')
-      .then((resp) => {
-        console.log("list_users", resp);
-        store.dispatch({
-          type: 'ADD_USERS',
-          data: resp.data,
-        });
+    .then((resp) => {
+      console.log("list_users", resp);
+      store.dispatch({
+        type: 'ADD_USERS',
+        data: resp.data,
       });
+    });
 }
 
 
 export function list_comments() {
   console.log("getting all comments");
   get('/comments')
-      .then((resp) => {
-        console.log("list_comments", resp);
-        store.dispatch({
-          type: 'ADD_COMMENTS',
-          data: resp.data,
-        });
+    .then((resp) => {
+      console.log("list_comments", resp);
+      store.dispatch({
+        type: 'ADD_COMMENTS',
+        data: resp.data,
       });
+    });
 }

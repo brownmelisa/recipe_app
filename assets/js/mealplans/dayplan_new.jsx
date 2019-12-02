@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import {Redirect} from 'react-router';
+import { Redirect } from 'react-router';
 import _ from 'lodash';
 
-import {Modal, Row, Col, Button, Table, ListGroup, Form, Alert} from 'react-bootstrap'
+import { Modal, Row, Col, Button, Table, ListGroup, Form, Alert } from 'react-bootstrap'
 import SearchRecipes from '../recipes/search'
 import RecipesCarousel from './recipes_carousel'
-import {createNewDayPlan, getAllMealPlans} from "../ajax";
-import {connect} from "react-redux";
+import { createNewDayPlan, getAllMealPlans } from "../ajax";
+import { connect } from "react-redux";
 
 // Send events from component to redux store.
 // Return "state" instead of "state.forms.test_create_new_day_plan"
@@ -37,51 +37,51 @@ class DayPlanNew extends React.Component {
   }
 
   redirect(path) {
-    this.setState({redirect: path});
+    this.setState({ redirect: path });
   }
 
   // handles any form changes and update store
   changed(data) {
     this.props.dispatch({
-                          type: 'CHANGE_NEW_DAY_PLAN_NAME',
-                          data: data,
-                        });
+      type: 'CHANGE_NEW_DAY_PLAN_NAME',
+      data: data,
+    });
   }
 
   // this function is necessary to get the recipe title
   // the store only contains the recipe id
   recipe_changed(data, recipe_title, meal_type) {
     console.log("meal type in day plan is", meal_type);
-    this.setState({show_modal: false});
-    this.setState({[meal_type]: recipe_title});
+    this.setState({ show_modal: false });
+    this.setState({ [meal_type]: recipe_title });
     this.changed(data);
   }
 
   // handles submit meal plan button click
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({breakfast:""});
-    this.setState({lunch:""});
-    this.setState({dinner:""});
-    this.setState({snack:""});
+    this.setState({ breakfast: "" });
+    this.setState({ lunch: "" });
+    this.setState({ dinner: "" });
+    this.setState({ snack: "" });
     ReactDOM.findDOMNode(this.messageForm).reset();
   }
 
   // handles closing the modal
   handleClose(ev) {
-    this.setState({show_modal: false});
+    this.setState({ show_modal: false });
   }
 
   // handles opening the modal, also checks that users have created
   // a meal plan before they start adding meals
   handleShow(mealType) {
     if (!this.props.plan_name) {
-      this.setState({show_alert: true});
+      this.setState({ show_alert: true });
       return;
     }
     console.log("handle shoe meal type is", mealType);
-    this.setState({show_modal: true});
-    this.setState({meal_type: mealType});
+    this.setState({ show_modal: true });
+    this.setState({ meal_type: mealType });
   }
 
   handleAddMeal(ev, name) {
@@ -90,14 +90,25 @@ class DayPlanNew extends React.Component {
     console.log('recipe name', name);
   }
 
+  clearDayPlanStore() {
+    console.log("in dayplan new", this.props)
+    this.props.dispatch({
+      type: "CLEAR_DAYPLAN_AFTER_CREATE",
+      data: null
+    })
+    console.log("in dayplan new after", this.props)
+
+  }
+
   handleButtonClick(params) {
     console.log('this in handle button is', params);
     if (this.props.forms.test_create_new_day_plan.breakfast
-        || this.props.forms.test_create_new_day_plan.lunch
-        || this.props.forms.test_create_new_day_plan.dinner
-        || this.props.forms.test_create_new_day_plan.snack
+      || this.props.forms.test_create_new_day_plan.lunch
+      || this.props.forms.test_create_new_day_plan.dinner
+      || this.props.forms.test_create_new_day_plan.snack
     ) {
       createNewDayPlan(params);
+      this.clearDayPlanStore();
       getAllMealPlans(this);
     } else {
       alert("must add at least one meal");
@@ -115,7 +126,7 @@ class DayPlanNew extends React.Component {
         <Form
           id='dayplanForm'
           className="dpForm"
-          ref={ dpForm => this.messageForm = dpForm }
+          ref={dpForm => this.messageForm = dpForm}
           onSubmit={this.handleSubmit.bind(this)}
         >
           <Form.Group as={Row} controlId="mealPlanDate">
@@ -125,14 +136,14 @@ class DayPlanNew extends React.Component {
                 required
                 type="date"
                 onChange={(ev) => this.changed(
-                  {date: ev.target.value, userId: user_id.toString(), mealPlanName: plan_name}
+                  { date: ev.target.value, userId: user_id.toString(), mealPlanName: plan_name }
                 )}
               />
             </Col>
           </Form.Group>
 
           {this.state.show_alert == true &&
-           <Alert variant="danger">create a plan name first</Alert>
+            <Alert variant="danger">create a plan name first</Alert>
           }
 
           <ListGroup>
@@ -169,21 +180,21 @@ class DayPlanNew extends React.Component {
 
           {console.log("in the render", this)}
           <Button id="savePlanBtn"
-                  type="submit"
-                  onClick={() => this.handleButtonClick(this)}>
+            type="submit"
+            onClick={() => this.handleButtonClick(this)}>
             Save Daily Plan
           </Button>
         </Form>
 
         <Modal id="mpModal"
-               show={this.state.show_modal}
-               onHide={this.handleClose}>
+          show={this.state.show_modal}
+          onHide={this.handleClose}>
           <Modal.Header id="mpModalHeader" closeButton>
             <Modal.Title>Add to Meal Plan</Modal.Title>
           </Modal.Header>
           <Modal.Body id="mpModalBody">
             <div>
-              <SearchRecipes/>
+              <SearchRecipes />
               <RecipesCarousel
                 mealType={this.state.meal_type}
                 onAddRecipe={this.recipe_changed}

@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {Modal, Row, Col, Button, Table, Form} from 'react-bootstrap'
+import { Modal, Row, Col, Button, Table, Form } from 'react-bootstrap'
 import DayPlanNew from './dayplan_new';
 import MealPlanShow from './mealplan_show';
-import {createNewDayPlan, createNewMealPlan, getMealPlan} from "../ajax";
+import { createNewDayPlan, createNewMealPlan, getMealPlan } from "../ajax";
 
 function state2props(state) {
   return state;
@@ -24,9 +24,9 @@ class MealPlanNew extends React.Component {
 
   changed(data) {
     this.props.dispatch({
-                          type: 'CHANGE_NEW_MEAL_PLAN_NAME',
-                          data: data,
-                        })
+      type: 'CHANGE_NEW_MEAL_PLAN_NAME',
+      data: data,
+    })
   }
 
   // handle submit for a meal plan
@@ -34,21 +34,20 @@ class MealPlanNew extends React.Component {
     // prevent page reload after submitting form
     ev.preventDefault();
     // once the user submit a meal plan name, the form should disappear
-    this.setState({show_form: false});
+    this.setState({ show_form: false });
   }
 
   refreshPage(ev) {
-    this.setState( {show_form: true} );
+    this.setState({ show_form: true });
   }
 
   render() {
 
-    if(!this.props.session)
-    {
+    if (!this.props.session) {
       return (
-        <h3 style =
-          {{fontFamily:"verdana",textAlign:"center", paddingTop:"30px"}}>
-            Please login to create Meal Plans.
+        <h3 style=
+          {{ fontFamily: "verdana", textAlign: "center", paddingTop: "30px" }}>
+          Please login to create Meal Plans.
         </h3>
       );
     }
@@ -59,10 +58,10 @@ class MealPlanNew extends React.Component {
     let bottom =
       <Row>
         <Col sm={4} md={6}>
-          <DayPlanNew plan_name={mealplan.meal_plan_name}/>
+          <DayPlanNew plan_name={mealplan.meal_plan_name} />
         </Col>
         <Col sm={4} md={6}>
-          <MealPlanShow mealplan={mealplan}/>
+          <MealPlanShow mealplan={mealplan} />
         </Col>
       </Row>;
 
@@ -72,9 +71,9 @@ class MealPlanNew extends React.Component {
         <div>
           <Row>
             <h4>MEAL PLAN NAME: {mealplan.meal_plan_name}</h4>
-            <Button variant="danger" onClick={this.refreshPage}>Create New Meal Plan</Button>
           </Row>
           {bottom}
+          <Button variant="danger" onClick={this.refreshPage}>Create New Meal Plan</Button>
         </div>
       );
     }
@@ -91,18 +90,18 @@ class MealPlanNew extends React.Component {
                 type="text"
                 placeholder={"enter a name for your meal plan"}
                 onChange={(ev) =>
-                  this.changed({mealPlanName: ev.target.value, userId: user_id})
-                }/>
+                  this.changed({ mealPlanName: ev.target.value, userId: user_id })
+                } />
             </Col>
           </Form.Group>
           <Form.Group controlId="submit">
             <Button type="submit"
-                    variant="primary"
-                    onClick={() => createNewMealPlan(this)}>
+              variant="primary"
+              onClick={() => createNewMealPlan(this)}>
               create meal plan</Button>
           </Form.Group>
         </Form>
-        <br/>
+        <br />
         {bottom}
       </div>
     );

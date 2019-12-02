@@ -208,14 +208,21 @@ function test_create_new_meal_plan(st0 = { mealPlanName: "", userId: "" }, actio
   }
 }
 
-function test_create_new_day_plan(st0 = {
+let form_create_new_day = {
   mealPlanName: "", date: "", breakfast: "",
   lunch: "", dinner: "", snack: "", userId: ""
-}, action) {
+};
+
+function test_create_new_day_plan(st0 = form_create_new_day, action) {
   switch (action.type) {
     case 'CHANGE_NEW_DAY_PLAN_NAME':
       console.log("in store create new day plan", action.data);
       return Object.assign({}, st0, action.data);
+    case 'CLEAR_DAYPLAN_AFTER_CREATE':
+      return Object.assign({}, st0, {
+        date: "", breakfast: "",
+        lunch: "", dinner: "", snack: ""
+      });
     default:
       return st0;
   }
@@ -246,7 +253,7 @@ function forms(st0, action) {
   return reducer(st0, action);
 }
 
-function new_comments(st0 = {user_id: 0, recipe_id: 0, comments: "", errors: null}, action) {
+function new_comments(st0 = { user_id: 0, recipe_id: 0, comments: "", errors: null }, action) {
   switch (action.type) {
     case 'CHANGE_COMMENTS':
       return Object.assign({}, st0, action.data);
@@ -298,10 +305,10 @@ function session(st0 = session0, action) {
 
 function recipes(st0, action) {
   let reducer = combineReducers(
-      {
-        search_resp,
-        get_recipe_by_id_resp,
-      });
+    {
+      search_resp,
+      get_recipe_by_id_resp,
+    });
   return reducer(st0, action);
 }
 
@@ -351,13 +358,13 @@ function get_all_mealplans(st0 = {}, action) {
 }
 function mealplans(st0, action) {
   let reducer = combineReducers(
-      {
-        create_new_mealplan_resp,
-        create_new_dayplan_resp,
-        get_mealplan_by_id,
-        get_gl_by_mpid_resp,
-        get_all_mealplans,
-      }
+    {
+      create_new_mealplan_resp,
+      create_new_dayplan_resp,
+      get_mealplan_by_id,
+      get_gl_by_mpid_resp,
+      get_all_mealplans,
+    }
   );
   return reducer(st0, action);
 }
