@@ -43,7 +43,7 @@ class MealDescription extends React.Component {
         if (meal) {
             return (
                 <div>
-                    <Button variant="link" onClick={() => this.redirect(meal.id)}>{meal.title}</Button>
+                    <Button className="accRecipeLink" variant="link" onClick={() => this.redirect(meal.id)}>{meal.title}</Button>
                     <p className="p_meal_detail">Calories: {meal.calories}</p>
                     <p className="p_meal_detail">Carbs: {meal.carbs}</p>
                     <p className="p_meal_detail">Protein: {meal.protein}</p>

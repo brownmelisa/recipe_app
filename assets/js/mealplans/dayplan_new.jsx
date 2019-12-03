@@ -122,7 +122,7 @@ class DayPlanNew extends React.Component {
 
     return (
       <div>
-        <h1 id="mpHeader">Daily Meal Plan</h1>
+        <h3 className="dpHeader">Make Daily Meal Plan</h3>
         <Form
           id='dayplanForm'
           className="dpForm"
@@ -189,7 +189,7 @@ class DayPlanNew extends React.Component {
         <Modal id="mpModal"
           show={this.state.show_modal}
           onHide={this.handleClose}>
-          <Modal.Header id="mpModalHeader" closeButton>
+          <Modal.Header className="mpModalHeader" closeButton>
             <Modal.Title>Add to Meal Plan</Modal.Title>
           </Modal.Header>
           <Modal.Body id="mpModalBody">
@@ -201,8 +201,8 @@ class DayPlanNew extends React.Component {
               />
             </div>
           </Modal.Body>
-          <Modal.Footer id="mpModalFooter">
-            <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+          <Modal.Footer className="mpModalFooter">
+            {/*<Button variant="secondary" onClick={this.handleClose}>Close</Button>*/}
           </Modal.Footer>
         </Modal>
 

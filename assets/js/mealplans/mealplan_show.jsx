@@ -87,7 +87,7 @@ class MealPlanShow extends React.Component {
       console.log("in empty");
       return (
         <div>
-          <h3>This meal plan is empty</h3>
+          <h3 className="dpHeader">Daily Plans Added</h3>
         </div>
       )
     }
@@ -108,8 +108,8 @@ class MealPlanShow extends React.Component {
 
     return (
       <div>
-        <h1>Meal Plan Details</h1>
-        <p>Meal Plan Name: {this.props.mealplan.meal_plan_name}</p>
+        <h3 className="dpHeader">Daily Plans Added</h3>
+        {/*<p>Meal Plan Name: {this.props.mealplan.meal_plan_name}</p>*/}
         <Table striped bordered hover>
           <thead>
           <tr>

@@ -69,11 +69,14 @@ class MealPlanNew extends React.Component {
     if (this.state.show_form === false || this.props.redirect_from === true) {
       return (
         <div>
+          <div className="container">
           <Row>
-            <h4>MEAL PLAN NAME: {mealplan.meal_plan_name}</h4>
+            <h3 id="mpNameHeader">MEAL PLAN: {mealplan.meal_plan_name}</h3>
+            <Button id="refreshBtn" variant="outline-success" size="sm"
+                    onClick={this.refreshPage}>start new meal plan</Button>
           </Row>
+          </div>
           {bottom}
-          <Button variant="danger" onClick={this.refreshPage}>Create New Meal Plan</Button>
         </div>
       );
     }
@@ -81,18 +84,18 @@ class MealPlanNew extends React.Component {
     // Otherwise show the meal plan form at the top of page
     return (
       <div>
-        <h2>Create a New Meal Plan</h2>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group as={Row} controlId="mealPlanName">
-            <Form.Label column sm="2">Plan Name</Form.Label>
-            <Col sm="10">
+        <h1 className="mpPageHeader">NEW MEAL PLAN</h1>
+        <div id="mpFormBox">
+        <Form inline onSubmit={this.handleSubmit}>
+          <Form.Group controlId="mealPlanName">
+            <Form.Label>Plan Name</Form.Label>
               <Form.Control
+                id = "mpFormInput"
                 type="text"
                 placeholder={"enter a name for your meal plan"}
                 onChange={(ev) =>
                   this.changed({ mealPlanName: ev.target.value, userId: user_id })
                 } />
-            </Col>
           </Form.Group>
           <Form.Group controlId="submit">
             <Button type="submit"
@@ -101,7 +104,7 @@ class MealPlanNew extends React.Component {
               create meal plan</Button>
           </Form.Group>
         </Form>
-        <br />
+        </div>
         {bottom}
       </div>
     );

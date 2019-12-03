@@ -86,9 +86,10 @@ class MealPlansAll extends React.Component {
 
     return (
       <div>
-        <h2>MY MEAL PLANS DASHBOARD</h2>
+        <h1 className="mpPageHeader">MEAL PLAN DASHBOARD</h1>
+        <div className="container">
         <Row>{mealplans_parsed}</Row>
-        }
+        </div>
       </div>
     );
   }

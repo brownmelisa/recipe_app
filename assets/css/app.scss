@@ -15,9 +15,9 @@ $body-bg: #BBB;
 }
 
 // Meal Plan
-#mpHeader {
+.dpHeader {
   text-align:center;
-  padding-top:30px;
+  padding-top:70px;
   padding-bottom:30px;
 }
 .mpBtn {
@@ -28,14 +28,16 @@ $body-bg: #BBB;
   font-size: 18px;
 }
 #savePlanBtn {
-  margin-top:20px;
-  align-items:center;
+  margin:20px 0 0 33%;
 }
 #groceryList {
   border-style: dotted;
 }
 .dailyMPHeading{
   background-color: #d3d9df;
+  height: 60px;
+  line-height: 40px;
+  //background-color: #b4b8bf;
 }
 .glImage {
   height: 20px;
@@ -44,18 +46,44 @@ $body-bg: #BBB;
   //height: auto;
 }
 
+
+// meal plan new
+#mpFormInput {
+  width: 600px;
+  //padding: 0 20px 0 20px;
+  margin: 0 20px 0 10px;
+  //box-sizing: border-box;
+}
+#mpFormBox {
+  width: 100%;
+  padding: 30px;
+  border: 1px solid gray;
+  //background-color: #cef0d2;
+  background-color: #ceddf5;
+}
+#mpNameHeader {
+  padding-top:20px;
+  color: #007bff;
+}
+#refreshBtn {
+  margin: 20px 0 0 40px;
+  //display: inline-block;
+  height: 30px;
+}
+
 // Popup (Modal)
 #mpModal {
   max-width: 900px;
 }
-#mpModalHeader {
+.mpModalHeader {
   background-color: #45b552;
 }
 #mpModalBody {
   background-color: #b4b8bf;
 }
-#mpModalFooter {
+.mpModalFooter {
   background-color: #45b552;
+  padding-top: 50px;
 }
 
 
@@ -67,6 +95,9 @@ $body-bg: #BBB;
 .ingr_and_instruction > div {
   margin:30px;
 }
+.searchFormLabel {
+  padding-right: 10px;
+}
 
 
 // Carousel
@@ -77,8 +108,29 @@ $body-bg: #BBB;
   padding-bottom: 30px;
 }
 .firstCard {
-  margin-left: 46px;
+  margin-left: 4%;
 }
+.carouselAddMealBtn {
+  //margin-left: 80px;
+  //float: right;
+  //text-align: center;
+  //text: center;
+  //position: relative;
+  //bottom: 10%;
+  //right: 10px;
+  position:absolute;
+  bottom:10%;
+  left:18%;
+}
+.recipeCardText {
+  font-size: 12px;
+  margin-bottom: 40px;
+}
+.recipeCardImage {
+  width: 100%;
+  margin-top: 8%;
+}
+
 
 // Recipe Detail Component
 .rdImage {
@@ -105,7 +157,7 @@ $body-bg: #BBB;
 }
 
 
-// Meal plan dashboard
+// Meal plan dashboard (mealplan_all and mealplan_card)
 .p_meal_detail {
   font-size : 14px;
   background-color : #ceddf5;
@@ -113,6 +165,43 @@ $body-bg: #BBB;
   margin : 0;
   line-height : 16px;
 }
+#mpBtnRow {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+.mpPageHeader {
+  margin: 40px 0 40px 0;
+  text-align: center;
+}
+.mpCardBtn {
+  margin: 0 5px 0 5px;
+}
+.mpCardTitle {
+  text-align: center;
+  margin-top: 12px;
+}
+.mpCardDpHeader{
+  padding-top: 10px;
+}
+.dpDeleteBtn{
+  margin-top: 10px;
+}
+.mpCardAccHeader {
+  //margin-top: 20px;
+  font-size : 16px;
+  padding : 20px 0 0 0;
+  margin : 0;
+  line-height : 16px;
+}
+.accRecipeLink{
+  text-align: left;
+  font-size : 15px;
+  padding : 4px 0 4px 0;
+  margin : 0;
+  line-height : 16px;
+}
+
 
 
 // Comments

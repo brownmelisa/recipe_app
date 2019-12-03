@@ -105,35 +105,35 @@ class SearchRecipes extends React.Component {
         <Form className="form-inline">
           <div>
             <Form.Group className="m-3" controlId="multiIngridient">
-              <Form.Label>Multiple Ingridient Search: </Form.Label>
+              <Form.Label className="searchFormLabel">Multiple Ingredient Search: </Form.Label>
               <Form.Control type="text"
                 onChange={(ev) => this.multiIngredientChanged(ev)} />
             </Form.Group>
           </div>
           <div>
             <Form.Group className="m-3" controlId="maxCalorie">
-              <Form.Label>Max Calorie: </Form.Label>
+              <Form.Label className="searchFormLabel">Max Calorie: </Form.Label>
               <Form.Control type="number"
                 onChange={(ev) => this.maxCalChanged(ev)} />
             </Form.Group>
           </div>
           <div>
             <Form.Group className="m-3" controlId="maxFat">
-              <Form.Label>Max Fat: </Form.Label>
+              <Form.Label className="searchFormLabel">Max Fat: </Form.Label>
               <Form.Control type="number"
                 onChange={(ev) => this.maxFatChanged(ev)} />
             </Form.Group>
           </div>
           <div>
             <Form.Group className="m-3" controlId="maxCabs">
-              <Form.Label>Max Carbs: </Form.Label>
+              <Form.Label className="searchFormLabel">Max Carbs: </Form.Label>
               <Form.Control type="number"
                 onChange={(ev) => this.maxCarbChanged(ev)} />
             </Form.Group>
           </div>
           <div>
             <Form.Group className="m-3" controlId="maxProtein">
-              <Form.Label>Max Protein: </Form.Label>
+              <Form.Label className="searchFormLabel">Max Protein: </Form.Label>
               <Form.Control type="number"
                 onChange={(ev) => this.maxProteinChanged(ev)} />
             </Form.Group>
@@ -150,13 +150,13 @@ class SearchRecipes extends React.Component {
     }
 
     console.log(this);
-    let body = <div>
-      <h2>Search Recipe</h2>
+    let body = <div className="container">
+      <h2>Search Recipes</h2>
       <Form className="form-inline">
 
         <div>
           <Form.Group className="m-3" controlId="searchTerm">
-            <Form.Label>Keywords(required):</Form.Label>
+            <Form.Label className="searchFormLabel">Keyword(required):</Form.Label>
             <Form.Control type="text"
               value={this.props.searchTerm}
               onChange={(ev) => this.searchTermChanged(ev)} />
@@ -165,14 +165,14 @@ class SearchRecipes extends React.Component {
 
         <div>
           <Form.Group className="m-3" controlId="cuisine">
-            <Form.Label>Cuisine: </Form.Label>
+            <Form.Label className="searchFormLabel">Cuisine: </Form.Label>
             <Form.Control type="text"
               onChange={(ev) => this.cuisineChanged(ev)} />
           </Form.Group>
         </div>
         <div>
           <Form.Group className="m-3" controlId="mealType">
-            <Form.Label>Meal Type: </Form.Label>
+            <Form.Label className="searchFormLabel">Meal Type: </Form.Label>
             <Form.Control as="select"
               onChange={(ev) => this.mealTypeChanged(ev)}>
               <option></option>
@@ -207,6 +207,7 @@ class SearchRecipes extends React.Component {
           Search</Button>
       </Form.Group>
     </div>;
+
     if (this.state.display_error) {
       return (
         <div>

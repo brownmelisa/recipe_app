@@ -50,28 +50,34 @@ class MealPlanCard extends React.Component {
 
     console.log("show in main", this.state.show_modal);
     return (
-      <Card className="col-4">
-        <Card.Title>Meal Plan Name: {this.props.mp.meal_plan_name} </Card.Title>
+      <Card border="secondary" className="col-4">
+        <Card.Title className="mpCardTitle">Meal Plan: {this.props.mp.meal_plan_name} </Card.Title>
         {dayplans}
-        <div>
-          <Button onClick={() => this.props.redirect(this.props.mp.id)}>grocery list</Button>
-          <Button onClick={() => this.handleShowModal()}>add new day</Button>
-          <Button onClick={() => this.props.handleDeleteMealPlan(this.props.mp.id)}>delete</Button>
+        <div id="mpBtnRow">
+          <Button className="mpCardBtn"
+                  size="sm" variant="secondary"
+                  onClick={() => this.props.redirect(this.props.mp.id)}>grocery list</Button>
+          <Button className="mpCardBtn"
+                  size="sm" variant="secondary"
+                  onClick={() => this.handleShowModal()}>add new day</Button>
+          <Button className="mpCardBtn"
+                  size="sm" variant="danger"
+                  onClick={() => this.props.handleDeleteMealPlan(this.props.mp.id)}>delete</Button>
         </div>
 
 
         <Modal show={this.state.show_modal}
           onHide={this.handleCloseModal}>
-          <Modal.Header closeButton>
+          <Modal.Header className="mpModalHeader" closeButton>
             <Modal.Title>Add to Meal Plan</Modal.Title>
           </Modal.Header>
           <Modal.Body id="mpModalBody">
             <DayPlanNew plan_name={this.props.mp.meal_plan_name} />
           </Modal.Body>
-          <Modal.Footer id="mpModalFooter">
-            <Button variant="secondary"
-              onClick={this.handleCloseModal}
-            >Close</Button>
+          <Modal.Footer className="mpModalFooter">
+            {/*<Button variant="secondary"*/}
+            {/*  onClick={this.handleCloseModal}*/}
+            {/*>Close</Button>*/}
           </Modal.Footer>
         </Modal>
       </Card>
@@ -91,34 +97,37 @@ function DayPlanList({ dp }) {
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-              <h6>{dp.date}</h6>
+              <h6 className="mpCardDpHeader">{dp.date}</h6>
             </Accordion.Toggle>
-            <Button onClick={() => { deleteDayPlan(dp.id) }}>delete</Button>
+            <Button className="float-right dpDeleteBtn"
+                    size="sm" variant="outline-danger"
+                    onClick={() => { deleteDayPlan(dp.id) }}>delete
+            </Button>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               {/*conditional rendering if meal exists in day plan*/}
               {dp.breakfast &&
                 <div>
-                  <p>Breakfast</p>
+                  <div className="mpCardAccHeader">Breakfast</div>
                   <MealDescription meal={dp.breakfast} />
                 </div>
               }
               {dp.lunch &&
                 <div>
-                  <p>Lunch</p>
+                  <div className="mpCardAccHeader">Lunch</div>
                   <MealDescription meal={dp.lunch} />
                 </div>
               }
               {dp.dinner &&
                 <div>
-                  <p>Dinner</p>
+                  <div className="mpCardAccHeader">Dinner</div>
                   <MealDescription meal={dp.dinner} />
                 </div>
               }
               {dp.snack &&
                 <div>
-                  Snack
+                  <div className="mpCardAccHeader">Snack</div>
                  <MealDescription meal={dp.snack} />
                 </div>
               }

@@ -72,14 +72,14 @@ class RecipesCarousel extends React.Component {
           <div className="row">
             <Col md="1"/>
             <Card className="col-3 carouselCard firstCard">
-              <Card.Img src={triplet[0].image_url}
+              <Card.Img className="recipeCardImage" src={triplet[0].image_url}
                         onClick={() => this.handleClickPicture(triplet[0].id)}/>
-              <Card.Text>
+              <Card.Text className="recipeCardText">
                 {triplet[0].title}
                 <p>{parseInt(triplet[0].calories) + " Cal"}</p>
               </Card.Text>
               <div className="card_buttons">
-                <Button variant="primary"
+                <Button size="sm" variant="primary" className="carouselAddMealBtn"
                         onClick={() =>
                           this.props.onAddRecipe({[mealType]: triplet[0].id.toString()},
                                                  triplet[0].title, mealType)
@@ -91,14 +91,15 @@ class RecipesCarousel extends React.Component {
             </Card>
 
             <Card className="col-3 carouselCard">
-              <Card.Img src={triplet[1].image_url}
+              <Card.Img className="recipeCardImage"
+                        src={triplet[1].image_url}
                         onClick={() => this.handleClickPicture(triplet[1].id)}/>
-              <Card.Text>
+              <Card.Text className="recipeCardText">
                 {triplet[1].title}
                 <p>{parseInt(triplet[1].calories) + " Cal"}</p>
               </Card.Text>
               <div className="card_buttons">
-                <Button variant="primary"
+                <Button size="sm" variant="primary" className="carouselAddMealBtn"
                         onClick={() =>
                           this.props.onAddRecipe({[mealType]: triplet[1].id.toString()},
                                                  triplet[1].title, mealType)
@@ -110,14 +111,15 @@ class RecipesCarousel extends React.Component {
             </Card>
 
             <Card className="col-3 carouselCard">
-              <Card.Img src={triplet[2].image_url}
+              <Card.Img className="recipeCardImage"
+                        src={triplet[2].image_url}
                         onClick={() => this.handleClickPicture(triplet[2].id)}/>
-              <Card.Text>
+              <Card.Text className="recipeCardText">
                 {triplet[2].title}
                 <p>{parseInt(triplet[2].calories) + " Cal"}</p>
               </Card.Text>
               <div className="card_buttons">
-                <Button variant="primary"
+                <Button size="sm" variant="primary" className="carouselAddMealBtn"
                         onClick={() =>
                           this.props.onAddRecipe({[mealType]: triplet[2].id.toString()},
                                                  triplet[2].title, mealType)}>
